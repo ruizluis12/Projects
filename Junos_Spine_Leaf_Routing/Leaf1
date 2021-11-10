@@ -7,13 +7,13 @@ set interfaces xe-0/0/1 description "to spine2"
 set interfaces xe-0/0/1 mtu 9192
 set interfaces xe-0/0/1 unit 0 family inet unnumbered-address lo0.0
 set interfaces lo0 unit 0 family inet address 10.255.1.3/32
-set interfaces irb unit 150 family inet address 192.168.150.1/24
-set interfaces irb unit 150 family inet address 192.168.150.254/24 preferred
+set interfaces irb unit 150 family inet address 10.50.1.1/24
+set interfaces irb unit 150 family inet address 10.50.1.254/24 preferred
 
 ### Policy
 ###
 set policy-options policy-statement PFE-LB then load-balance per-packet
-set policy-options prefix-list LOCAL-ROUTES 192.168.150.0/24
+set policy-options prefix-list LOCAL-ROUTES 10.50.1.0/24
 set policy-options policy-statement ADVERTISEMENTS from protocol direct
 set policy-options policy-statement ADVERTISEMENTS from prefix-list LOCAL-ROUTES
 set policy-options policy-statement ADVERTISEMENTS then accept
@@ -41,4 +41,50 @@ set protocols ospf area 0.0.0.0 interface lo0.0
 ### Vlan config
 set vlans VNI_15000 vlan-id 150         
 set vlans VNI_15000 l3-interface irb.150
-set interfaces xe-0/0/3 unit 0 family ethernet-switching vlan members VNI_15000
+
+################################# MLAG Config################################
+###
+
+#Creates 2 port channels
+set chassis aggregated-devices ethernet device-count 2
+
+#Interface bundle for control to secondary device
+set interfaces xe-0/0/4 ether-options 802.3ad ae0
+
+#Port channel for control traffic configuration
+set interfaces ae0 aggregated-ether-options lacp active
+set interfaces ae0 unit 0 family ethernet-switching interface-mode trunk
+set interfaces ae0 unit 0 family ethernet-switching vlan members VNI_15000
+
+# Configuration for the Port Channel dual hommed
+set interfaces ae1 aggregated-ether-options lacp active
+set interfaces ae1 aggregated-ether-options lacp system-id 00:01:02:03:04:05
+set interfaces ae1 aggregated-ether-options lacp admin-key 3
+set interfaces ae1 aggregated-ether-options mc-ae mc-ae-id 3
+set interfaces ae1 aggregated-ether-options mc-ae redundancy-group 1
+set interfaces ae1 aggregated-ether-options mc-ae chassis-id 0
+set interfaces ae1 aggregated-ether-options mc-ae mode active-active
+set interfaces ae1 aggregated-ether-options mc-ae status-control active
+set interfaces ae1 aggregated-ether-options mc-ae init-delay-time 240
+set interfaces ae1 unit 0 family ethernet-switching interface-mode access
+set interfaces ae1 unit 0 family ethernet-switching vlan members VNI_15000
+
+#Management address used as backup peer - Check to see if this can be a loopback interface?
+set interfaces em0 unit 0 family inet address 10.1.1.1/24
+
+
+#Peer config to be used on the secondary device
+set multi-chassis multi-chassis-protection 10.50.1.2 interface ae0
+
+#ICCP config
+set protocols iccp local-ip-addr 10.50.1.1
+set protocols iccp peer 10.50.1.2 session-establishment-hold-time 340
+set protocols iccp peer 10.50.1.2 redundancy-group-id-list 1
+set protocols iccp peer 10.50.1.2 backup-liveness-detection backup-peer-ip 10.1.1.2
+set protocols iccp peer 10.50.1.2 liveness-detection minimum-receive-interval 1000
+set protocols iccp peer 10.50.1.2 liveness-detection transmit-interval minimum-interval 1000
+
+#Interface config to end host
+set interfaces xe-0/0/3 ether-options 802.3ad ae1
+set interfaces ae1 unit 0 family ethernet-switching interface-mode access
+set interfaces ae1 unit 0 family ethernet-switching vlan members VNI_15000
