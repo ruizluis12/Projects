@@ -86,5 +86,3 @@ set protocols iccp peer 10.50.1.2 liveness-detection transmit-interval minimum-i
 
 #Interface config to end host
 set interfaces xe-0/0/3 ether-options 802.3ad ae1
-set interfaces ae1 unit 0 family ethernet-switching interface-mode access
-set interfaces ae1 unit 0 family ethernet-switching vlan members VNI_15000
