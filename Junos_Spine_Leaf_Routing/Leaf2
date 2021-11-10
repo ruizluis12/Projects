@@ -1,0 +1,47 @@
+### Interface config
+###
+set interfaces xe-0/0/0 description "to spine1"
+set interfaces xe-0/0/0 mtu 9192
+set interfaces xe-0/0/0 unit 0 family inet unnumbered-address lo0.0
+set interfaces xe-0/0/1 description "to spine2"
+set interfaces xe-0/0/1 mtu 9192
+set interfaces xe-0/0/1 unit 0 family inet unnumbered-address lo0.0
+set interfaces xe-0/0/2 unit 0 family ethernet-switching
+set interfaces xe-0/0/3 unit 0 family ethernet-switching
+set interfaces irb unit 250 family inet address 192.168.250.254/24 preferred
+set interfaces irb unit 250 family inet address 192.168.250.1/24 preferred
+set interfaces lo0 unit 0 family inet address 10.255.1.4/32
+
+### Policy
+###
+
+set policy-options prefix-list LOCAL-ROUTES 192.168.250.0/24
+set policy-options policy-statement ADVERTISEMENTS from protocol direct
+set policy-options policy-statement ADVERTISEMENTS from prefix-list LOCAL-ROUTES
+set policy-options policy-statement ADVERTISEMENTS then accept
+set policy-options policy-statement PFE-LB then load-balance per-packet
+
+### Routing Configuration
+###
+set routing-options router-id 10.255.1.4
+set routing-options autonomous-system 64589
+set routing-options forwarding-table export PFE-LB
+set routing-options forwarding-table ecmp-fast-reroute
+set forwarding-options storm-control-profiles default all
+
+set protocols bgp log-updown
+set protocols bgp graceful-restart
+set protocols bgp group OVERLAY type internal
+set protocols bgp group OVERLAY local-address 10.255.1.4
+set protocols bgp group OVERLAY export ADVERTISEMENTS
+set protocols bgp group OVERLAY family inet unicast
+set protocols bgp group OVERLAY neighbor 10.255.1.1 description "IBGP/overlay peering to Spine1"
+set protocols bgp group OVERLAY neighbor 10.255.1.2 description "IBGP/overlay peering to Spine2"
+set protocols ospf area 0.0.0.0 interface xe-0/0/1.0 interface-type p2p
+set protocols ospf area 0.0.0.0 interface xe-0/0/0.0 interface-type p2p
+set protocols ospf area 0.0.0.0 interface lo0.0
+
+### Vlan config
+set vlans VNI_25000 vlan-id 250
+set vlans VNI_25000 l3-interface irb.250
+set interfaces xe-0/0/2 unit 0 family ethernet-switching vlan members VNI_25000
