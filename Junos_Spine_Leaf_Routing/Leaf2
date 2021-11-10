@@ -65,7 +65,7 @@ set interfaces ae1 aggregated-ether-options lacp system-id 00:01:02:03:04:05
 set interfaces ae1 aggregated-ether-options lacp admin-key 3
 set interfaces ae1 aggregated-ether-options mc-ae mc-ae-id 3
 set interfaces ae1 aggregated-ether-options mc-ae redundancy-group 1
-set interfaces ae1 aggregated-ether-options mc-ae chassis-id 0
+set interfaces ae1 aggregated-ether-options mc-ae chassis-id 1
 set interfaces ae1 aggregated-ether-options mc-ae mode active-active
 set interfaces ae1 aggregated-ether-options mc-ae status-control active
 set interfaces ae1 aggregated-ether-options mc-ae init-delay-time 240
@@ -73,19 +73,19 @@ set interfaces ae1 unit 0 family ethernet-switching interface-mode access
 set interfaces ae1 unit 0 family ethernet-switching vlan members VNI_15000
 
 #Management address used as backup peer - Check to see if this can be a loopback interface?
-set interfaces em0 unit 0 family inet address 10.1.1.1/24
+set interfaces em0 unit 0 family inet address 10.1.1.2/24
 
 
 #Peer config to be used on the secondary device
-set multi-chassis multi-chassis-protection 10.50.1.2 interface ae0
+set multi-chassis multi-chassis-protection 10.50.1.1 interface ae0
 
 #ICCP config
-set protocols iccp local-ip-addr 10.50.1.1
-set protocols iccp peer 10.50.1.2 session-establishment-hold-time 340
-set protocols iccp peer 10.50.1.2 redundancy-group-id-list 1
-set protocols iccp peer 10.50.1.2 backup-liveness-detection backup-peer-ip 10.1.1.2
-set protocols iccp peer 10.50.1.2 liveness-detection minimum-receive-interval 1000
-set protocols iccp peer 10.50.1.2 liveness-detection transmit-interval minimum-interval 1000
+set protocols iccp local-ip-addr 10.50.1.2
+set protocols iccp peer 10.50.1.1 session-establishment-hold-time 340
+set protocols iccp peer 10.50.1.1 redundancy-group-id-list 1
+set protocols iccp peer 10.50.1.1 backup-liveness-detection backup-peer-ip 10.1.1.1
+set protocols iccp peer 10.50.1.1 liveness-detection minimum-receive-interval 1000
+set protocols iccp peer 10.50.1.1 liveness-detection transmit-interval minimum-interval 1000
 
 #Interface config to end host
 set interfaces xe-0/0/3 ether-options 802.3ad ae1
