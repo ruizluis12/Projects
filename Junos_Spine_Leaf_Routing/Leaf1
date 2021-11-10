@@ -17,7 +17,6 @@ set policy-options prefix-list LOCAL-ROUTES 192.168.150.0/24
 set policy-options policy-statement ADVERTISEMENTS from protocol direct
 set policy-options policy-statement ADVERTISEMENTS from prefix-list LOCAL-ROUTES
 set policy-options policy-statement ADVERTISEMENTS then accept
-set policy-options policy-statement PFE-LB then load-balance per-packet
 
 ### Routing Configuration
 ###
