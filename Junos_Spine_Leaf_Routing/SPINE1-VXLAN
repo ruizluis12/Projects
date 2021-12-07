@@ -1,0 +1,58 @@
+set version 18.1R3-S5.3
+set system host-name DC2-Spine1
+set interfaces xe-0/0/0 description "to leaf1"
+set interfaces xe-0/0/0 mtu 9192
+set interfaces xe-0/0/0 unit 0 family inet address 10.1.113.1/30
+set interfaces xe-0/0/1 description "to leaf2"
+set interfaces xe-0/0/1 mtu 9192
+set interfaces xe-0/0/1 unit 0 family inet address 10.1.114.1/30
+set interfaces xe-0/0/2 unit 0
+set interfaces xe-0/0/3 unit 0
+set interfaces xe-0/0/4 unit 0
+set interfaces xe-0/0/5 unit 0
+set interfaces xe-0/0/6 unit 0
+set interfaces xe-0/0/7 unit 0
+set interfaces em0 unit 0 family inet address 100.123.13.211/16
+set interfaces em1 unit 0 family inet address 169.254.0.2/24
+set interfaces lo0 unit 0 family inet address 10.255.1.1/32
+set snmp community public authorization read-only
+set forwarding-options storm-control-profiles default all
+set routing-options static route 100.123.0.0/16 next-hop 100.123.0.1
+set routing-options static route 0.0.0.0/0 next-hop 100.123.0.1
+set routing-options router-id 10.255.1.1
+set routing-options autonomous-system 64589
+set routing-options forwarding-table export PFE-LB
+set routing-options forwarding-table ecmp-fast-reroute
+set protocols bgp log-updown
+set protocols bgp graceful-restart      
+set protocols bgp group IPCLOS_eBGP type external
+set protocols bgp group IPCLOS_eBGP mtu-discovery
+set protocols bgp group IPCLOS_eBGP import IPCLOS_BGP_IMP
+set protocols bgp group IPCLOS_eBGP export IPCLOS_BGP_EXP
+set protocols bgp group IPCLOS_eBGP local-as 65511
+set protocols bgp group IPCLOS_eBGP multipath multiple-as
+set protocols bgp group IPCLOS_eBGP neighbor 10.1.113.2 description "EBGP peering to Leaf1"
+set protocols bgp group IPCLOS_eBGP neighbor 10.1.113.2 peer-as 65513
+set protocols bgp group IPCLOS_eBGP neighbor 10.1.114.2 description "EBGP peering to Leaf2"
+set protocols bgp group IPCLOS_eBGP neighbor 10.1.114.2 peer-as 65514
+set protocols bgp group OVERLAY type internal
+set protocols bgp group OVERLAY local-address 10.255.1.1
+set protocols bgp group OVERLAY family evpn signaling
+set protocols bgp group OVERLAY cluster 10.255.1.10
+set protocols bgp group OVERLAY multipath
+set protocols bgp group OVERLAY neighbor 10.255.1.3 description "IBGP/overlay peering to Leaf1"
+set protocols bgp group OVERLAY neighbor 10.255.1.4 description "IBGP/overlay peering to Leaf2"
+set protocols bgp group OVERLAY_RR_MESH type internal
+set protocols bgp group OVERLAY_RR_MESH local-address 10.255.1.1
+set protocols bgp group OVERLAY_RR_MESH family evpn signaling
+set protocols bgp group OVERLAY_RR_MESH neighbor 10.255.1.2 description "IBGP/overlay peering to Spine2"
+set protocols igmp-snooping vlan default
+set policy-options policy-statement IPCLOS_BGP_EXP term loopback from protocol direct
+set policy-options policy-statement IPCLOS_BGP_EXP term loopback from protocol bgp
+set policy-options policy-statement IPCLOS_BGP_EXP term loopback then accept
+set policy-options policy-statement IPCLOS_BGP_EXP term default then reject
+set policy-options policy-statement IPCLOS_BGP_IMP term loopback from protocol bgp
+set policy-options policy-statement IPCLOS_BGP_IMP term loopback from protocol direct
+set policy-options policy-statement IPCLOS_BGP_IMP term loopback then accept
+set policy-options policy-statement IPCLOS_BGP_IMP term default then reject
+set policy-options policy-statement PFE-LB then load-balance per-packet
