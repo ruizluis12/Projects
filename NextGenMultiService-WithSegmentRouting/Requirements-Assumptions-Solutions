@@ -1,0 +1,10 @@
+Requirements
+Provide Bandwith visibility
+Ensure Bandwith from top(R) network follows a specific botton(B) network path
+Avoid traffic getting rerouted on bottom network when link goes down.  Example of this is when you have multiple services on a PE and and you want to utilize a single link but multiple links exist.  If that links goes down, you don't want traffic to reroute to the second link.
+Bandwith On Demand for service
+Be able to utilize existing hardware
+
+Solutions
+Built MPLS Segment Routing over the Bottom Network
+Services are going to use Segment Routing colors for SR-policy
