@@ -6,5 +6,6 @@ Bandwith On Demand for service
 Be able to utilize existing hardware
 
 Solutions
-Built MPLS Segment Routing over the Bottom Network
+Built MPLS Segment Routing over the B Network
 Services are going to use Segment Routing colors for SR-policy
+Utilize Affinity or explicit Path TE for B network to ensure links are only utilize for a specific R service.
