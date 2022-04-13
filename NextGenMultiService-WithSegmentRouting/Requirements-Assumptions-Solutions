@@ -9,3 +9,8 @@ Solutions
 Built MPLS Segment Routing over the B Network
 Services are going to use Segment Routing colors for SR-policy
 Utilize Affinity or explicit Path TE for B network to ensure links are only utilize for a specific R service.
+
+
+
+Info links
+https://networkzblogger.com/2018/06/27/segment-routed-l2vpn-te-cisco-ios-xr/
