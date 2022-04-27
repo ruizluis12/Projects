@@ -1,3 +1,5 @@
+ip prefix-list ALL seq 5 permit 4.4.4.4/32
+!
 segment-routing traffic-eng
  interface GigabitEthernet1
   affinity
