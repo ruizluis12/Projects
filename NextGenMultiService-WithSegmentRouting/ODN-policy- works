@@ -1,0 +1,38 @@
+segment-routing traffic-eng
+ interface GigabitEthernet1
+  affinity
+   name primary
+ interface GigabitEthernet2
+  affinity
+   name secondary
+ !
+ on-demand color 10
+  authorize restrict
+   ipv4 prefix-list ALL
+  candidate-paths
+   preference 1
+    constraints
+     segments
+      dataplane mpls
+     !
+     affinity
+      include-all
+       name primary
+      !
+     !
+    !
+    dynamic
+     pcep
+     metric
+      type igp
+    !
+   !
+  !
+ !
+ pcc
+  pce address 100.100.100.100 source-address 9.9.9.9 preference 100
+ !        
+ affinity-map
+   name primary bit-position 20
+   name red bit-position 0
+   name secondary bit-position 21
