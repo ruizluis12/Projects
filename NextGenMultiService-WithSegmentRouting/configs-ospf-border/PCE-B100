@@ -1,0 +1,165 @@
+hostname PCE-B100
+username cisco
+ group root-lr
+ group cisco-support
+ password 7 1511021F0725
+!
+username admin
+ group root-lr
+ group cisco-support
+ password 7 050A02022842
+!
+username lab
+ group root-lr
+ group cisco-support
+ password 7 020A0559
+!
+pce
+ address ipv4 100.100.100.100
+!
+ipv4 unnumbered mpls traffic-eng Loopback0
+call-home 
+ service active
+ contact smart-licensing
+ profile CiscoTAC-1
+  active
+  destination transport-method http
+ !
+!
+interface Loopback0
+ ipv4 address 100.100.100.100 255.255.255.255
+!
+interface MgmtEth0/RP0/CPU0/0
+ shutdown
+!
+interface GigabitEthernet0/0/0/0
+ ipv4 address 10.4.100.100 255.255.255.0
+!
+interface GigabitEthernet0/0/0/1
+ ipv4 address 10.5.100.100 255.255.255.0
+!
+interface GigabitEthernet0/0/0/2
+ ipv4 address 10.6.100.100 255.255.255.0
+!
+router ospf 1
+ distribute link-state
+ router-id 100.100.100.100
+ segment-routing mpls
+ area 0
+  mpls traffic-eng
+  segment-routing mpls
+  interface Loopback0
+   passive enable
+   prefix-sid absolute 16100
+  !
+  interface GigabitEthernet0/0/0/0
+   network point-to-point
+  !
+  interface GigabitEthernet0/0/0/1
+   network point-to-point
+  !
+  interface GigabitEthernet0/0/0/2
+   network point-to-point
+  !
+ !
+ mpls traffic-eng router-id Loopback0
+!
+router bgp 65000
+ address-family ipv4 unicast
+  network 100.100.100.100/32
+ !
+ address-family vpnv4 unicast
+ !
+ address-family link-state link-state
+ !
+ neighbor 4.4.4.4
+  remote-as 65000
+  update-source Loopback0
+  address-family vpnv4 unicast
+   route-reflector-client
+   soft-reconfiguration inbound
+  !
+  address-family link-state link-state
+   route-reflector-client
+   soft-reconfiguration inbound
+  !
+ !
+ neighbor 5.5.5.5
+  remote-as 65000
+  update-source Loopback0
+  address-family vpnv4 unicast
+   route-reflector-client
+   soft-reconfiguration inbound
+  !
+  address-family link-state link-state
+   route-reflector-client
+   soft-reconfiguration inbound
+  !
+ !
+ neighbor 6.6.6.6
+  remote-as 65000
+  update-source Loopback0
+  address-family vpnv4 unicast
+   route-reflector-client
+   soft-reconfiguration inbound
+  !
+  address-family link-state link-state
+   route-reflector-client
+   soft-reconfiguration inbound
+  !
+ !
+ neighbor 7.7.7.7
+  remote-as 65000
+  update-source Loopback0
+  address-family vpnv4 unicast
+   route-reflector-client
+   soft-reconfiguration inbound
+  !
+  address-family link-state link-state
+   route-reflector-client
+   soft-reconfiguration inbound
+  !
+ !
+ neighbor 8.8.8.8
+  remote-as 65000
+  update-source Loopback0
+  address-family vpnv4 unicast
+   route-reflector-client
+   soft-reconfiguration inbound
+  !
+  address-family link-state link-state
+   route-reflector-client
+   soft-reconfiguration inbound
+  !
+ !
+ neighbor 9.9.9.9
+  remote-as 65000
+  update-source Loopback0
+  address-family vpnv4 unicast
+   route-reflector-client
+   soft-reconfiguration inbound
+  !
+  address-family link-state link-state
+   route-reflector-client
+   soft-reconfiguration inbound
+  !
+ !
+!
+mpls traffic-eng
+ interface GigabitEthernet0/0/0/0
+ !
+ interface GigabitEthernet0/0/0/1
+ !
+ interface GigabitEthernet0/0/0/2
+ !
+!
+segment-routing
+ traffic-eng
+  affinity-map
+   name red bit-position 0
+   name primary bit-position 20
+   name secondary bit-position 21
+  !
+ !
+!
+end
