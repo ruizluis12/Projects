@@ -1,0 +1,88 @@
+Verification of L2 tunnels on B4
+
+B4#sh ip ospf neigh
+
+Neighbor ID     Pri   State           Dead Time   Address         Interface
+7.7.7.7           0   FULL/  -        00:00:32    10.104.107.7    GigabitEthernet10
+7.7.7.7           0   FULL/  -        00:00:31    10.4.7.7        GigabitEthernet9
+5.5.5.5           0   FULL/  -        00:00:37    10.14.15.5      GigabitEthernet8
+6.6.6.6           0   FULL/  -        00:00:33    10.14.16.6      GigabitEthernet7
+100.100.100.100   0   FULL/  -        00:00:39    10.4.100.100    GigabitEthernet4
+6.6.6.6           0   FULL/  -        00:00:34    10.4.6.6        GigabitEthernet2
+5.5.5.5           0   FULL/  -        00:00:39    10.4.5.5        GigabitEthernet1
+
+B4#sh xconnect all
+Legend:    XC ST=Xconnect State  S1=Segment1 State  S2=Segment2 State
+  UP=Up       DN=Down            AD=Admin Down      IA=Inactive
+  SB=Standby  HS=Hot Standby     RV=Recovering      NH=No Hardware
+
+XC ST  Segment 1                         S1 Segment 2                         S2
+------+---------------------------------+--+---------------------------------+--
+UP pri mpls 5.5.5.5:45                   UP   ac Gi6:45(Ethernet)             UP
+UP pri mpls 6.6.6.6:100                  UP   ac Gi3:100(Ethernet)            UP
+
+If we bring down a link of the te tunnel, or red should go down and not reroute over the second link to B6 (G7)
+
+B4#config t
+Enter configuration commands, one per line.  End with CNTL/Z.
+B4(config)#int g2
+B4(config-if)#shut
+B4(config-if)#
+B4(config-if)#
+B4(config-if)#
+*May  4 12:14:05.347: %OSPF-5-ADJCHG: Process 1, Nbr 6.6.6.6 on GigabitEthernet2 from FULL to DOWN, Neighbor Down: Interface down or detached
+*May  4 12:14:06.251: %LINEPROTO-5-UPDOWN: Line protocol on Interface Tunnel1, changed state to down
+*May  4 12:14:07.309: %LINK-5-CHANGED: Interface GigabitEthernet2, changed state to administratively down
+*May  4 12:14:08.310: %LINEPROTO-5-UPDOWN: Line protocol on Interface GigabitEthernet2, changed state to down
+B4(config-if)#
+B4(config-if)#do sh xconnect all
+Legend:    XC ST=Xconnect State  S1=Segment1 State  S2=Segment2 State
+  UP=Up       DN=Down            AD=Admin Down      IA=Inactive
+  SB=Standby  HS=Hot Standby     RV=Recovering      NH=No Hardware
+
+XC ST  Segment 1                         S1 Segment 2                         S2
+------+---------------------------------+--+---------------------------------+--
+UP pri mpls 5.5.5.5:45                   UP   ac Gi6:45(Ethernet)             UP
+DN pri mpls 6.6.6.6:100                  DN   ac Gi3:100(Ethernet)            UP
+
+ON R1 we see our OSPF going down
+
+*May  4 12:14:29.090: %OSPF-5-ADJCHG: Process 1, Nbr 10.1.3.3 on GigabitEthernet1 from FULL to DOWN, Neighbor Down: Dead timer expired
+R1>
+
+R1#ping 10.1.3.3
+Type escape sequence to abort.
+Sending 5, 100-byte ICMP Echos to 10.1.3.3, timeout is 2 seconds:
+.....
+Success rate is 0 percent (0/5)
+
+When we bring the link back up, ospf comes up, L3VPN comes up and Red link comes up
+
+B4(config-if)#no shut
+B4(config-if)#
+*May  4 12:16:49.912: %LINK-3-UPDOWN: Interface GigabitEthernet2, changed state to up
+*May  4 12:16:50.913: %LINEPROTO-5-UPDOWN: Line protocol on Interface GigabitEthernet2, changed state to up
+*May  4 12:16:55.697: %OSPF-5-ADJCHG: Process 1, Nbr 6.6.6.6 on GigabitEthernet2 from LOADING to FULL, Loading Done
+*May  4 12:16:58.289: %LINEPROTO-5-UPDOWN: Line protocol on Interface Tunnel1, changed state to up
+
+B4#sh xconnect all
+Legend:    XC ST=Xconnect State  S1=Segment1 State  S2=Segment2 State
+  UP=Up       DN=Down            AD=Admin Down      IA=Inactive
+  SB=Standby  HS=Hot Standby     RV=Recovering      NH=No Hardware
+
+XC ST  Segment 1                         S1 Segment 2                         S2
+------+---------------------------------+--+---------------------------------+--
+UP pri mpls 5.5.5.5:45                   UP   ac Gi6:45(Ethernet)             UP
+UP pri mpls 6.6.6.6:100                  UP   ac Gi3:100(Ethernet)            UP
+
+
+R1#
+*May  4 12:16:50.285: %OSPF-5-ADJCHG: Process 1, Nbr 10.1.3.3 on GigabitEthernet1 from LOADING to FULL, Loading Done
+R1#
+R1#ping 10.1.3.3
+Type escape sequence to abort.
+Sending 5, 100-byte ICMP Echos to 10.1.3.3, timeout is 2 seconds:
+!!!!!
+Success rate is 100 percent (5/5), round-trip min/avg/max = 5/6/8 ms
+
+
