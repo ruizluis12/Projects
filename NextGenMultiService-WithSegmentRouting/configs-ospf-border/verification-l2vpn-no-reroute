@@ -21,6 +21,49 @@ XC ST  Segment 1                         S1 Segment 2                         S2
 UP pri mpls 5.5.5.5:45                   UP   ac Gi6:45(Ethernet)             UP
 UP pri mpls 6.6.6.6:100                  UP   ac Gi3:100(Ethernet)            UP
 
+
+4#sh mpls traffic-eng tunnels 
+
+P2P TUNNELS/LSPs:
+
+Name: B4_t1                               (Tunnel1) Destination: 6.6.6.6
+  Status:
+    Admin: up         Oper: up     Path: valid       Signalling: connected
+    path option 10, (SEGMENT-ROUTING) type explicit SR-PATH-B6 (Basis for Setup, path weight 1)
+
+  Config Parameters:
+    Bandwidth: 0        kbps (Global)  Priority: 6  6   Affinity: 0x1/0xFFFF
+    Metric Type: TE (default)
+    Path Selection:
+     Protection: any (default)
+    Path-selection Tiebreaker:
+      Global: not set   Tunnel Specific: not set   Effective: min-fill (default)
+    Hop Limit: disabled [ignore: Explicit Path Option with all Strict Hops]
+    Cost Limit: disabled
+    Path-invalidation timeout: 10000 msec (default), Action: Tear
+    AutoRoute: disabled LockDown: disabled Loadshare: 0 [0] bw-based
+    auto-bw: disabled
+    Fault-OAM: disabled, Wrap-Protection: disabled, Wrap-Capable: No
+  Active Path Option Parameters:
+    State: explicit path option 10 is active
+    BandwidthOverride: disabled  LockDown: disabled  Verbatim: disabled
+
+  History:
+    Tunnel:
+      Time since created: 8 days, 16 hours, 56 minutes
+      Time since path change: 9 minutes, 55 seconds
+      Number of LSP IDs (Tun_Instances) used: 93
+    Current LSP: [ID: 93]
+      Uptime: 9 minutes, 55 seconds
+    Prior LSP: [ID: 69]
+      ID: path option unknown
+      Removal Trigger: signalling shutdown
+  Tun_Instance: 93
+  Segment-Routing Path Info (ospf 1  area 0)
+    Segment0[Link]: 10.4.6.4 - 10.4.6.6, Label: 24
+
+	
+	
 If we bring down a link of the te tunnel, or red should go down and not reroute over the second link to B6 (G7)
 
 B4#config t
@@ -84,5 +127,6 @@ Type escape sequence to abort.
 Sending 5, 100-byte ICMP Echos to 10.1.3.3, timeout is 2 seconds:
 !!!!!
 Success rate is 100 percent (5/5), round-trip min/avg/max = 5/6/8 ms
+
 
 
