@@ -281,5 +281,5 @@ Name: BLEED-4.4.4.4 (Color: 10 End-point: 4.4.4.4)
     
     May 16 10:59:21.581: %OSPF-5-ADJCHG: Process 1, Nbr 10.1.3.1 on Tunnel14 from LOADING to FULL, Loading Done
     
-    So why a remote picking 2 sites as hub and not run a full mesh.  As the amount of interconnecivity and network component increases, the complexity also increases.  Not only the number of links increases, but also the possible paths throught the network.  This makes it harder fir betwork desiners to plan traffic patherns and to troubleshoot the network when something goes wrong. Also full mesh is hard to achieve since you require a pysical cables between all the sites, and even if creating a full mesh of overlays the packets needs to 
-    go over a physical path.  Adding the extra control plane complexity might not be ideal as it might not any benefit.  
+    So why a remote picking 2 sites as hub and not run a full mesh.  As the amount of interconnecivity and network component increases, the complexity also increases.  Not only the number of links increases, but also the possible paths throught the network.  This makes it harder for betwork desiners to plan traffic patherns and to troubleshoot the network when something goes wrong. Also full mesh is hard to achieve since you require a pysical cables between all the sites, and even if creating a full mesh of overlays the packets needs to 
+    go over a physical path.  Adding all the extra control plane complexity will come as a cost with no benefit.  
