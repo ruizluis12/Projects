@@ -1,0 +1,285 @@
+B9#sh bgp vpnv4 unicast vrf L3-VPN 10.1.4.0
+BGP routing table entry for 65000:9:10.1.4.0/24, version 33
+Paths: (1 available, best #1, table L3-VPN)
+  Not advertised to any peer
+  Refresh Epoch 1
+  Local, imported path from 65000:4:10.1.4.0/24 (global)
+    4.4.4.4 (metric 2) (via default) from 100.100.100.100 (100.100.100.100)
+      Origin IGP, metric 0, localpref 100, valid, internal, best
+      Extended Community: RT:100:100 Color:10
+      Originator: 4.4.4.4, Cluster list: 100.100.100.100
+      mpls labels in/out nolabel/42
+      binding SID: 17 (color - 10) (state - UP)
+      rx pathid: 0, tx pathid: 0x0
+      Updated on May 12 2022 17:07:44 UTC
+      
+B9#sh ip route 4.4.4.4
+% Network not in table
+B9#sh ip cef 4.4.4.4
+0.0.0.0/0
+  nexthop 10.7.9.7 GigabitEthernet1
+  nexthop 10.8.9.8 GigabitEthernet2
+  
+B9#ping vrf L3-VPN 10.1.4.1  
+Type escape sequence to abort.
+Sending 5, 100-byte ICMP Echos to 10.1.4.1, timeout is 2 seconds:
+!!!!!
+Success rate is 100 percent (5/5), round-trip min/avg/max = 4/7/18 ms
+
+B9#sh segment-routing traffic-eng policy all detail 
+
+Name: BLEED-4.4.4.4 (Color: 10 End-point: 4.4.4.4)
+  Owners : CLI
+  Status:
+    Admin: up, Operational: up for 89:31:19 (since 05-12 17:07:43.643)
+  Candidate-paths:
+    Preference 100 (CLI):
+      Constraints:
+        Affinity:
+          include-all:
+           primary
+      Dynamic (pce 100.100.100.100) (active)
+        Metric Type: TE, Path Accumulated Metric: 1001
+          16007 [Prefix-SID, 7.7.7.7]
+          17 [Adjacency-SID, 10.4.7.7 - 10.4.7.4]
+  Attributes:
+    Binding SID: 17
+      Allocation mode: dynamic
+      State: Programmed
+  IPv6 caps enabled
+  Forwarding-ID: 65536 (0xD)
+  Per owner configs:
+    CLI
+      Binding SID: dynamic
+  Stats:
+    Packets: 90036      Bytes: 13091204
+
+  Event history:
+    Timestamp                   Client                  Event type              Context: Value
+    ---------                   ------                  ----------              -------: -----
+    05-06 18:51:48.271          CLI                     Policy created          Name: CLI
+    05-06 18:51:48.278          CLI                     Set colour              Colour: 10
+    05-06 18:51:48.278          CLI                     Set end point           End-point: 4.4.4.4
+    05-06 18:51:48.283          CLI                     Set dynamic             Path option: dynamic
+    05-06 18:51:48.283          CLI                     Set dynamic pce         Path option: dynamic pce
+    05-06 18:51:51.294          CLI                     BSID allocated          FWD: label 17
+    05-06 18:52:36.812          FH Resolution           Policy state UP         Status: PATH RESOLVED
+    05-06 18:52:36.849          FH Resolution           REOPT triggered         Status: REOPTIMIZED
+    05-12 00:58:17.454          FH Resolution           Policy state DOWN       Status: PATH NOT RESOLVED
+    05-12 00:58:18.176          FH Resolution           Policy state UP         Status: PATH RESOLVED
+    05-12 17:07:40.788          FH Resolution           Policy state DOWN       Status: PATH NOT RESOLVED
+    05-12 17:07:42.097          FH Resolution           Policy state UP         Status: PATH RESOLVED
+    05-12 17:07:43.643          FH Resolution           Policy state DOWN       Status: PATH NOT RESOLVED
+    05-12 17:07:44.203          FH Resolution           Policy state UP         Status: PATH RESOLVED
+
+
+
+Name: BLEED-5-5-5-5 (Color: 10 End-point: 5.5.5.5)
+  Owners : CLI
+  Status:
+    Admin: up, Operational: up for 89:31:19 (since 05-12 17:07:43.618)
+  Candidate-paths:
+    Preference 100 (CLI):
+      Constraints:
+        Affinity:
+          include-all:
+           secondary
+      Dynamic (pce 100.100.100.100) (active)
+        Metric Type: TE, Path Accumulated Metric: 2
+          16008 [Prefix-SID, 8.8.8.8]
+          17 [Adjacency-SID, 10.5.8.8 - 10.5.8.5]
+  Attributes:
+    Binding SID: 18
+      Allocation mode: dynamic
+      State: Programmed
+  IPv6 caps enabled
+  Forwarding-ID: 65537 (0xE)
+  Per owner configs:
+    CLI
+      Binding SID: dynamic
+  Stats:
+    Packets: 88102      Bytes: 12494458
+
+  Event history:
+    Timestamp                   Client                  Event type              Context: Value
+    ---------                   ------                  ----------              -------: -----
+    05-06 18:51:48.283          CLI                     Policy created          Name: CLI
+    05-06 18:51:48.284          CLI                     Set colour              Colour: 10
+    05-06 18:51:48.284          CLI                     Set end point           End-point: 5.5.5.5
+    05-06 18:51:48.288          CLI                     Set dynamic             Path option: dynamic
+    05-06 18:51:48.288          CLI                     Set dynamic pce         Path option: dynamic pce
+    05-06 18:51:51.340          CLI                     BSID allocated          FWD: label 18
+    05-06 18:52:28.299          FH Resolution           Policy state UP         Status: PATH RESOLVED
+    05-06 18:52:28.348          FH Resolution           REOPT triggered         Status: REOPTIMIZED
+    05-12 00:58:18.263          FH Resolution           Policy state DOWN       Status: PATH NOT RESOLVED
+    05-12 00:58:19.003          FH Resolution           Policy state UP         Status: PATH RESOLVED
+    05-12 00:58:33.657          FH Resolution           REOPT triggered         Status: REOPTIMIZED
+    05-12 00:58:36.733          FH Resolution           REOPT triggered         Status: REOPTIMIZED
+    05-12 17:07:41.682          FH Resolution           Policy state DOWN       Status: PATH NOT RESOLVED
+    05-12 17:07:42.446          FH Resolution           Policy state UP         Status: PATH RESOLVED
+    05-12 17:07:43.618          FH Resolution           Policy state DOWN       Status: PATH NOT RESOLVED
+    05-12 17:07:45.183          FH Resolution           Policy state UP         Status: PATH RESOLVED
+          
+On the red
+
+R4#sh ip int brief
+Interface              IP-Address      OK? Method Status                Protocol
+GigabitEthernet1       10.4.9.4        YES NVRAM  up                    up      
+GigabitEthernet2       unassigned      YES NVRAM  administratively down down    
+GigabitEthernet3       unassigned      YES NVRAM  administratively down down    
+GigabitEthernet4       unassigned      YES NVRAM  administratively down down    
+GigabitEthernet5       unassigned      YES NVRAM  administratively down down    
+GigabitEthernet6       unassigned      YES NVRAM  administratively down down    
+GigabitEthernet7       unassigned      YES NVRAM  administratively down down    
+GigabitEthernet8       unassigned      YES NVRAM  administratively down down    
+Loopback0              4.4.4.4         YES NVRAM  up                    up      
+Tunnel14               10.101.104.4    YES NVRAM  up                    up      
+Tunnel24               10.102.102.4    YES NVRAM  up                    up      
+
+Lets bring the primary link down
+
+9(config)#int g1 
+B9(config-if)#shut
+*May 16 10:40:58.358: %OSPF-5-ADJCHG: Process 1, Nbr 7.7.7.7 on GigabitEthernet1 from FULL to DOWN, Neighbor Down: Interface down or detached
+B9(config-if)#
+*May 16 10:41:00.350: %LINK-5-CHANGED: Interface GigabitEthernet1, changed state to administratively down
+*May 16 10:41:01.350: %LINEPROTO-5-UPDOWN: Line protocol on Interface GigabitEthernet1, changed state to down
+
+B9#sh segment-routing traffic-eng policy all detail 
+
+Name: BLEED-4.4.4.4 (Color: 10 End-point: 4.4.4.4)
+  Owners : CLI
+  Status:
+    Admin: up, Operational: down for 00:00:44 (since 05-16 10:40:58.511)
+  Candidate-paths:
+    Preference 100 (CLI):
+      Constraints:
+        Affinity:
+          include-all:
+           primary
+      Dynamic (pce) (inactive)
+        Inactive Reason: PCE no path
+        Metric Type: TE
+  Attributes:
+    Binding SID: 17
+      Allocation mode: dynamic
+      State: Programmed
+  IPv6 caps enabled
+  Forwarding-ID: 65536 (0xD)
+  Per owner configs:
+    CLI
+      Binding SID: dynamic
+  Stats:  
+    Packets: 90051      Bytes: 13093356
+
+  Event history:
+    Timestamp                   Client                  Event type              Context: Value
+    ---------                   ------                  ----------              -------: -----
+    05-06 18:51:48.271          CLI                     Policy created          Name: CLI
+    05-06 18:51:48.278          CLI                     Set colour              Colour: 10
+    05-06 18:51:48.278          CLI                     Set end point           End-point: 4.4.4.4
+    05-06 18:51:48.283          CLI                     Set dynamic             Path option: dynamic
+    05-06 18:51:48.283          CLI                     Set dynamic pce         Path option: dynamic pce
+    05-06 18:51:51.294          CLI                     BSID allocated          FWD: label 17
+    05-06 18:52:36.812          FH Resolution           Policy state UP         Status: PATH RESOLVED
+    05-06 18:52:36.849          FH Resolution           REOPT triggered         Status: REOPTIMIZED
+    05-12 00:58:17.454          FH Resolution           Policy state DOWN       Status: PATH NOT RESOLVED
+    05-12 00:58:18.176          FH Resolution           Policy state UP         Status: PATH RESOLVED
+    05-12 17:07:40.788          FH Resolution           Policy state DOWN       Status: PATH NOT RESOLVED
+    05-12 17:07:42.097          FH Resolution           Policy state UP         Status: PATH RESOLVED
+    05-12 17:07:43.643          FH Resolution           Policy state DOWN       Status: PATH NOT RESOLVED
+    05-12 17:07:44.203          FH Resolution           Policy state UP         Status: PATH RESOLVED
+    05-16 10:40:58.511          FH Resolution           Policy state DOWN       Status: PATH NOT RESOLVED
+
+Red tunnel goes down
+    R4#   
+*May 16 10:41:32.062: %OSPF-5-ADJCHG: Process 1, Nbr 10.1.3.1 on Tunnel14 from FULL to DOWN, Neighbor Down: Dead timer expired
+
+R4#ping 10.1.4.1
+Type escape sequence to abort.
+Sending 5, 100-byte ICMP Echos to 10.1.4.1, timeout is 2 seconds:
+.....
+Success rate is 0 percent (0/5)
+
+B9#sh bgp vpnv4 unicast vrf L3-VPN 10.1.4.0
+BGP routing table entry for 65000:9:10.1.4.0/24, version 47
+Paths: (1 available, best #1, table L3-VPN)
+  Not advertised to any peer
+  Refresh Epoch 1
+  Local, imported path from 65000:4:10.1.4.0/24 (global)
+    4.4.4.4 (metric 2) (via default) from 100.100.100.100 (100.100.100.100)
+      Origin IGP, metric 0, localpref 100, valid, internal, best
+      Extended Community: RT:100:100 Color:10
+      Originator: 4.4.4.4, Cluster list: 100.100.100.100
+      mpls labels in/out nolabel/42
+      binding SID: 17 (color - 10) (state - DOWN)
+      rx pathid: 0, tx pathid: 0x0
+      Updated on May 12 2022 17:07:44 UTC
+      
+B9(config)#int g1
+B9(config-if)#no shut
+B9(config-if)#
+*May 16 10:59:18.618: %LINK-3-UPDOWN: Interface GigabitEthernet1, changed state to up
+*May 16 10:59:19.618: %LINEPROTO-5-UPDOWN: Line protocol on Interface GigabitEthernet1, changed state to up
+*May 16 10:59:20.119: %OSPF-5-ADJCHG: Process 1, Nbr 7.7.7.7 on GigabitEthernet1 from LOADING to FULL, Loading Done
+
+B9#sh segment-routing traffic-eng policy ?
+  all   Show all Policies
+  name  SR Policy Name
+
+B9#sh segment-routing traffic-eng policy all det
+B9#sh segment-routing traffic-eng policy all detail 
+
+Name: BLEED-4.4.4.4 (Color: 10 End-point: 4.4.4.4)
+  Owners : CLI
+  Status:
+    Admin: up, Operational: up for 00:19:02 (since 05-16 10:40:58.511)
+  Candidate-paths:
+    Preference 100 (CLI):
+      Constraints:
+        Affinity:
+          include-all:
+           primary
+      Dynamic (pce 100.100.100.100) (active)
+        Metric Type: TE, Path Accumulated Metric: 1001
+          16007 [Prefix-SID, 7.7.7.7]
+          17 [Adjacency-SID, 10.4.7.7 - 10.4.7.4]
+  Attributes:
+    Binding SID: 17
+      Allocation mode: dynamic
+      State: Programmed
+  IPv6 caps enabled
+  Forwarding-ID: 65536 (0xD)
+  Per owner configs:
+    CLI
+      Binding SID: dynamic
+  Stats:  
+    Packets: 90072      Bytes: 13095640
+          
+  Event history:
+    Timestamp                   Client                  Event type              Context: Value
+    ---------                   ------                  ----------              -------: -----
+    05-06 18:51:48.271          CLI                     Policy created          Name: CLI
+    05-06 18:51:48.278          CLI                     Set colour              Colour: 10
+    05-06 18:51:48.278          CLI                     Set end point           End-point: 4.4.4.4
+    05-06 18:51:48.283          CLI                     Set dynamic             Path option: dynamic
+    05-06 18:51:48.283          CLI                     Set dynamic pce         Path option: dynamic pce
+    05-06 18:51:51.294          CLI                     BSID allocated          FWD: label 17
+    05-06 18:52:36.812          FH Resolution           Policy state UP         Status: PATH RESOLVED
+    05-06 18:52:36.849          FH Resolution           REOPT triggered         Status: REOPTIMIZED
+    05-12 00:58:17.454          FH Resolution           Policy state DOWN       Status: PATH NOT RESOLVED
+    05-12 00:58:18.176          FH Resolution           Policy state UP         Status: PATH RESOLVED
+    05-12 17:07:40.788          FH Resolution           Policy state DOWN       Status: PATH NOT RESOLVED
+    05-12 17:07:42.097          FH Resolution           Policy state UP         Status: PATH RESOLVED
+    05-12 17:07:43.643          FH Resolution           Policy state DOWN       Status: PATH NOT RESOLVED
+    05-12 17:07:44.203          FH Resolution           Policy state UP         Status: PATH RESOLVED
+    05-16 10:40:58.511          FH Resolution           Policy state DOWN       Status: PATH NOT RESOLVED
+    05-16 10:59:21.564          FH Resolution           Policy state UP         Status: PATH RESOLVED
+    05-16 10:59:21.600          FH Resolution           REOPT triggered         Status: REOPTIMIZED
+    05-16 10:59:26.188          FH Resolution           REOPT triggered         Status: REOPTIMIZED
+    05-16 10:59:26.206          FH Resolution           REOPT triggered         Status: REOPTIMIZED
+    
+    May 16 10:59:21.581: %OSPF-5-ADJCHG: Process 1, Nbr 10.1.3.1 on Tunnel14 from LOADING to FULL, Loading Done
+    
+    So why a remote picking 2 sites as hub and not run a full mesh.  As the amount of interconnecivity and network component increases, the complexity also increases.  Not only the number of links increases, but also the possible paths throught the network.  This makes it harder fir betwork desiners to plan traffic patherns and to troubleshoot the network when something goes wrong. Also full mesh is hard to achieve since you require a pysical cables between all the sites, and even if creating a full mesh of overlays the packets needs to 
+    go over a physical path.  Adding the extra control plane complexity might not be ideal as it might not any benefit.  
