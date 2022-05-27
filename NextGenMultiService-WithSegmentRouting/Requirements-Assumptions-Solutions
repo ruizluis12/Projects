@@ -9,7 +9,10 @@ Solutions
 Built MPLS Segment Routing over the B Network
 Services are going to use Segment Routing colors for SR-policy
 Utilize Affinity or explicit Path TE for B network to ensure links are only utilize for a specific R service.
+For Tail TE, you can use PCEP and multiple areas to get the correct path
 
+Another solution is to use regular MPLS and use a differrent area for the links you dont want to use for the L2VPN
+Then for the tail use juniper and TE and utilize Classful Transport Planes with no failover LSP to reach the remote PE
 
 
 Info links
