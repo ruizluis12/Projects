@@ -14,6 +14,9 @@ For Tail TE, you can use PCEP and multiple areas to get the correct path
 Another solution is to use regular MPLS and use a differrent area for the links you dont want to use for the L2VPN
 Then for the tail use juniper and TE and utilize Classful Transport Planes with no failover LSP to reach the remote PE
 
+With the feature traffic stearing by dropping invalid paths we can deploy segment routing on one area (no need for multiple areas)
+https://www.cisco.com/c/en/us/td/docs/ios-xml/ios/seg_routing/configuration/xe-17/segrt-xe-17-book/m_traffic-steering-dropping-invalid-paths.pdf
+
 
 Info links
 https://networkzblogger.com/2018/06/27/segment-routed-l2vpn-te-cisco-ios-xr/
