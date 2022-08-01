@@ -8,11 +8,10 @@ sudo docker commit 78026aea9752 ruizluis12/ruizluis_ubuntu
 
 Pushing images
 https://www.youtube.com/watch?v=Q6YDB3a_whM
+example 
+sudo docker login --username lruiz
+sudo docker push ruizluis12/ruizluis_ubuntu
 
-To run image
-
-sudo docker run ruizluis12/ruizluis_ubuntu
-
-To connect to the image
+To run image and to connect to the image
  sudo docker run -it --entrypoint "/bin/bash" ruizluis12/ruizluis_ubuntu
 
