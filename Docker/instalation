@@ -11,5 +11,5 @@ To run image
 sudo docker run ruizluis12/ruizluis_ubuntu
 
 To connect to the image
-sudo docker 
+ sudo docker run -it --entrypoint "/bin/bash" ruizluis12/ruizluis_ubuntu
 
