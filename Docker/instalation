@@ -3,6 +3,9 @@ https://docs.docker.com/engine/install/ubuntu/
 Commiting images
 https://www.geeksforgeeks.org/creating-an-alpine-docker-container/
 
+example
+sudo docker commit 78026aea9752 ruizluis12/ruizluis_ubuntu
+
 Pushing images
 https://www.youtube.com/watch?v=Q6YDB3a_whM
 
