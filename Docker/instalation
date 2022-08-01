@@ -35,6 +35,7 @@ ansible
 netmiko
 napalm
 nornir
+nano
 
 Add the following on the docketfile
 
