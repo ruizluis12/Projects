@@ -5,3 +5,11 @@ https://www.geeksforgeeks.org/creating-an-alpine-docker-container/
 
 Pushing images
 https://www.youtube.com/watch?v=Q6YDB3a_whM
+
+To run image
+
+sudo docker run ruizluis12/ruizluis_ubuntu
+
+To connect to the image
+sudo docker 
+
