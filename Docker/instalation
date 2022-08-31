@@ -1,5 +1,7 @@
 https://docs.docker.com/engine/install/ubuntu/
 
+docker ps -a
+
 Commiting images
 https://www.geeksforgeeks.org/creating-an-alpine-docker-container/
 
