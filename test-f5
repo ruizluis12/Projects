@@ -1,484 +1,74 @@
-Grep for the time frame of the request
-
-[lruiz-adm@firelord:Active:Changes Pending] log # grep -i "Oct 25 17:22" /var/log/apm.1 | more
-Oct 25 17:22:01 firelord.iad.gov notice tmm[22880]: 01490521:5: /Common/iad.gov_access_profile:Common:18b99ba0: Session statistics - bytes in: 2493, bytes out: 3934
-Oct 25 17:22:02 firelord.iad.gov notice tmm[22880]: 01490521:5: /Common/iad.gov_access_profile:Common:d028d313: Session statistics - bytes in: 0, bytes out: 0
-Oct 25 17:22:03 firelord.iad.gov notice tmm[22880]: 01490506:5: /Common/iad.gov_access_profile:Common:c586a48e: Received User-Agent header: Mozilla%2F5.0%20(Windows%20NT%2010.0%3B%20Win
-64%3B%20x64)%20AppleWebKit%2F537.36%20(KHTML%2C%20like%20Gecko)%20Chrome%2F106.0.0.0%20Safari%2F537.36%20Edg%2F106.0.1370.52.
-Oct 25 17:22:03 firelord.iad.gov notice tmm[22880]: 01490500:5: /Common/iad.gov_access_profile:Common:c586a48e: New session from client IP 136.226.12.205 (ST=Illinois/CC=US/C=NA) at VIP
- 172.30.20.115 Listener /Common/vs_Ufx05_Prod_Secure (Reputation=Unknown)
-Oct 25 17:22:03 firelord.iad.gov info apmd[15644]: 01490006:6: /Common/iad.gov_access_profile:Common:c586a48e: Following rule 'fallback' from item 'Start' to item 'AnonUserid or Cert'
-Oct 25 17:22:03 firelord.iad.gov info apmd[15644]: 01490006:6: /Common/iad.gov_access_profile:Common:c586a48e: Following rule 'fallback' from item 'AnonUserid or Cert' to item 'AnonUser
-id'
-Oct 25 17:22:03 firelord.iad.gov info apmd[15644]: 01490006:6: /Common/iad.gov_access_profile:Common:c586a48e: Following rule 'Macro Call' from item 'AnonUserid' to item 'In'
-Oct 25 17:22:03 firelord.iad.gov info apmd[15644]: 01490006:6: /Common/iad.gov_access_profile:Common:c586a48e: Following rule 'fallback' from item 'In' to item 'AnonUserid iRule Event'
-Oct 25 17:22:03 firelord.iad.gov info apmd[15644]: 01490004:6: /Common/iad.gov_access_profile:Common:c586a48e: Executed agent '/Common/anonuserid_act_irule_event_ag', return value 3 ('N
-eed User input')
-Oct 25 17:22:03 firelord.iad.gov info apmd[15644]: 01490007:6: /Common/iad.gov_access_profile:Common:c586a48e: Session variable 'session.custom_event.id' set to 'PUBLIC'
-Oct 25 17:22:03 firelord.iad.gov info apmd[15644]: 01490007:6: /Common/iad.gov_access_profile:Common:c586a48e: Session variable 'session.policy.result.policy_path' set to ' | Start (fal
-lback) | AnonUserid or Cert (fallback) | {ENTER MACRO} AnonUserid | In (fallback)'
-Oct 25 17:22:03 firelord.iad.gov info apmd[15644]: 01490004:6: /Common/iad.gov_access_profile:Common:c586a48e: Executed agent '/Common/anonuserid_act_irule_event_ag', return value 0 ('E
-xecution Done')
-Oct 25 17:22:03 firelord.iad.gov notice apmd[15644]: 01490115:5: /Common/iad.gov_access_profile:Common:c586a48e: Following rule 'fallback' from item 'AnonUserid iRule Event' to terminal
-out 'Out'
-Oct 25 17:22:03 firelord.iad.gov notice apmd[15644]: 01490005:5: /Common/iad.gov_access_profile:Common:c586a48e: Following rule 'Out' from item 'AnonUserid' to ending 'Allow'
-Oct 25 17:22:03 firelord.iad.gov notice apmd[15644]: 01490102:5: /Common/iad.gov_access_profile:Common:c586a48e: Access policy result: LTM+APM_Mode
-Oct 25 17:22:03 firelord.iad.gov info apmd[15644]: 01490004:6: /Common/iad.gov_access_profile:Common:c586a48e: Executed agent '/Common/iad.gov_access_profile_end_allow_ag', return value
- 0 ('Execution Done')
-Oct 25 17:22:03 firelord.iad.gov notice apmd[15644]: 01490000:5: AccessPolicyProcessor/AccessPolicy.cpp func: "execute()" line: 830 Msg: policy_path:  | Start (fallback) | AnonUserid or
- Cert (fallback) | {ENTER MACRO} AnonUserid | In (fallback) | AnonUserid iRule Event (fallback) | Out | {EXIT MACRO} AnonUserid (Out) | Allow |
-Oct 25 17:22:03 firelord.iad.gov notice apmd[15644]: 01490248:5: /Common/iad.gov_access_profile:Common:c586a48e: Received client info - Hostname:  Type: Mozilla Version: 5 Platform: Win
-10 CPU: x64 UI Mode: Full Javascript Support: 1 ActiveX Support: 0 Plugin Support: 0
-Oct 25 17:22:03 firelord.iad.gov notice apmd[15644]: 014902b8:5: /Common/iad.gov_access_profile:Common:c586a48e:  | Start (fallback) | AnonUserid or Cert (fallback) | {ENTER MACRO} Anon
-Userid | In (fallback) | AnonUserid iRule Event (fallback) | Out | {EXIT MACRO} AnonUserid (Out) | Allow |  Ending is: Allow
-Oct 25 17:22:03 firelord.iad.gov info apmd[15644]: 01490007:6: /Common/iad.gov_access_profile:Common:c586a48e: Session variable 'session.assigned.uuid' set to 'tmm.uuid./Common/iad.gov_
-access_profile.'
-Oct 25 17:22:03 firelord.iad.gov info apmd[15644]: 01490007:6: /Common/iad.gov_access_profile:Common:c586a48e: Session variable 'session.assigned.webtopsectionsresources' set to ''
-Oct 25 17:22:03 firelord.iad.gov info apmd[15644]: 01490007:6: /Common/iad.gov_access_profile:Common:c586a48e: Session variable 'session.logon.page.errorcode' set to '0'
-Oct 25 17:22:03 firelord.iad.gov info apmd[15644]: 01490007:6: /Common/iad.gov_access_profile:Common:c586a48e: Session variable 'session.policy.result' set to 'allow'
-Oct 25 17:22:03 firelord.iad.gov info apmd[15644]: 01490007:6: /Common/iad.gov_access_profile:Common:c586a48e: Session variable 'session.policy.result.policy_path' set to ' | Start (fal
-lback) | AnonUserid or Cert (fallback) | {ENTER MACRO} AnonUserid | In (fallback) | AnonUserid iRule Event (fallback) | Out | {EXIT MACRO} AnonUserid (Out) | Allow | '
-Oct 25 17:22:04 firelord.iad.gov notice tmm1[22880]: 01490506:5: /Common/iad.gov_access_profile:Common:35104dfa: Received User-Agent header: Mozilla%2F5.0%20(Windows%20NT%206.1%3B%20WOW
-64%3B%20Trident%2F7.0%3B%20rv%3A11.0)%20like%20Gecko.
-Oct 25 17:22:04 firelord.iad.gov notice tmm1[22880]: 01490500:5: /Common/iad.gov_access_profile:Common:35104dfa: New session from client IP 134.209.121.45 (ST=New Jersey/CC=US/C=NA) at
-VIP 172.30.20.115 Listener /Common/vs_Ufx05_Prod_Secure (Reputation=Unknown)
-Oct 25 17:22:04 firelord.iad.gov notice tmm1[22880]: 01490502:5: /Common/iad.gov_access_profile:Common:c611084c: Session deleted due to user inactivity.
-Oct 25 17:22:04 firelord.iad.gov notice tmm[22880]: 01490502:5: /Common/iad.gov_access_profile:Common:6446085f: Session deleted due to user inactivity.
-Oct 25 17:22:09 firelord.iad.gov notice tmm[22880]: 01490506:5: /Common/iad.gov_access_profile:Common:47c82ee5: Received User-Agent header: Mozilla%2F5.0%20(Windows%20NT%2010.0%3B%20WOW
-64)%20AppleWebKit%2F537.36%20(KHTML%2C%20like%20Gecko)%20Chrome%2F106.0.0.0%20Safari%2F537.36.
-Oct 25 17:22:09 firelord.iad.gov notice tmm[22880]: 01490500:5: /Common/iad.gov_access_profile:Common:47c82ee5: New session from client IP 205.56.181.195 (ST=Virginia/CC=US/C=NA) at VIP
- 172.30.20.115 Listener /Common/vs_Ufx05_Prod_Secure (Reputation=Unknown)
-Oct 25 17:22:10 firelord.iad.gov info apmd[15644]: 01490006:6: /Common/iad.gov_access_profile:Common:47c82ee5: Following rule 'fallback' from item 'Start' to item 'AnonUserid or Cert'
-Oct 25 17:22:10 firelord.iad.gov info apmd[15644]: 01490006:6: /Common/iad.gov_access_profile:Common:47c82ee5: Following rule 'fallback' from item 'AnonUserid or Cert' to item 'AnonUser
-id'
-Oct 25 17:22:10 firelord.iad.gov info apmd[15644]: 01490006:6: /Common/iad.gov_access_profile:Common:47c82ee5: Following rule 'Macro Call' from item 'AnonUserid' to item 'In'
-Oct 25 17:22:10 firelord.iad.gov info apmd[15644]: 01490006:6: /Common/iad.gov_access_profile:Common:47c82ee5: Following rule 'fallback' from item 'In' to item 'AnonUserid iRule Event'
-Oct 25 17:22:10 firelord.iad.gov info apmd[15644]: 01490004:6: /Common/iad.gov_access_profile:Common:47c82ee5: Executed agent '/Common/anonuserid_act_irule_event_ag', return value 3 ('N
-eed User input')
-Oct 25 17:22:10 firelord.iad.gov info apmd[15644]: 01490007:6: /Common/iad.gov_access_profile:Common:47c82ee5: Session variable 'session.custom_event.id' set to 'PUBLIC'
-Oct 25 17:22:10 firelord.iad.gov info apmd[15644]: 01490007:6: /Common/iad.gov_access_profile:Common:47c82ee5: Session variable 'session.policy.result.policy_path' set to ' | Start (fal
-lback) | AnonUserid or Cert (fallback) | {ENTER MACRO} AnonUserid | In (fallback)'
-Oct 25 17:22:10 firelord.iad.gov info apmd[15644]: 01490004:6: /Common/iad.gov_access_profile:Common:47c82ee5: Executed agent '/Common/anonuserid_act_irule_event_ag', return value 0 ('E
-xecution Done')
-Oct 25 17:22:10 firelord.iad.gov notice apmd[15644]: 01490115:5: /Common/iad.gov_access_profile:Common:47c82ee5: Following rule 'fallback' from item 'AnonUserid iRule Event' to terminal
-out 'Out'
-Oct 25 17:22:10 firelord.iad.gov notice apmd[15644]: 01490005:5: /Common/iad.gov_access_profile:Common:47c82ee5: Following rule 'Out' from item 'AnonUserid' to ending 'Allow'
-Oct 25 17:22:10 firelord.iad.gov notice apmd[15644]: 01490102:5: /Common/iad.gov_access_profile:Common:47c82ee5: Access policy result: LTM+APM_Mode
-Oct 25 17:22:10 firelord.iad.gov info apmd[15644]: 01490004:6: /Common/iad.gov_access_profile:Common:47c82ee5: Executed agent '/Common/iad.gov_access_profile_end_allow_ag', return value
- 0 ('Execution Done')
-Oct 25 17:22:10 firelord.iad.gov notice apmd[15644]: 01490248:5: /Common/iad.gov_access_profile:Common:47c82ee5: Received client info - Hostname:  Type: Mozilla Version: 5 Platform: Win
-10 CPU: WOW64 UI Mode: Full Javascript Support: 1 ActiveX Support: 0 Plugin Support: 0
-Oct 25 17:22:10 firelord.iad.gov notice apmd[15644]: 014902b8:5: /Common/iad.gov_access_profile:Common:47c82ee5:  | Start (fallback) | AnonUserid or Cert (fallback) | {ENTER MACRO} Anon
-Userid | In (fallback) | AnonUserid iRule Event (fallback) | Out | {EXIT MACRO} AnonUserid (Out) | Allow |  Ending is: Allow
-Oct 25 17:22:10 firelord.iad.gov info apmd[15644]: 01490007:6: /Common/iad.gov_access_profile:Common:47c82ee5: Session variable 'session.assigned.uuid' set to 'tmm.uuid./Common/iad.gov_
-access_profile.'
-Oct 25 17:22:10 firelord.iad.gov info apmd[15644]: 01490007:6: /Common/iad.gov_access_profile:Common:47c82ee5: Session variable 'session.assigned.webtopsectionsresources' set to ''
-Oct 25 17:22:10 firelord.iad.gov info apmd[15644]: 01490007:6: /Common/iad.gov_access_profile:Common:47c82ee5: Session variable 'session.logon.page.errorcode' set to '0'
-Oct 25 17:22:10 firelord.iad.gov info apmd[15644]: 01490007:6: /Common/iad.gov_access_profile:Common:47c82ee5: Session variable 'session.policy.result' set to 'allow'
-Oct 25 17:22:10 firelord.iad.gov info apmd[15644]: 01490007:6: /Common/iad.gov_access_profile:Common:47c82ee5: Session variable 'session.policy.result.policy_path' set to ' | Start (fal
-lback) | AnonUserid or Cert (fallback) | {ENTER MACRO} AnonUserid | In (fallback) | AnonUserid iRule Event (fallback) | Out | {EXIT MACRO} AnonUserid (Out) | Allow | '
-Oct 25 17:22:10 firelord.iad.gov notice apmd[15644]: 01490000:5: AccessPolicyProcessor/AccessPolicy.cpp func: "execute()" line: 830 Msg: policy_path:  | Start (fallback) | AnonUserid or
- Cert (fallback) | {ENTER MACRO} AnonUserid | In (fallback) | AnonUserid iRule Event (fallback) | Out | {EXIT MACRO} AnonUserid (Out) | Allow |
-Oct 25 17:22:12 firelord.iad.gov notice tmm1[22880]: 01490506:5: /Common/iad.gov_access_profile:Common:bb2d65c5: Received User-Agent header: GGG.
-Oct 25 17:22:12 firelord.iad.gov notice tmm1[22880]: 01490500:5: /Common/iad.gov_access_profile:Common:bb2d65c5: New session from client IP 147.182.241.248 (ST=California/CC=US/C=NA) at
- VIP 172.30.20.115 Listener /Common/vs_Ufx05_Prod_Secure (Reputation=Unknown)
-Oct 25 17:22:13 firelord.iad.gov notice tmm[22880]: 01490521:5: /Common/iad.gov_access_profile:Common:9246fc73: Session statistics - bytes in: 52506, bytes out: 5868271
-Oct 25 17:22:15 firelord.iad.gov notice tmm[22880]: 01490506:5: /Common/iad.gov_access_profile:Common:e8ecc23a: Received User-Agent header: Mozilla%2F5.0%20(Windows%20NT%2010.0%3B%20Win
-64%3B%20x64)%20AppleWebKit%2F537.36%20(KHTML%2C%20like%20Gecko)%20Chrome%2F106.0.0.0%20Safari%2F537.36%20Edg%2F106.0.1370.47.
-Oct 25 17:22:15 firelord.iad.gov notice tmm[22880]: 01490500:5: /Common/iad.gov_access_profile:Common:e8ecc23a: New session from client IP 138.163.128.43 (ST=Hawaii/CC=US/C=NA) at VIP 1
-72.30.20.115 Listener /Common/vs_Ufx05_Prod_Secure (Reputation=Unknown)
-Oct 25 17:22:15 firelord.iad.gov info apmd[15644]: 01490006:6: /Common/iad.gov_access_profile:Common:e8ecc23a: Following rule 'fallback' from item 'Start' to item 'AnonUserid or Cert'
-Oct 25 17:22:15 firelord.iad.gov info apmd[15644]: 01490006:6: /Common/iad.gov_access_profile:Common:e8ecc23a: Following rule 'fallback' from item 'AnonUserid or Cert' to item 'AnonUser
-id'
-Oct 25 17:22:15 firelord.iad.gov info apmd[15644]: 01490006:6: /Common/iad.gov_access_profile:Common:e8ecc23a: Following rule 'Macro Call' from item 'AnonUserid' to item 'In'
-Oct 25 17:22:15 firelord.iad.gov info apmd[15644]: 01490006:6: /Common/iad.gov_access_profile:Common:e8ecc23a: Following rule 'fallback' from item 'In' to item 'AnonUserid iRule Event'
-Oct 25 17:22:15 firelord.iad.gov info apmd[15644]: 01490004:6: /Common/iad.gov_access_profile:Common:e8ecc23a: Executed agent '/Common/anonuserid_act_irule_event_ag', return value 3 ('N
-eed User input')
-Oct 25 17:22:15 firelord.iad.gov info apmd[15644]: 01490007:6: /Common/iad.gov_access_profile:Common:e8ecc23a: Session variable 'session.custom_event.id' set to 'PUBLIC'
-Oct 25 17:22:15 firelord.iad.gov info apmd[15644]: 01490007:6: /Common/iad.gov_access_profile:Common:e8ecc23a: Session variable 'session.policy.result.policy_path' set to ' | Start (fal
-lback) | AnonUserid or Cert (fallback) | {ENTER MACRO} AnonUserid | In (fallback)'
-Oct 25 17:22:15 firelord.iad.gov info apmd[15644]: 01490004:6: /Common/iad.gov_access_profile:Common:e8ecc23a: Executed agent '/Common/anonuserid_act_irule_event_ag', return value 0 ('E
-xecution Done')
-Oct 25 17:22:15 firelord.iad.gov notice apmd[15644]: 01490115:5: /Common/iad.gov_access_profile:Common:e8ecc23a: Following rule 'fallback' from item 'AnonUserid iRule Event' to terminal
-out 'Out'
-Oct 25 17:22:15 firelord.iad.gov notice apmd[15644]: 01490005:5: /Common/iad.gov_access_profile:Common:e8ecc23a: Following rule 'Out' from item 'AnonUserid' to ending 'Allow'
-Oct 25 17:22:15 firelord.iad.gov notice apmd[15644]: 01490102:5: /Common/iad.gov_access_profile:Common:e8ecc23a: Access policy result: LTM+APM_Mode
-Oct 25 17:22:15 firelord.iad.gov info apmd[15644]: 01490004:6: /Common/iad.gov_access_profile:Common:e8ecc23a: Executed agent '/Common/iad.gov_access_profile_end_allow_ag', return value
- 0 ('Execution Done')
-Oct 25 17:22:15 firelord.iad.gov notice apmd[15644]: 01490248:5: /Common/iad.gov_access_profile:Common:e8ecc23a: Received client info - Hostname:  Type: Mozilla Version: 5 Platform: Win
-10 CPU: x64 UI Mode: Full Javascript Support: 1 ActiveX Support: 0 Plugin Support: 0
-Oct 25 17:22:15 firelord.iad.gov notice apmd[15644]: 014902b8:5: /Common/iad.gov_access_profile:Common:e8ecc23a:  | Start (fallback) | AnonUserid or Cert (fallback) | {ENTER MACRO} Anon
-Userid | In (fallback) | AnonUserid iRule Event (fallback) | Out | {EXIT MACRO} AnonUserid (Out) | Allow |  Ending is: Allow
-Oct 25 17:22:15 firelord.iad.gov info apmd[15644]: 01490007:6: /Common/iad.gov_access_profile:Common:e8ecc23a: Session variable 'session.assigned.uuid' set to 'tmm.uuid./Common/iad.gov_
-access_profile.'
-Oct 25 17:22:15 firelord.iad.gov info apmd[15644]: 01490007:6: /Common/iad.gov_access_profile:Common:e8ecc23a: Session variable 'session.assigned.webtopsectionsresources' set to ''
-Oct 25 17:22:15 firelord.iad.gov info apmd[15644]: 01490007:6: /Common/iad.gov_access_profile:Common:e8ecc23a: Session variable 'session.logon.page.errorcode' set to '0'
-Oct 25 17:22:15 firelord.iad.gov info apmd[15644]: 01490007:6: /Common/iad.gov_access_profile:Common:e8ecc23a: Session variable 'session.policy.result' set to 'allow'
-Oct 25 17:22:15 firelord.iad.gov info apmd[15644]: 01490007:6: /Common/iad.gov_access_profile:Common:e8ecc23a: Session variable 'session.policy.result.policy_path' set to ' | Start (fal
-lback) | AnonUserid or Cert (fallback) | {ENTER MACRO} AnonUserid | In (fallback) | AnonUserid iRule Event (fallback) | Out | {EXIT MACRO} AnonUserid (Out) | Allow | '
-Oct 25 17:22:15 firelord.iad.gov notice apmd[15644]: 01490000:5: AccessPolicyProcessor/AccessPolicy.cpp func: "execute()" line: 830 Msg: policy_path:  | Start (fallback) | AnonUserid or
- Cert (fallback) | {ENTER MACRO} AnonUserid | In (fallback) | AnonUserid iRule Event (fallback) | Out | {EXIT MACRO} AnonUserid (Out) | Allow |
-Oct 25 17:22:21 firelord.iad.gov notice tmm[22880]: 01490521:5: /Common/iad.gov_access_profile:Common:5af89206: Session statistics - bytes in: 0, bytes out: 0
-Oct 25 17:22:26 firelord.iad.gov notice tmm[22880]: 01490502:5: /Common/iad.gov_access_profile:Common:cc780823: Session deleted due to user inactivity.
-Oct 25 17:22:26 firelord.iad.gov notice tmm[22880]: 01490520:5: /Common/iad.gov_access_profile:Common:e8ecc23a: Session deleted due to admin initiated termination.
-Oct 25 17:22:26 firelord.iad.gov notice tmm[22880]: 01490520:5: /Common/iad.gov_access_profile:Common:47c82ee5: Session deleted due to admin initiated termination.
-Oct 25 17:22:27 firelord.iad.gov notice tmm[22880]: 01490506:5: /Common/iad.gov_access_profile:Common:1812d7db: Received User-Agent header: Mozilla%2F5.0%20(Windows%20NT%2010.0%3B%20Win
-64%3B%20x64)%20AppleWebKit%2F537.36%20(KHTML%2C%20like%20Gecko)%20Chrome%2F106.0.0.0%20Safari%2F537.36%20Edg%2F106.0.1370.47.
-Oct 25 17:22:27 firelord.iad.gov notice tmm[22880]: 01490500:5: /Common/iad.gov_access_profile:Common:1812d7db: New session from client IP 138.163.128.43 (ST=Hawaii/CC=US/C=NA) at VIP 1
-72.30.20.115 Listener /Common/vs_Ufx05_Prod_Secure (Reputation=Unknown)
-Oct 25 17:22:27 firelord.iad.gov info apmd[15644]: 01490006:6: /Common/iad.gov_access_profile:Common:1812d7db: Following rule 'fallback' from item 'Start' to item 'AnonUserid or Cert'
-Oct 25 17:22:27 firelord.iad.gov info apmd[15644]: 01490006:6: /Common/iad.gov_access_profile:Common:1812d7db: Following rule 'Cert' from item 'AnonUserid or Cert' to item 'Cert Authent
-ication'
-Oct 25 17:22:27 firelord.iad.gov info apmd[15644]: 01490006:6: /Common/iad.gov_access_profile:Common:1812d7db: Following rule 'Macro Call' from item 'Cert Authentication' to item 'In'
-Oct 25 17:22:27 firelord.iad.gov info apmd[15644]: 01490006:6: /Common/iad.gov_access_profile:Common:1812d7db: Following rule 'fallback' from item 'In' to item 'On-Demand Cert Auth'
-Oct 25 17:22:27 firelord.iad.gov info apmd[15644]: 01490004:6: /Common/iad.gov_access_profile:Common:1812d7db: Executed agent '/Common/cert_authentication_act_ondemand_cert_auth_1_ag',
-return value 3 ('Need User input')
-Oct 25 17:22:27 firelord.iad.gov info apmd[15644]: 01490007:6: /Common/iad.gov_access_profile:Common:1812d7db: Session variable 'session.clientcert.ssl_rehandshake_pending' set to '2'
-Oct 25 17:22:27 firelord.iad.gov info apmd[15644]: 01490007:6: /Common/iad.gov_access_profile:Common:1812d7db: Session variable 'session.policy.result.policy_path' set to ' | Start (fal
-lback) | AnonUserid or Cert (Cert) | {ENTER MACRO} Cert Authentication | In (fallback)'
-Oct 25 17:22:27 firelord.iad.gov info apmd[15644]: 01490007:6: /Common/iad.gov_access_profile:Common:1812d7db: Session variable 'session.ssl.cert.exist' set to '0'
-Oct 25 17:22:27 firelord.iad.gov info apmd[15644]: 01490007:6: /Common/iad.gov_access_profile:Common:1812d7db: Session variable 'session.ssl.cert.valid' set to '1'
-Oct 25 17:22:27 firelord.iad.gov notice tmm[22880]: 01490506:5: /Common/iad.gov_access_profile:Common:9fe5ecc0: Received User-Agent header: Mozilla%2F5.0%20(Windows%20NT%2010.0%3B%20WOW
-64)%20AppleWebKit%2F537.36%20(KHTML%2C%20like%20Gecko)%20Chrome%2F106.0.0.0%20Safari%2F537.36.
-Oct 25 17:22:27 firelord.iad.gov notice tmm[22880]: 01490500:5: /Common/iad.gov_access_profile:Common:9fe5ecc0: New session from client IP 205.56.181.195 (ST=Virginia/CC=US/C=NA) at VIP
- 172.30.20.115 Listener /Common/vs_Ufx05_Prod_Secure (Reputation=Unknown)
-Oct 25 17:22:28 firelord.iad.gov info apmd[15644]: 01490006:6: /Common/iad.gov_access_profile:Common:9fe5ecc0: Following rule 'fallback' from item 'Start' to item 'AnonUserid or Cert'
-Oct 25 17:22:28 firelord.iad.gov info apmd[15644]: 01490006:6: /Common/iad.gov_access_profile:Common:9fe5ecc0: Following rule 'Cert' from item 'AnonUserid or Cert' to item 'Cert Authent
-ication'
-Oct 25 17:22:28 firelord.iad.gov info apmd[15644]: 01490006:6: /Common/iad.gov_access_profile:Common:9fe5ecc0: Following rule 'Macro Call' from item 'Cert Authentication' to item 'In'
-Oct 25 17:22:28 firelord.iad.gov info apmd[15644]: 01490006:6: /Common/iad.gov_access_profile:Common:9fe5ecc0: Following rule 'fallback' from item 'In' to item 'On-Demand Cert Auth'
-Oct 25 17:22:28 firelord.iad.gov info apmd[15644]: 01490004:6: /Common/iad.gov_access_profile:Common:9fe5ecc0: Executed agent '/Common/cert_authentication_act_ondemand_cert_auth_1_ag',
-return value 3 ('Need User input')
-Oct 25 17:22:28 firelord.iad.gov info apmd[15644]: 01490007:6: /Common/iad.gov_access_profile:Common:9fe5ecc0: Session variable 'session.clientcert.ssl_rehandshake_pending' set to '2'
-Oct 25 17:22:28 firelord.iad.gov info apmd[15644]: 01490007:6: /Common/iad.gov_access_profile:Common:9fe5ecc0: Session variable 'session.policy.result.policy_path' set to ' | Start (fal
-lback) | AnonUserid or Cert (Cert) | {ENTER MACRO} Cert Authentication | In (fallback)'
-Oct 25 17:22:28 firelord.iad.gov info apmd[15644]: 01490007:6: /Common/iad.gov_access_profile:Common:9fe5ecc0: Session variable 'session.ssl.cert.exist' set to '0'
-Oct 25 17:22:28 firelord.iad.gov info apmd[15644]: 01490007:6: /Common/iad.gov_access_profile:Common:9fe5ecc0: Session variable 'session.ssl.cert.valid' set to '1'
-Oct 25 17:22:33 firelord.iad.gov info apmd[15644]: 01490004:6: /Common/iad.gov_access_profile:Common:1812d7db: Executed agent '/Common/cert_authentication_act_ondemand_cert_auth_1_ag',
-return value 3 ('Need User input')
-Oct 25 17:22:33 firelord.iad.gov info apmd[15644]: 01490007:6: /Common/iad.gov_access_profile:Common:1812d7db: Session variable 'session.clientcert.ssl_agentnonce' set to 'IcGQWxFDm7H7i
-9Hf'
-Oct 25 17:22:33 firelord.iad.gov info apmd[15644]: 01490007:6: /Common/iad.gov_access_profile:Common:1812d7db: Session variable 'session.clientcert.ssl_rehandshake_pending' set to '0'
-Oct 25 17:22:33 firelord.iad.gov info apmd[15644]: 01490007:6: /Common/iad.gov_access_profile:Common:1812d7db: Session variable 'session.policy.result.policy_path' set to ' | Start (fal
-lback) | AnonUserid or Cert (Cert) | {ENTER MACRO} Cert Authentication | In (fallback)'
-Oct 25 17:22:33 firelord.iad.gov info apmd[15644]: 01490007:6: /Common/iad.gov_access_profile:Common:1812d7db: Session variable 'session.ssl.cert.certissuer' set to '-----BEGIN CERTIFIC
-ATE----- MIIEuTCCA6GgAwIBAgICBUowDQYJKoZIhvcNAQELBQAwWzELMAkGA1UEBhMCVVMx GDAWBgNVBAoTD1UuUy4gR292ZXJubWVudDEMMAoGA1UECxMDRG9EMQwwCgYDVQQL EwNQS0kxFjAUBgNVBAMTDURvRCBSb290IENBIDMwHhcNMj
-EwNjAxMTQwNzMxWhcN MjcwNjAyMTQwNzMxWjBaMQswCQYDVQQGEwJVUzEYMBYGA1UEChMPVS5TLiBHb3Zl cm5tZW50MQwwCgYDVQQLEwNEb0QxDDAKBgNVBAsTA1BLSTEVMBMGA1UEAxMMRE9E IElEIENBLTYyMIIBIjANBgkqhkiG9w0BAQEF
-AAOCAQ8AMIIBCgKCAQEArwNbqJeQ +d89t/E7vLSYF7ivkWMG6g8d0y7EbV7yd8r8suoNsfF/aKeApZbwumJ+ja4pbggt OqLolW/GyyJdAzhtEBOIBXMK4CEAcTTrAX40xKiKCFoY5X/ss0jiOwVDptHmvQeC UlG0oAR5/tgkGOpRdjBdYxEWkX
-IkQxE1mPpQZ56Vmbtr9onsnKjTr1ufmJaaquPr M3eXnwU8KOJmdpgO1sSLsIxy8JFedyrqO1TuZw6riMMOuK6P1XW6IpMGiu8+k0tf Gk/tL4yI3p17Ney+oZIvmuJu43V+NnRLRcwtsQRsRfj20fjH0o2uouWkUV1FuJoD OhceArDpkr1xlQID
-AQABo4IBhjCCAYIwHwYDVR0jBBgwFoAUbIqUonexgHIdgXoW qvLczmbuRcAwHQYDVR0OBBYEFG57IARNEcmB6RY1kNTLwltC1gdYMA4GA1UdDwEB /wQEAwIBhjBnBgNVHSAEYDBeMAsGCWCGSAFlAgELJDALBglghkgBZQIBCycwCwYJ YIZIAW
-UCAQsqMAsGCWCGSAFlAgELOzAMBgpghkgBZQMCAQMNMAwGCmCGSAFlAwIB AxEwDAYKYIZIAWUDAgEDJzASBgNVHRMBAf8ECDAGAQH/AgEAMAwGA1UdJAQFMAOA AQAwNwYDVR0fBDAwLjAsoCqgKIYmaHR0cDovL2NybC5kaXNhLm1pbC9jcmwvR
-E9E Uk9PVENBMy5jcmwwbAYIKwYBBQUHAQEEYDBeMDoGCCsGAQUFBzAChi5odHRwOi8v Y3JsLmRpc2EubWlsL2lzc3VlZHRvL0RPRFJPT1RDQTNfSVQucDdjMCAGCCsGAQUF BzABhhRodHRwOi8vb2NzcC5kaXNhLm1pbDANBgkqhkiG9w0BAQs
-FAAOCAQEAA3It 1175xvpIzhP2duSRdNq3TfxaEGoc5vnzGnCtURC5rIfnY5V9F+W50u0yePUPbiNa S3ZljgnSoCCM6f6DGNSlG1mLjnnYdg3ojFKWR9m2S55V53/v0Z7JIPRmDTZ2dVw/ EiGg1VDRj9/ucI5fJF1jQZxdYGUDIi8AYkQ1LejD2
-0avqkH/gUag6j/3mUXZF4rd ikORTbPtqDRVo+bNf4dGYjuihmru4GE0lMPK9keGf/ZfeZ0g00/iqyWVZwbdep4G s4VWiWbcJCB744R93TsBRQ6Cmes/dh1RFtEkcOMC6t+NJV9aSIF20CZv2NlNcD4T L7MvBU75kWmaG+2/kA== -----END C
-ERTIFICATE----- '
-Oct 25 17:22:33 firelord.iad.gov info apmd[15644]: 01490007:6: /Common/iad.gov_access_profile:Common:1812d7db: Session variable 'session.ssl.cert.end' set to 'Sep 22 23:59:59 2023 GMT'
-Oct 25 17:22:33 firelord.iad.gov info apmd[15644]: 01490007:6: /Common/iad.gov_access_profile:Common:1812d7db: Session variable 'session.ssl.cert.exist' set to '1'
-Oct 25 17:22:33 firelord.iad.gov info apmd[15644]: 01490007:6: /Common/iad.gov_access_profile:Common:1812d7db: Session variable 'session.ssl.cert.issuer' set to 'C=US, O=U.S. Government
-, OU=DoD, OU=PKI, CN=DOD ID CA-62'
-Oct 25 17:22:33 firelord.iad.gov info apmd[15644]: 01490007:6: /Common/iad.gov_access_profile:Common:1812d7db: Session variable 'session.ssl.cert.serial' set to '09:8c:3a'
-Oct 25 17:22:33 firelord.iad.gov info apmd[15644]: 01490007:6: /Common/iad.gov_access_profile:Common:1812d7db: Session variable 'session.ssl.cert.start' set to 'Sep 29 00:00:00 2022 GMT
-'
-Oct 25 17:22:33 firelord.iad.gov info apmd[15644]: 01490007:6: /Common/iad.gov_access_profile:Common:1812d7db: Session variable 'session.ssl.cert.subject' set to 'C=US, O=U.S. Governmen
-t, OU=DoD, OU=PKI, OU=CONTRACTOR, CN=TSE-CASTRO.DANE.ANTHONY.1174201087'
-Oct 25 17:22:33 firelord.iad.gov info apmd[15644]: 01490007:6: /Common/iad.gov_access_profile:Common:1812d7db: Session variable 'session.ssl.cert.valid' set to '0'
-Oct 25 17:22:33 firelord.iad.gov info apmd[15644]: 01490007:6: /Common/iad.gov_access_profile:Common:1812d7db: Session variable 'session.ssl.cert.whole' set to '-----BEGIN CERTIFICATE--
---- MIIFQjCCBCqgAwIBAgIDCYw6MA0GCSqGSIb3DQEBCwUAMFoxCzAJBgNVBAYTAlVT MRgwFgYDVQQKEw9VLlMuIEdvdmVybm1lbnQxDDAKBgNVBAsTA0RvRDEMMAoGA1UE CxMDUEtJMRUwEwYDVQQDEwxET0QgSUQgQ0EtNjIwHhcNMjIwOTI
-5MDAwMDAwWhcN MjMwOTIyMjM1OTU5WjCBhTELMAkGA1UEBhMCVVMxGDAWBgNVBAoTD1UuUy4gR292 ZXJubWVudDEMMAoGA1UECxMDRG9EMQwwCgYDVQQLEwNQS0kxEzARBgNVBAsTCkNP TlRSQUNUT1IxKzApBgNVBAMTIlRTRS1DQVNUUk8uR
-EFORS5BTlRIT05ZLjExNzQy MDEwODcwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQC/w/53l+sk4nXy lHeV0L4bgRA3ChrTIHcqZLMPqmFyqHGchivAnWBjj57f2lXsOcXjWwZSjvSryaHL pTTUCbeTuU1lMjQe4C24RS0g1QYyHh1
-fyLwQfyUq/fLz5cCevthv4JrInRwaBk9L 0lTPHM2/k/WjFNDRhg1OMKM9OHfieKJ2uJnnN/9cKIdfTRkQi1KMic1oWgtgYQD/ iUCJk9zvbqhN31qltrBI6uKeARMJABPK4Wkvdhr3/IdJZ+s3xF/c7AlipFw1wgnS c1DnL2NIC66a0Y0vNOy25
-fLFNmbeiHUmWkIj9ouXbZayOVzTKofZEJFkSb2cQJ+w wrszj0ITAgMBAAGjggHjMIIB3zAfBgNVHSMEGDAWgBRueyAETRHJgekWNZDUy8Jb QtYHWDA3BgNVHR8EMDAuMCygKqAohiZodHRwOi8vY3JsLmRpc2EubWlsL2NybC9E T0RJRENBXzY
-yLmNybDAOBgNVHQ8BAf8EBAMCB4AwJAYDVR0gBB0wGzALBglghkgB ZQIBCyowDAYKYIZIAWUDAgEDDTAdBgNVHQ4EFgQU51yQrtkRh1Z6RUIB/yxJSxv3 +NAwZQYIKwYBBQUHAQEEWTBXMDMGCCsGAQUFBzAChidodHRwOi8vY3JsLmRpc2Eu b
-WlsL3NpZ24vRE9ESURDQV82Mi5jZXIwIAYIKwYBBQUHMAGGFGh0dHA6Ly9vY3Nw LmRpc2EubWlsMIGIBgNVHREEgYAwfqAnBghghkgBZQMGBqAbBBnUOBDaEIZsglUE bYNg2hDhEBgEXIQ4ENf5oCQGCisGAQQBgjcUAgOgFgwUMTE3NDIwMTA4
-NzExNzAw NUBtaWyGLXVybjp1dWlkOkVGQjFGNDk1LTI2RjgtNDQ3NC05RjA4LTAxQTY0OEZB MTUzQjAbBgNVHQkEFDASMBAGCCsGAQUFBwkEMQQTAlVTMB8GA1UdJQQYMBYGCisG AQQBgjcUAgIGCCsGAQUFBwMCMA0GCSqGSIb3DQEBCwUAA4
-IBAQAHB9A+wrAZX2xY AvnV06Z/0PxXIRlLgpRMotr5HA7zQQGPlAwq+ube01F6Ykd8ayPKTW/v+FkzrTyi OrZ5Xioh5B6ayCJR1Y+V4GiDp+iJxrirzWfs7CCuheQrZwy7ip7hgb95LJW4s95T Du4nV4tPuv8f0k5gtAuByRaQe0/Fod27Pj58
-RboGeHqJ1qpfy/DX253SNmZODUuX 9BxWvswn1uzDjNM0ir647g31yhcfJT5581ogyyJJt+X83t27jkEdYX/Wpk4rF6t6 lXz8ygiWLqjXrM/kmu+varlYpEBrOrGP3AvggQFBoY/UguWF6bdoAZF/hpTnD5kJ U57/629s -----END CERTIFIC
-ATE----- '
-Oct 25 17:22:33 firelord.iad.gov info apmd[15644]: 01490007:6: /Common/iad.gov_access_profile:Common:1812d7db: Session variable 'session.ssl.cert.x509extension' set to 'X509v3 extension
-s:     X509v3 Authority Key Identifier:          keyid:6E:7B:20:04:4D:11:C9:81:E9:16:35:90:D4:CB:C2:5B:42:D6:07:58      X509v3 CRL Distribution Points:           Full Name:           UR
-I:http://crl.disa.mil/crl/DODIDCA_62.crl      X509v3 Key Usage: critical         Digital Signature     X509v3 Certificate Policies:          Policy: 2.16.840.1.101.2.1.11.42         Pol
-icy: 2.16.840.1.101.3.2.1.3.13      X509v3 Subject Key Identifier:          E7:5C:90:AE:D9:11:87:56:7A:45:42:01:FF:2C:49:4B:1B:F7:F8:D0     Authority Information Access:          CA Iss
-uers - URI:http://crl.disa.mil/sign/DODIDCA_62.cer         OCSP - URI:http://ocsp.disa.mil      X509v3 Subject Alternative Name:          othername:<unsupported>, othername:UPN<11742010
-87117005@mil>, URI:urn:uuid:EFB1F495-26F8-4474-9F08-01A648FA153B     X509v3 Subject Directory Attributes:          0.0...+.......1...US     X509v3 Extended Key Usage:          Microsoft
- Smartcardlogin, TLS Web Client Authentication '
-Oct 25 17:22:34 firelord.iad.gov info apmd[15644]: 01490004:6: /Common/iad.gov_access_profile:Common:1812d7db: Executed agent '/Common/cert_authentication_act_ondemand_cert_auth_1_ag',
-return value 0 ('Execution Done')
-Oct 25 17:22:34 firelord.iad.gov info apmd[15644]: 01490006:6: /Common/iad.gov_access_profile:Common:1812d7db: Following rule 'Successful' from item 'On-Demand Cert Auth' to item 'Cert
-iRule Event'
-Oct 25 17:22:34 firelord.iad.gov info apmd[15644]: 01490004:6: /Common/iad.gov_access_profile:Common:1812d7db: Executed agent '/Common/cert_authentication_act_irule_event_ag', return va
-lue 3 ('Need User input')
-Oct 25 17:22:34 firelord.iad.gov info apmd[15644]: 01490007:6: /Common/iad.gov_access_profile:Common:1812d7db: Session variable 'session.custom_event.id' set to 'PRIVATE'
-Oct 25 17:22:34 firelord.iad.gov info apmd[15644]: 01490007:6: /Common/iad.gov_access_profile:Common:1812d7db: Session variable 'session.policy.result.policy_path' set to ' | Start (fal
-lback) | AnonUserid or Cert (Cert) | {ENTER MACRO} Cert Authentication | In (fallback) | On-Demand Cert Auth (Successful)'
-Oct 25 17:22:34 firelord.iad.gov info apmd[15644]: 01490004:6: /Common/iad.gov_access_profile:Common:1812d7db: Executed agent '/Common/cert_authentication_act_irule_event_ag', return va
-lue 0 ('Execution Done')
-Oct 25 17:22:34 firelord.iad.gov notice apmd[15644]: 01490115:5: /Common/iad.gov_access_profile:Common:1812d7db: Following rule 'fallback' from item 'Cert iRule Event' to terminalout 'G
-ood'
-Oct 25 17:22:34 firelord.iad.gov notice apmd[15644]: 01490005:5: /Common/iad.gov_access_profile:Common:1812d7db: Following rule 'Good' from item 'Cert Authentication' to ending 'Allow'
-Oct 25 17:22:34 firelord.iad.gov notice apmd[15644]: 01490102:5: /Common/iad.gov_access_profile:Common:1812d7db: Access policy result: LTM+APM_Mode
-Oct 25 17:22:34 firelord.iad.gov info apmd[15644]: 01490004:6: /Common/iad.gov_access_profile:Common:1812d7db: Executed agent '/Common/iad.gov_access_profile_end_allow_ag', return value
- 0 ('Execution Done')
-Oct 25 17:22:34 firelord.iad.gov notice apmd[15644]: 01490248:5: /Common/iad.gov_access_profile:Common:1812d7db: Received client info - Hostname:  Type: Mozilla Version: 5 Platform: Win
-10 CPU: x64 UI Mode: Full Javascript Support: 1 ActiveX Support: 0 Plugin Support: 0
-Oct 25 17:22:34 firelord.iad.gov notice apmd[15644]: 014902b8:5: /Common/iad.gov_access_profile:Common:1812d7db:  | Start (fallback) | AnonUserid or Cert (Cert) | {ENTER MACRO} Cert Aut
-hentication | In (fallback) | On-Demand Cert Auth (Successful) | Cert iRule Event (fallback) | Good | {EXIT MACRO} Cert Authentication (Good) | Allow |  Ending is: Allow
-Oct 25 17:22:34 firelord.iad.gov info apmd[15644]: 01490007:6: /Common/iad.gov_access_profile:Common:1812d7db: Session variable 'session.assigned.uuid' set to 'tmm.uuid./Common/iad.gov_
-access_profile.'
-Oct 25 17:22:34 firelord.iad.gov info apmd[15644]: 01490007:6: /Common/iad.gov_access_profile:Common:1812d7db: Session variable 'session.assigned.webtopsectionsresources' set to ''
-Oct 25 17:22:34 firelord.iad.gov info apmd[15644]: 01490007:6: /Common/iad.gov_access_profile:Common:1812d7db: Session variable 'session.logon.page.errorcode' set to '0'
-Oct 25 17:22:34 firelord.iad.gov info apmd[15644]: 01490007:6: /Common/iad.gov_access_profile:Common:1812d7db: Session variable 'session.policy.result' set to 'allow'
-Oct 25 17:22:34 firelord.iad.gov info apmd[15644]: 01490007:6: /Common/iad.gov_access_profile:Common:1812d7db: Session variable 'session.policy.result.policy_path' set to ' | Start (fal
-lback) | AnonUserid or Cert (Cert) | {ENTER MACRO} Cert Authentication | In (fallback) | On-Demand Cert Auth (Successful) | Cert iRule Event (fallback) | Good | {EXIT MACRO} Cert Authen
-tication (Good) | Allow | '
-Oct 25 17:22:34 firelord.iad.gov notice apmd[15644]: 01490000:5: AccessPolicyProcessor/AccessPolicy.cpp func: "execute()" line: 830 Msg: policy_path:  | Start (fallback) | AnonUserid or
- Cert (Cert) | {ENTER MACRO} Cert Authentication | In (fallback) | On-Demand Cert Auth (Successful) | Cert iRule Event (fallback) | Good | {EXIT MACRO} Cert Authentication (Good) | Allo
-w |
-Oct 25 17:22:37 firelord.iad.gov notice tmm1[22880]: 01490502:5: /Common/iad.gov_access_profile:Common:399f52ed: Session deleted due to user inactivity.
-Oct 25 17:22:38 firelord.iad.gov notice tmm1[22880]: 01490502:5: /Common/iad.gov_access_profile:Common:3cb176b6: Session deleted due to user inactivity.
-Oct 25 17:22:39 firelord.iad.gov info apmd[15644]: 01490004:6: /Common/iad.gov_access_profile:Common:9fe5ecc0: Executed agent '/Common/cert_authentication_act_ondemand_cert_auth_1_ag',
-return value 3 ('Need User input')
-Oct 25 17:22:39 firelord.iad.gov info apmd[15644]: 01490007:6: /Common/iad.gov_access_profile:Common:9fe5ecc0: Session variable 'session.clientcert.ssl_agentnonce' set to 'NWmXY5VV2G3Sn
-ai0'
-Oct 25 17:22:39 firelord.iad.gov info apmd[15644]: 01490007:6: /Common/iad.gov_access_profile:Common:9fe5ecc0: Session variable 'session.clientcert.ssl_rehandshake_pending' set to '0'
-Oct 25 17:22:39 firelord.iad.gov info apmd[15644]: 01490007:6: /Common/iad.gov_access_profile:Common:9fe5ecc0: Session variable 'session.policy.result.policy_path' set to ' | Start (fal
-lback) | AnonUserid or Cert (Cert) | {ENTER MACRO} Cert Authentication | In (fallback)'
-Oct 25 17:22:39 firelord.iad.gov info apmd[15644]: 01490007:6: /Common/iad.gov_access_profile:Common:9fe5ecc0: Session variable 'session.ssl.cert.certissuer' set to '-----BEGIN CERTIFIC
-ATE----- MIIEuTCCA6GgAwIBAgICBUswDQYJKoZIhvcNAQELBQAwWzELMAkGA1UEBhMCVVMx GDAWBgNVBAoTD1UuUy4gR292ZXJubWVudDEMMAoGA1UECxMDRG9EMQwwCgYDVQQL EwNQS0kxFjAUBgNVBAMTDURvRCBSb290IENBIDMwHhcNMj
-EwNjAxMTQwOTM3WhcN MjcwNjAyMTQwOTM3WjBaMQswCQYDVQQGEwJVUzEYMBYGA1UEChMPVS5TLiBHb3Zl cm5tZW50MQwwCgYDVQQLEwNEb0QxDDAKBgNVBAsTA1BLSTEVMBMGA1UEAxMMRE9E IElEIENBLTY0MIIBIjANBgkqhkiG9w0BAQEF
-AAOCAQ8AMIIBCgKCAQEAjsvhd1Q/ aKpj5/vTYmydA08Od1W2AOjjDsK0iot8jWIt693OEq9x8bSQ1K6eStv4Y3f1jj9c SMvnP050SWqlF2Xmw8jifyk626E54rs67jhbuY5gc2+1BoComnq8IvN/tVbbPQkF mR/tlvcyV6SJp+PUFTy/vKwBVk
-yV42BTa9Dgq0z7XHq+Z7bjf2ZYDi1v+BxFW3Ni lv3CVmaQExf7S8JX9+5twtUtg4e9fl3wU98yW1SWu7A6KdqxDnMGqYxfX6FNWDbK 8y/4evrhAoV1lRCuTMvP7OdGbAjhUDHXNen3FoCxxu3pB4v32HjlMAi3Q2Rd3pCj ENEIzp17/k3yIwID
-AQABo4IBhjCCAYIwHwYDVR0jBBgwFoAUbIqUonexgHIdgXoW qvLczmbuRcAwHQYDVR0OBBYEFFe8wF7bias73Uepch6uy0IZax56MA4GA1UdDwEB /wQEAwIBhjBnBgNVHSAEYDBeMAsGCWCGSAFlAgELJDALBglghkgBZQIBCycwCwYJ YIZIAW
-UCAQsqMAsGCWCGSAFlAgELOzAMBgpghkgBZQMCAQMNMAwGCmCGSAFlAwIB AxEwDAYKYIZIAWUDAgEDJzASBgNVHRMBAf8ECDAGAQH/AgEAMAwGA1UdJAQFMAOA AQAwNwYDVR0fBDAwLjAsoCqgKIYmaHR0cDovL2NybC5kaXNhLm1pbC9jcmwvR
-E9E Uk9PVENBMy5jcmwwbAYIKwYBBQUHAQEEYDBeMDoGCCsGAQUFBzAChi5odHRwOi8v Y3JsLmRpc2EubWlsL2lzc3VlZHRvL0RPRFJPT1RDQTNfSVQucDdjMCAGCCsGAQUF BzABhhRodHRwOi8vb2NzcC5kaXNhLm1pbDANBgkqhkiG9w0BAQs
-FAAOCAQEAXr0y V7GzeW4yhuPP193deLxBfBDdG7yNWjI5tSGnvx/mvaJqj7oqiAftY/EbyTepYzbo 6/Q09s+Ael+wftRZXbbZwzRuYigpQZy50eDi+6s/tc/ItUJ37oQszUPTcsFt3qjt lH8FFTtLyPwxtalkwL5w7ACTv+1vD5avoXmJwHhFD
-GL8fKIQxCgfgU0AoL6XtLGT XdAQ5Xd9viVDaWsva1HX/RS7uZ5+n34OFM5SZBuMAtIcWYRouML4FpCsXMYcAYB9 nh5gG9qMkIX0b/oTkF5loV2Pq7p09Pj48Ebbv8B32vqnaUOQLjRANb/sIQLHXoXH qwTizQlR8MkIO8+F+Q== -----END C
-ERTIFICATE----- '
-Oct 25 17:22:39 firelord.iad.gov info apmd[15644]: 01490007:6: /Common/iad.gov_access_profile:Common:9fe5ecc0: Session variable 'session.ssl.cert.end' set to 'Aug 15 23:59:59 2025 GMT'
-Oct 25 17:22:39 firelord.iad.gov info apmd[15644]: 01490007:6: /Common/iad.gov_access_profile:Common:9fe5ecc0: Session variable 'session.ssl.cert.exist' set to '1'
-Oct 25 17:22:39 firelord.iad.gov info apmd[15644]: 01490007:6: /Common/iad.gov_access_profile:Common:9fe5ecc0: Session variable 'session.ssl.cert.issuer' set to 'C=US, O=U.S. Government
-, OU=DoD, OU=PKI, CN=DOD ID CA-64'
-Oct 25 17:22:39 firelord.iad.gov info apmd[15644]: 01490007:6: /Common/iad.gov_access_profile:Common:9fe5ecc0: Session variable 'session.ssl.cert.serial' set to '07:2a:9c'
-Oct 25 17:22:39 firelord.iad.gov info apmd[15644]: 01490007:6: /Common/iad.gov_access_profile:Common:9fe5ecc0: Session variable 'session.ssl.cert.start' set to 'Aug 16 00:00:00 2022 GMT
-'
-Oct 25 17:22:39 firelord.iad.gov info apmd[15644]: 01490007:6: /Common/iad.gov_access_profile:Common:9fe5ecc0: Session variable 'session.ssl.cert.subject' set to 'C=US, O=U.S. Governmen
-t, OU=DoD, OU=PKI, OU=USN, CN=GALLI.SIERRA.CATHERINE.1540151977'
-Oct 25 17:22:39 firelord.iad.gov info apmd[15644]: 01490007:6: /Common/iad.gov_access_profile:Common:9fe5ecc0: Session variable 'session.ssl.cert.valid' set to '0'
-Oct 25 17:22:39 firelord.iad.gov info apmd[15644]: 01490007:6: /Common/iad.gov_access_profile:Common:9fe5ecc0: Session variable 'session.ssl.cert.whole' set to '-----BEGIN CERTIFICATE--
---- MIIFOTCCBCGgAwIBAgIDByqcMA0GCSqGSIb3DQEBCwUAMFoxCzAJBgNVBAYTAlVT MRgwFgYDVQQKEw9VLlMuIEdvdmVybm1lbnQxDDAKBgNVBAsTA0RvRDEMMAoGA1UE CxMDUEtJMRUwEwYDVQQDEwxET0QgSUQgQ0EtNjQwHhcNMjIwODE
-2MDAwMDAwWhcN MjUwODE1MjM1OTU5WjB9MQswCQYDVQQGEwJVUzEYMBYGA1UEChMPVS5TLiBHb3Zl cm5tZW50MQwwCgYDVQQLEwNEb0QxDDAKBgNVBAsTA1BLSTEMMAoGA1UECxMDVVNO MSowKAYDVQQDEyFHQUxMSS5TSUVSUkEuQ0FUSEVSS
-U5FLjE1NDAxNTE5NzcwggEi MA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQDXxfC2qvAf8hmAKIRbwGDG4tBc jW0JxKc1aLo461aHSwxv6Yh6Er/wjU+hcsrT5gVWv5kWeYAURFmgX8VZI3K08QN7 gDJJvTI3mJaU8mwzGoJMv7I3sLwFNsw
-wf1h7c4YGk44GW/cJK+K+mIZM1mEgUQdI 7OPzCeo+qmX2o66VSI8aJp7BVd5t5Sm+BgU7CIbZ/q0Wi0dZjgf8ib02oKvDLW+f tj5AnR9wS2/HesIz2TjNX73+JqoKSkfwb/Q9b2eBbmgYdKFQwZPv1+uBcydkWLCa Ifq5rs1U2u3o6SpWCK3/j
-cBg3OflxCIP579IWuhxXHgL2NYTrXt2+MaINS89AgMB AAGjggHjMIIB3zAfBgNVHSMEGDAWgBRXvMBe24mrO91HqXIerstCGWseejA3BgNV HR8EMDAuMCygKqAohiZodHRwOi8vY3JsLmRpc2EubWlsL2NybC9ET0RJRENBXzY0 LmNybDAOBgN
-VHQ8BAf8EBAMCB4AwJAYDVR0gBB0wGzALBglghkgBZQIBCyowDAYK YIZIAWUDAgEDDTAdBgNVHQ4EFgQUUJmSwNs/KMik7KNBTDzb+23jkm4wZQYIKwYB BQUHAQEEWTBXMDMGCCsGAQUFBzAChidodHRwOi8vY3JsLmRpc2EubWlsL3NpZ24v R
-E9ESURDQV82NC5jZXIwIAYIKwYBBQUHMAGGFGh0dHA6Ly9vY3NwLmRpc2EubWls MIGIBgNVHREEgYAwfqAnBghghkgBZQMGBqAbBBnUOBDaEMisiAmtbYNg2hUgYVhP nIQ4EJPtoCQGCisGAQQBgjcUAgOgFgwUMTU0MDE1MTk3NzExNzAwNEBt
-aWyGLXVy bjp1dWlkOjQ0RDgxRUU5LTkwNzQtNEY5My04RTZELTBCNkI1MUY5NjBGMTAbBgNV HQkEFDASMBAGCCsGAQUFBwkEMQQTAlVTMB8GA1UdJQQYMBYGCisGAQQBgjcUAgIG CCsGAQUFBwMCMA0GCSqGSIb3DQEBCwUAA4IBAQBtoq+F9C
-yFqtERXkmVXBfIIIi/ xh+Sty1jmhl9wja2srmpR0xE8lrd5PGgftFYZEkL2zGPlfx/6YNttk1ljZTE1htn UTbWPq0Q/El65RgJF3OgMaIo+n1HmAPcOQ+BIgBnDtpd4iTIXFULLG5dhqIniuiM 5E9sccrx/ZyAz8mRcwyn+fXJ9YycBthYK+J1
-5572BHGm/fOLc92lKX99L0Vtq4jb TdSPj1iT5sQ6/kRm+jkSN/ic1P5uPfvqxCkzIAibi/TgYVuH/IOCdaKTNRqVefeo tJIsA1haXkILxV7ZhhLktOL++kk+5BQYzT8IiEynoZpbXa3X4ByJOr0iVmaj -----END CERTIFICATE----- '
-Oct 25 17:22:39 firelord.iad.gov info apmd[15644]: 01490007:6: /Common/iad.gov_access_profile:Common:9fe5ecc0: Session variable 'session.ssl.cert.x509extension' set to 'X509v3 extension
-s:     X509v3 Authority Key Identifier:          keyid:57:BC:C0:5E:DB:89:AB:3B:DD:47:A9:72:1E:AE:CB:42:19:6B:1E:7A      X509v3 CRL Distribution Points:           Full Name:           UR
-I:http://crl.disa.mil/crl/DODIDCA_64.crl      X509v3 Key Usage: critical         Digital Signature     X509v3 Certificate Policies:          Policy: 2.16.840.1.101.2.1.11.42         Pol
-icy: 2.16.840.1.101.3.2.1.3.13      X509v3 Subject Key Identifier:          50:99:92:C0:DB:3F:28:C8:A4:EC:A3:41:4C:3C:DB:FB:6D:E3:92:6E     Authority Information Access:          CA Iss
-uers - URI:http://crl.disa.mil/sign/DODIDCA_64.cer         OCSP - URI:http://ocsp.disa.mil      X509v3 Subject Alternative Name:          othername:<unsupported>, othername:UPN<15401519
-77117004@mil>, URI:urn:uuid:44D81EE9-9074-4F93-8E6D-0B6B51F960F1     X509v3 Subject Directory Attributes:          0.0...+.......1...US     X509v3 Extended Key Usage:          Microsoft
- Smartcardlogin, TLS Web Client Authentication '
-Oct 25 17:22:40 firelord.iad.gov notice tmm1[22880]: 01490502:5: /Common/iad.gov_access_profile:Common:85df6e9a: Session deleted due to user inactivity.
-Oct 25 17:22:40 firelord.iad.gov info apmd[15644]: 01490004:6: /Common/iad.gov_access_profile:Common:9fe5ecc0: Executed agent '/Common/cert_authentication_act_ondemand_cert_auth_1_ag',
-return value 0 ('Execution Done')
-Oct 25 17:22:40 firelord.iad.gov info apmd[15644]: 01490006:6: /Common/iad.gov_access_profile:Common:9fe5ecc0: Following rule 'Successful' from item 'On-Demand Cert Auth' to item 'Cert
-iRule Event'
-Oct 25 17:22:40 firelord.iad.gov info apmd[15644]: 01490004:6: /Common/iad.gov_access_profile:Common:9fe5ecc0: Executed agent '/Common/cert_authentication_act_irule_event_ag', return va
-lue 3 ('Need User input')
-Oct 25 17:22:40 firelord.iad.gov info apmd[15644]: 01490007:6: /Common/iad.gov_access_profile:Common:9fe5ecc0: Session variable 'session.custom_event.id' set to 'PRIVATE'
-Oct 25 17:22:40 firelord.iad.gov info apmd[15644]: 01490007:6: /Common/iad.gov_access_profile:Common:9fe5ecc0: Session variable 'session.policy.result.policy_path' set to ' | Start (fal
-lback) | AnonUserid or Cert (Cert) | {ENTER MACRO} Cert Authentication | In (fallback) | On-Demand Cert Auth (Successful)'
-Oct 25 17:22:40 firelord.iad.gov info apmd[15644]: 01490004:6: /Common/iad.gov_access_profile:Common:9fe5ecc0: Executed agent '/Common/cert_authentication_act_irule_event_ag', return va
-lue 0 ('Execution Done')
-Oct 25 17:22:40 firelord.iad.gov notice apmd[15644]: 01490115:5: /Common/iad.gov_access_profile:Common:9fe5ecc0: Following rule 'fallback' from item 'Cert iRule Event' to terminalout 'G
-ood'
-Oct 25 17:22:40 firelord.iad.gov notice apmd[15644]: 01490005:5: /Common/iad.gov_access_profile:Common:9fe5ecc0: Following rule 'Good' from item 'Cert Authentication' to ending 'Allow'
-Oct 25 17:22:40 firelord.iad.gov notice apmd[15644]: 01490102:5: /Common/iad.gov_access_profile:Common:9fe5ecc0: Access policy result: LTM+APM_Mode
-Oct 25 17:22:40 firelord.iad.gov info apmd[15644]: 01490004:6: /Common/iad.gov_access_profile:Common:9fe5ecc0: Executed agent '/Common/iad.gov_access_profile_end_allow_ag', return value
- 0 ('Execution Done')
-Oct 25 17:22:40 firelord.iad.gov notice apmd[15644]: 01490248:5: /Common/iad.gov_access_profile:Common:9fe5ecc0: Received client info - Hostname:  Type: Mozilla Version: 5 Platform: Win
-10 CPU: WOW64 UI Mode: Full Javascript Support: 1 ActiveX Support: 0 Plugin Support: 0
-Oct 25 17:22:40 firelord.iad.gov notice apmd[15644]: 014902b8:5: /Common/iad.gov_access_profile:Common:9fe5ecc0:  | Start (fallback) | AnonUserid or Cert (Cert) | {ENTER MACRO} Cert Aut
-hentication | In (fallback) | On-Demand Cert Auth (Successful) | Cert iRule Event (fallback) | Good | {EXIT MACRO} Cert Authentication (Good) | Allow |  Ending is: Allow
-Oct 25 17:22:40 firelord.iad.gov info apmd[15644]: 01490007:6: /Common/iad.gov_access_profile:Common:9fe5ecc0: Session variable 'session.assigned.uuid' set to 'tmm.uuid./Common/iad.gov_
-access_profile.'
-Oct 25 17:22:40 firelord.iad.gov info apmd[15644]: 01490007:6: /Common/iad.gov_access_profile:Common:9fe5ecc0: Session variable 'session.assigned.webtopsectionsresources' set to ''
-Oct 25 17:22:40 firelord.iad.gov info apmd[15644]: 01490007:6: /Common/iad.gov_access_profile:Common:9fe5ecc0: Session variable 'session.logon.page.errorcode' set to '0'
-Oct 25 17:22:40 firelord.iad.gov info apmd[15644]: 01490007:6: /Common/iad.gov_access_profile:Common:9fe5ecc0: Session variable 'session.policy.result' set to 'allow'
-Oct 25 17:22:40 firelord.iad.gov info apmd[15644]: 01490007:6: /Common/iad.gov_access_profile:Common:9fe5ecc0: Session variable 'session.policy.result.policy_path' set to ' | Start (fal
-lback) | AnonUserid or Cert (Cert) | {ENTER MACRO} Cert Authentication | In (fallback) | On-Demand Cert Auth (Successful) | Cert iRule Event (fallback) | Good | {EXIT MACRO} Cert Authen
-tication (Good) | Allow | '
-Oct 25 17:22:40 firelord.iad.gov notice apmd[15644]: 01490000:5: AccessPolicyProcessor/AccessPolicy.cpp func: "execute()" line: 830 Msg: policy_path:  | Start (fallback) | AnonUserid or
- Cert (Cert) | {ENTER MACRO} Cert Authentication | In (fallback) | On-Demand Cert Auth (Successful) | Cert iRule Event (fallback) | Good | {EXIT MACRO} Cert Authentication (Good) | Allo
-w |
-Oct 25 17:22:43 firelord.iad.gov notice tmm1[22880]: 01490506:5: /Common/iad.gov_access_profile:Common:94d83170: Received User-Agent header: Mozilla%2F5.0%20(compatible%3B%20bingbot%2F2
-.0%3B%20%2Bhttp%3A%2F%2Fwww.bing.com%2Fbingbot.htm).
-Oct 25 17:22:43 firelord.iad.gov notice tmm1[22880]: 01490500:5: /Common/iad.gov_access_profile:Common:94d83170: New session from client IP 157.55.39.183 (ST=Washington/CC=US/C=NA) at V
-IP 172.30.20.115 Listener /Common/vs_Ufx05_Prod_Secure (Reputation=Unknown)
-Oct 25 17:22:44 firelord.iad.gov info apmd[15644]: 01490006:6: /Common/iad.gov_access_profile:Common:94d83170: Following rule 'fallback' from item 'Start' to item 'AnonUserid or Cert'
-Oct 25 17:22:44 firelord.iad.gov info apmd[15644]: 01490006:6: /Common/iad.gov_access_profile:Common:94d83170: Following rule 'fallback' from item 'AnonUserid or Cert' to item 'AnonUser
-id'
-Oct 25 17:22:44 firelord.iad.gov info apmd[15644]: 01490006:6: /Common/iad.gov_access_profile:Common:94d83170: Following rule 'Macro Call' from item 'AnonUserid' to item 'In'
-Oct 25 17:22:44 firelord.iad.gov info apmd[15644]: 01490006:6: /Common/iad.gov_access_profile:Common:94d83170: Following rule 'fallback' from item 'In' to item 'AnonUserid iRule Event'
-Oct 25 17:22:44 firelord.iad.gov info apmd[15644]: 01490004:6: /Common/iad.gov_access_profile:Common:94d83170: Executed agent '/Common/anonuserid_act_irule_event_ag', return value 3 ('N
-eed User input')
-Oct 25 17:22:44 firelord.iad.gov info apmd[15644]: 01490007:6: /Common/iad.gov_access_profile:Common:94d83170: Session variable 'session.custom_event.id' set to 'PUBLIC'
-Oct 25 17:22:44 firelord.iad.gov info apmd[15644]: 01490007:6: /Common/iad.gov_access_profile:Common:94d83170: Session variable 'session.policy.result.policy_path' set to ' | Start (fal
-lback) | AnonUserid or Cert (fallback) | {ENTER MACRO} AnonUserid | In (fallback)'
-Oct 25 17:22:44 firelord.iad.gov info apmd[15644]: 01490004:6: /Common/iad.gov_access_profile:Common:94d83170: Executed agent '/Common/anonuserid_act_irule_event_ag', return value 0 ('E
-xecution Done')
-Oct 25 17:22:44 firelord.iad.gov notice apmd[15644]: 01490115:5: /Common/iad.gov_access_profile:Common:94d83170: Following rule 'fallback' from item 'AnonUserid iRule Event' to terminal
-out 'Out'
-Oct 25 17:22:44 firelord.iad.gov notice apmd[15644]: 01490005:5: /Common/iad.gov_access_profile:Common:94d83170: Following rule 'Out' from item 'AnonUserid' to ending 'Allow'
-Oct 25 17:22:44 firelord.iad.gov notice apmd[15644]: 01490102:5: /Common/iad.gov_access_profile:Common:94d83170: Access policy result: LTM+APM_Mode
-Oct 25 17:22:44 firelord.iad.gov info apmd[15644]: 01490004:6: /Common/iad.gov_access_profile:Common:94d83170: Executed agent '/Common/iad.gov_access_profile_end_allow_ag', return value
- 0 ('Execution Done')
-Oct 25 17:22:44 firelord.iad.gov notice apmd[15644]: 01490000:5: AccessPolicyProcessor/AccessPolicy.cpp func: "execute()" line: 830 Msg: policy_path:  | Start (fallback) | AnonUserid or
- Cert (fallback) | {ENTER MACRO} AnonUserid | In (fallback) | AnonUserid iRule Event (fallback) | Out | {EXIT MACRO} AnonUserid (Out) | Allow |
-Oct 25 17:22:44 firelord.iad.gov notice apmd[15644]: 01490248:5: /Common/iad.gov_access_profile:Common:94d83170: Received client info - Hostname:  Type: unknown Version: 0 Platform: unk
-nown CPU: unknown UI Mode: Full Javascript Support: 0 ActiveX Support: 0 Plugin Support: 0
-Oct 25 17:22:44 firelord.iad.gov notice apmd[15644]: 014902b8:5: /Common/iad.gov_access_profile:Common:94d83170:  | Start (fallback) | AnonUserid or Cert (fallback) | {ENTER MACRO} Anon
-Userid | In (fallback) | AnonUserid iRule Event (fallback) | Out | {EXIT MACRO} AnonUserid (Out) | Allow |  Ending is: Allow
-Oct 25 17:22:44 firelord.iad.gov info apmd[15644]: 01490007:6: /Common/iad.gov_access_profile:Common:94d83170: Session variable 'session.assigned.uuid' set to 'tmm.uuid./Common/iad.gov_
-access_profile.'
-Oct 25 17:22:44 firelord.iad.gov info apmd[15644]: 01490007:6: /Common/iad.gov_access_profile:Common:94d83170: Session variable 'session.assigned.webtopsectionsresources' set to ''
-Oct 25 17:22:44 firelord.iad.gov info apmd[15644]: 01490007:6: /Common/iad.gov_access_profile:Common:94d83170: Session variable 'session.logon.page.errorcode' set to '0'
-Oct 25 17:22:44 firelord.iad.gov info apmd[15644]: 01490007:6: /Common/iad.gov_access_profile:Common:94d83170: Session variable 'session.policy.result' set to 'allow'
-Oct 25 17:22:44 firelord.iad.gov info apmd[15644]: 01490007:6: /Common/iad.gov_access_profile:Common:94d83170: Session variable 'session.policy.result.policy_path' set to ' | Start (fal
-lback) | AnonUserid or Cert (fallback) | {ENTER MACRO} AnonUserid | In (fallback) | AnonUserid iRule Event (fallback) | Out | {EXIT MACRO} AnonUserid (Out) | Allow | '
-Oct 25 17:22:45 firelord.iad.gov notice tmm1[22880]: 01490521:5: /Common/iad.gov_access_profile:Common:c611084c: Session statistics - bytes in: 1287, bytes out: 2045
-Oct 25 17:22:45 firelord.iad.gov notice tmm[22880]: 01490521:5: /Common/iad.gov_access_profile:Common:6446085f: Session statistics - bytes in: 45615, bytes out: 3754323
-Oct 25 17:22:59 firelord.iad.gov notice tmm[22880]: 01490521:5: /Common/iad.gov_access_profile:Common:e8ecc23a: Session statistics - bytes in: 3317, bytes out: 13821
-
-
-
-Grep for IP
-
-[lruiz-adm@firelord:Active:Changes Pending] log # grep -i "23.50.48.12" /var/log/apm.1 | more
-
-
-
-Firewall statistics to check flow is permitted
-
-packet-tracer input outside1 tcp 23.50.48.12 1024 172.30.20.115 443
-
-Phase: 1
-Type: ROUTE-LOOKUP
-Subtype: Resolve Egress Interface
-Result: ALLOW
-Config:
-Additional Information:
-found next-hop 172.30.20.115 using egress ifc  External
-
-Phase: 2
-Type: ACCESS-LIST
-Subtype: log
-Result: ALLOW
-Config:
-access-group outside1_access_in in interface outside1
-access-list outside1_access_in extended permit tcp any object VIP-ufx05_prod object-group DM_INLINE_TCP_3
-object-group service DM_INLINE_TCP_3 tcp
- port-object eq 8443
- port-object eq www
- port-object eq https
-Additional Information:
-
-Phase: 3
-Type: NAT
-Subtype: per-session
-Flossie# packet-tracer input outside1 tcp 23.50.48.12 1024 8.44.96.42 443
-
-Phase: 1
-Type: UN-NAT
-Subtype: static
-Result: ALLOW
-Config:
-object network VIP-ufx05_prod
- nat (External,outside1) static ExternalWebProd
-Additional Information:
-NAT divert to egress interface External
-Untranslate 8.44.96.42/443 to 172.30.20.115/443
-
-Phase: 2
-Type: ACCESS-LIST
-Subtype: log
-Result: ALLOW
-Config:
-access-group outside1_access_in in interface outside1
-access-list outside1_access_in extended permit tcp any object VIP-ufx05_prod object-group DM_INLINE_TCP_3
-object-group service DM_INLINE_TCP_3 tcp
- port-object eq 8443
- port-object eq www
- port-object eq https
-Additional Information:
-
-Phase: 3
-Type: NAT
-Subtype: per-session
-Result: ALLOW
-Config:
-Additional Information:
-
-Phase: 4
-Type: IP-OPTIONS
-Subtype:
-Result: ALLOW
-Config:
-Additional Information:
-
-Phase: 5
-Type: FOVER
-Subtype: standby-update
-Result: ALLOW
-Config:
-Additional Information:
-
-Phase: 6
-Type: FLOW-EXPORT
-Subtype:
-Result: ALLOW
-Config:
-Additional Information:
-
-Phase: 7
-Type: NAT
-Subtype: rpf-check
-Result: ALLOW
-Config:
-object network VIP-ufx05_prod
- nat (External,outside1) static ExternalWebProd
-Additional Information:
-
-Phase: 8
-Type: NAT
-Subtype: per-session
-Result: ALLOW
-Config:
-Additional Information:
-
-Phase: 9
-Type: IP-OPTIONS
-Subtype:
-Result: ALLOW
-Config:
-Additional Information:
-
-Phase: 10
-Type: FLOW-CREATION
-Subtype:
-Result: ALLOW
-Config:
-Additional Information:
-New flow created with id 43252730, packet dispatched to next module
-
-Result:
-input-interface: outside1
-input-status: up
-input-line-status: up
-output-interface: External
-output-status: up
-output-line-status: up
-Action: allow
+[lruiz-adm@firelord:Active:Changes Pending] ~ # grep -i "edba86c8:" /var/log/apm.1 | more
+Oct 25 08:17:18 firelord.iad.gov notice tmm1[22880]: 01490506:5: /Common/iad.gov_access_profile:Common:edba86c8: Received User-Agent header: Mozilla%2F5.0%20(Macintosh%3B%20Intel%20Mac%20OS%20X%2010_15_7)%
+20AppleWebKit%2F537.36%20(KHTML%2C%20like%20Gecko)%20Chrome%2F106.0.0.0%20Safari%2F537.36.
+Oct 25 08:17:18 firelord.iad.gov notice tmm1[22880]: 01490500:5: /Common/iad.gov_access_profile:Common:edba86c8: New session from client IP 138.88.114.197 (ST=Virginia/CC=US/C=NA) at VIP 172.30.20.115 List
+ener /Common/vs_Ufx05_Prod_Secure (Reputation=Unknown)
+Oct 25 08:17:18 firelord.iad.gov info apmd[15644]: 01490006:6: /Common/iad.gov_access_profile:Common:edba86c8: Following rule 'fallback' from item 'Start' to item 'AnonUserid or Cert'
+Oct 25 08:17:18 firelord.iad.gov info apmd[15644]: 01490006:6: /Common/iad.gov_access_profile:Common:edba86c8: Following rule 'Cert' from item 'AnonUserid or Cert' to item 'Cert Authentication'
+Oct 25 08:17:18 firelord.iad.gov info apmd[15644]: 01490006:6: /Common/iad.gov_access_profile:Common:edba86c8: Following rule 'Macro Call' from item 'Cert Authentication' to item 'In'
+Oct 25 08:17:18 firelord.iad.gov info apmd[15644]: 01490006:6: /Common/iad.gov_access_profile:Common:edba86c8: Following rule 'fallback' from item 'In' to item 'On-Demand Cert Auth'
+Oct 25 08:17:18 firelord.iad.gov info apmd[15644]: 01490004:6: /Common/iad.gov_access_profile:Common:edba86c8: Executed agent '/Common/cert_authentication_act_ondemand_cert_auth_1_ag', return value 3 ('Nee
+d User input')
+Oct 25 08:17:18 firelord.iad.gov info apmd[15644]: 01490007:6: /Common/iad.gov_access_profile:Common:edba86c8: Session variable 'session.clientcert.ssl_rehandshake_pending' set to '2'
+Oct 25 08:17:18 firelord.iad.gov info apmd[15644]: 01490007:6: /Common/iad.gov_access_profile:Common:edba86c8: Session variable 'session.policy.result.policy_path' set to ' | Start (fallback) | AnonUserid
+or Cert (Cert) | {ENTER MACRO} Cert Authentication | In (fallback)'
+Oct 25 08:17:18 firelord.iad.gov info apmd[15644]: 01490007:6: /Common/iad.gov_access_profile:Common:edba86c8: Session variable 'session.ssl.cert.exist' set to '0'
+Oct 25 08:17:18 firelord.iad.gov info apmd[15644]: 01490007:6: /Common/iad.gov_access_profile:Common:edba86c8: Session variable 'session.ssl.cert.valid' set to '1'
+Oct 25 08:17:27 firelord.iad.gov info apmd[15644]: 01490004:6: /Common/iad.gov_access_profile:Common:edba86c8: Executed agent '/Common/cert_authentication_act_ondemand_cert_auth_1_ag', return value 3 ('Nee
+d User input')
+Oct 25 08:17:27 firelord.iad.gov info apmd[15644]: 01490007:6: /Common/iad.gov_access_profile:Common:edba86c8: Session variable 'session.clientcert.ssl_agentnonce' set to 'uX9B83CuUbpo7SN8'
+Oct 25 08:17:27 firelord.iad.gov info apmd[15644]: 01490007:6: /Common/iad.gov_access_profile:Common:edba86c8: Session variable 'session.clientcert.ssl_rehandshake_pending' set to '0'
+Oct 25 08:17:27 firelord.iad.gov info apmd[15644]: 01490007:6: /Common/iad.gov_access_profile:Common:edba86c8: Session variable 'session.policy.result.policy_path' set to ' | Start (fallback) | AnonUserid
+or Cert (Cert) | {ENTER MACRO} Cert Authentication | In (fallback)'
+Oct 25 08:17:27 firelord.iad.gov info apmd[15644]: 01490007:6: /Common/iad.gov_access_profile:Common:edba86c8: Session variable 'session.ssl.cert.end' set to 'Jun 13 23:59:59 2024 GMT'
+Oct 25 08:17:27 firelord.iad.gov info apmd[15644]: 01490007:6: /Common/iad.gov_access_profile:Common:edba86c8: Session variable 'session.ssl.cert.exist' set to '1'
+Oct 25 08:17:27 firelord.iad.gov info apmd[15644]: 01490007:6: /Common/iad.gov_access_profile:Common:edba86c8: Session variable 'session.ssl.cert.issuer' set to 'C=US, O=U.S. Government, OU=DoD, OU=PKI, CN
+=DOD ID CA-59'
+Oct 25 08:17:27 firelord.iad.gov info apmd[15644]: 01490007:6: /Common/iad.gov_access_profile:Common:edba86c8: Session variable 'session.ssl.cert.serial' set to '01:15:06:84'
+Oct 25 08:17:27 firelord.iad.gov info apmd[15644]: 01490007:6: /Common/iad.gov_access_profile:Common:edba86c8: Session variable 'session.ssl.cert.start' set to 'Jul  6 00:00:00 2021 GMT'
+Oct 25 08:17:27 firelord.iad.gov info apmd[15644]: 01490007:6: /Common/iad.gov_access_profile:Common:edba86c8: Session variable 'session.ssl.cert.subject' set to 'C=US, O=U.S. Government, OU=DoD, OU=PKI, O
+U=CONTRACTOR, CN=KILPATRICK.TIMOTHY.M.1158907190'
+Oct 25 08:17:27 firelord.iad.gov info apmd[15644]: 01490007:6: /Common/iad.gov_access_profile:Common:edba86c8: Session variable 'session.ssl.cert.valid' set to '20'
+Oct 25 08:17:27 firelord.iad.gov info apmd[15644]: 01490007:6: /Common/iad.gov_access_profile:Common:edba86c8: Session variable 'session.ssl.cert.whole' set to '-----BEGIN CERTIFICATE----- MIIFRDCCBCygAwIB
+AgIEARUGhDANBgkqhkiG9w0BAQsFADBaMQswCQYDVQQGEwJV UzEYMBYGA1UEChMPVS5TLiBHb3Zlcm5tZW50MQwwCgYDVQQLEwNEb0QxDDAKBgNV BAsTA1BLSTEVMBMGA1UEAxMMRE9EIElEIENBLTU5MB4XDTIxMDcwNjAwMDAwMFoX DTI0MDYxMzIzNTk1OVowgYIxCz
+AJBgNVBAYTAlVTMRgwFgYDVQQKEw9VLlMuIEdv dmVybm1lbnQxDDAKBgNVBAsTA0RvRDEMMAoGA1UECxMDUEtJMRMwEQYDVQQLEwpD T05UUkFDVE9SMSgwJgYDVQQDEx9LSUxQQVRSSUNLLlRJTU9USFkuTS4xMTU4OTA3 MTkwMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8A
+MIIBCgKCAQEAuYE6yPYvpzaH/LhJ yHTeaW9U94nvBhNFAHnn9obHsSVu8p3Gj4WX7mBI7IWUQez+bQVjnoGoRswriFn1 PXxk5G8hTXIE6n9htdld97rwzwWk7ETUaUnt2CSL9CctrrOne59KifI9tvn6koMQ n3BNeFFS5kuWqj8E0MVKR0tbdhf/HNt4qllKz+9DFpLdkD
+6+lRfGYvilMQEkLNG7 IP/BfZoPbvIKmQIP590rNuOnbixqfhYTang6lb9l1TZymmBPAbxhpNiE+XCTHHAX cdrU7P7nBMamdCWdftbf4MsLfahYzp55VDx+s5uqHi2hCpyVp3kRYYYRKeZqcpNj 0jhm8wIDAQABo4IB5zCCAeMwHwYDVR0jBBgwFoAUdQmmFROuhzz6c5QA
+8vD1ebmy chQwOwYDVR0fBDQwMjAwoC6gLIYqaHR0cDovL2NybC5kaXNhLm1pbC9jcmwvRE9E SURDQV81OV9QSVYuY3JsMA4GA1UdDwEB/wQEAwIHgDAkBgNVHSAEHTAbMAsGCWCG SAFlAgELKjAMBgpghkgBZQMCAQMNMB0GA1UdDgQWBBQR8otY2BVb3hD3kWVT7PsR /
+j0ZezBlBggrBgEFBQcBAQRZMFcwMwYIKwYBBQUHMAKGJ2h0dHA6Ly9jcmwuZGlz YS5taWwvc2lnbi9ET0RJRENBXzU5LmNlcjAgBggrBgEFBQcwAYYUaHR0cDovL29j c3AuZGlzYS5taWwwgYgGA1UdEQSBgDB+oCcGCGCGSAFlAwYGoBsEGdT4ENoVmiwc wDUlg2DaEKi
+mHkJhhPgQ1+ugJAYKKwYBBAGCNxQCA6AWDBQxMTU4OTA3MTkwMTk3 MDA1QG1pbIYtdXJuOnV1aWQ6RTNGRDc4NEEtOEY0QS00QTA2LTg5MzYtOENCOURD NzY5NzZGMBsGA1UdCQQUMBIwEAYIKwYBBQUHCQQxBBMCVVMwHwYDVR0lBBgwFgYK KwYBBAGCNxQCAgYIKwYBB
+QUHAwIwDQYJKoZIhvcNAQELBQADggEBAKxD9iKWbpr9 GCo7PnMH9jrl5ZuQX2c9zXYgN9TpAs83UZ6QdGLoESwoGJmonQwQT/MB6wTR11pM 8eda+ZV/f9gOV0ki68va6sNEPKL2jef+akT+uHkIAuUI5Pz1Ci2wxCeOu/zOkYU/ q8pCoqt86EoaE4OXwxHQePcvKKip7vv
+o0FPxrh4NhJAtpaQmPU7kKjB2XW2riXLD FIe2v85bNzeZMSJVqYlxlHuf5PH/T6o7Ip2INhjxTYRNU+ltHrRTTNO4I1649/v3 K6qPwMgOTYIYHhfkJN5OhTTnMlDlZwIjnSZDIJRfGKFTH/7t/HmtcBtNZcw3gpBE HKaxnv11Bz8= -----END CERTIFICATE----- '
+Oct 25 08:17:27 firelord.iad.gov info apmd[15644]: 01490007:6: /Common/iad.gov_access_profile:Common:edba86c8: Session variable 'session.ssl.cert.x509extension' set to 'X509v3 extensions:     X509v3 Author
+ity Key Identifier:          keyid:75:09:A6:15:13:AE:87:3C:FA:73:94:00:F2:F0:F5:79:B9:B2:72:14      X509v3 CRL Distribution Points:           Full Name:           URI:http://crl.disa.mil/crl/DODIDCA_59_PIV
+.crl      X509v3 Key Usage: critical         Digital Signature     X509v3 Certificate Policies:          Policy: 2.16.840.1.101.2.1.11.42         Policy: 2.16.840.1.101.3.2.1.3.13      X509v3 Subject Key I
+dentifier:          11:F2:8B:58:D8:15:5B:DE:10:F7:91:65:53:EC:FB:11:FE:3D:19:7B     Authority Information Access:          CA Issuers - URI:http://crl.disa.mil/sign/DODIDCA_59.cer         OCSP - URI:http:/
+/ocsp.disa.mil      X509v3 Subject Alternative Name:          othername:<unsupported>, othername:UPN<1158907190197005@mil>, URI:urn:uuid:E3FD784A-8F4A-4A06-8936-8CB9DC76976F     X509v3 Subject Directory At
+tributes:          0.0...+.......1...US     X509v3 Extended Key Usage:          Microsoft Smartcardlogin, TLS Web Client Authentication '
+Oct 25 08:17:27 firelord.iad.gov info apmd[15644]: 01490004:6: /Common/iad.gov_access_profile:Common:edba86c8: Executed agent '/Common/cert_authentication_act_ondemand_cert_auth_1_ag', return value 0 ('Exe
+cution Done')
+Oct 25 08:17:27 firelord.iad.gov info apmd[15644]: 01490006:6: /Common/iad.gov_access_profile:Common:edba86c8: Following rule 'fallback' from item 'On-Demand Cert Auth' to item 'Redirect iRule Event'
+Oct 25 08:17:27 firelord.iad.gov info apmd[15644]: 01490004:6: /Common/iad.gov_access_profile:Common:edba86c8: Executed agent '/Common/cert_authentication_act_irule_event_1_ag', return value 3 ('Need User
+input')
+Oct 25 08:17:27 firelord.iad.gov info apmd[15644]: 01490007:6: /Common/iad.gov_access_profile:Common:edba86c8: Session variable 'session.custom_event.id' set to 'ODCAFAIL'
+Oct 25 08:17:27 firelord.iad.gov info apmd[15644]: 01490007:6: /Common/iad.gov_access_profile:Common:edba86c8: Session variable 'session.policy.result.policy_path' set to ' | Start (fallback) | AnonUserid
+or Cert (Cert) | {ENTER MACRO} Cert Authentication | In (fallback) | On-Demand Cert Auth (fallback)'
+Oct 25 08:17:27 firelord.iad.gov info apmd[15644]: 01490004:6: /Common/iad.gov_access_profile:Common:edba86c8: Executed agent '/Common/cert_authentication_act_irule_event_1_ag', return value 0 ('Execution
+Done')
+Oct 25 08:17:27 firelord.iad.gov notice apmd[15644]: 01490115:5: /Common/iad.gov_access_profile:Common:edba86c8: Following rule 'fallback' from item 'Redirect iRule Event' to terminalout 'Good'
+Oct 25 08:17:27 firelord.iad.gov notice apmd[15644]: 01490005:5: /Common/iad.gov_access_profile:Common:edba86c8: Following rule 'Good' from item 'Cert Authentication' to ending 'Allow'
+Oct 25 08:17:27 firelord.iad.gov notice apmd[15644]: 01490102:5: /Common/iad.gov_access_profile:Common:edba86c8: Access policy result: LTM+APM_Mode
+Oct 25 08:17:27 firelord.iad.gov info apmd[15644]: 01490004:6: /Common/iad.gov_access_profile:Common:edba86c8: Executed agent '/Common/iad.gov_access_profile_end_allow_ag', return value 0 ('Execution Done'
+)
+Oct 25 08:17:27 firelord.iad.gov notice apmd[15644]: 01490248:5: /Common/iad.gov_access_profile:Common:edba86c8: Received client info - Hostname:  Type: Mozilla Version: 1 Platform: MacOS CPU: x64 UI Mode:
+ Full Javascript Support: 1 ActiveX Support: 0 Plugin Support: 0
+Oct 25 08:17:27 firelord.iad.gov notice apmd[15644]: 014902b8:5: /Common/iad.gov_access_profile:Common:edba86c8:  | Start (fallback) | AnonUserid or Cert (Cert) | {ENTER MACRO} Cert Authentication | In (fa
+llback) | On-Demand Cert Auth (fallback) | Redirect iRule Event (fallback) | Good | {EXIT MACRO} Cert Authentication (Good) | Allow |  Ending is: Allow
+Oct 25 08:17:27 firelord.iad.gov info apmd[15644]: 01490007:6: /Common/iad.gov_access_profile:Common:edba86c8: Session variable 'session.assigned.uuid' set to 'tmm.uuid./Common/iad.gov_access_profile.'
+Oct 25 08:17:27 firelord.iad.gov info apmd[15644]: 01490007:6: /Common/iad.gov_access_profile:Common:edba86c8: Session variable 'session.assigned.webtopsectionsresources' set to ''
+Oct 25 08:17:27 firelord.iad.gov info apmd[15644]: 01490007:6: /Common/iad.gov_access_profile:Common:edba86c8: Session variable 'session.logon.page.errorcode' set to '0'
+Oct 25 08:17:27 firelord.iad.gov info apmd[15644]: 01490007:6: /Common/iad.gov_access_profile:Common:edba86c8: Session variable 'session.policy.result' set to 'allow'
+Oct 25 08:17:27 firelord.iad.gov info apmd[15644]: 01490007:6: /Common/iad.gov_access_profile:Common:edba86c8: Session variable 'session.policy.result.policy_path' set to ' | Start (fallback) | AnonUserid
+or Cert (Cert) | {ENTER MACRO} Cert Authentication | In (fallback) | On-Demand Cert Auth (fallback) | Redirect iRule Event (fallback) | Good | {EXIT MACRO} Cert Authentication (Good) | Allow | '
+Oct 25 08:17:28 firelord.iad.gov notice tmm1[22880]: 01490567:5: /Common/iad.gov_access_profile:Common:edba86c8: Session deleted (restarted).
+Oct 25 08:18:04 firelord.iad.gov notice tmm1[22880]: 01490521:5: /Common/iad.gov_access_profile:Common:edba86c8: Session statistics - bytes in: 9452, bytes out: 7251
