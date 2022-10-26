@@ -1,0 +1,33 @@
+ASA1(config-if)# sh int ip brief                 
+Interface                  IP-Address      OK? Method Status                Protocol
+GigabitEthernet0/0         unassigned      YES unset  administratively down up  
+GigabitEthernet0/0.10      unassigned      YES unset  down                  down
+GigabitEthernet0/1         unassigned      YES unset  administratively down up  
+GigabitEthernet0/2         unassigned      YES unset  administratively down up  
+GigabitEthernet0/3         unassigned      YES unset  administratively down up  
+GigabitEthernet0/3.10      192.168.1.1     YES unset  down                  down
+GigabitEthernet0/3.100     192.168.1.1     YES unset  down                  down
+GigabitEthernet0/3.200     192.168.2.1     YES unset  down                  down
+GigabitEthernet0/4         unassigned      YES unset  up                    up  
+GigabitEthernet0/5         10.1.0.1        YES unset  up                    up  
+GigabitEthernet0/6         10.0.0.1        YES unset  up                    up  
+Internal-Data0/0           169.254.1.1     YES unset  up                    up  
+Management0/0              unassigned      YES unset  administratively down up  
+BVI1                       192.168.1.1     YES manual up                    up  
+BVI2                       192.168.2.1     YES manual up                    up  
+
+ASA1(config-if)# sh nameif
+Interface                Name                     Security
+GigabitEthernet0/3.10    inside                   100
+GigabitEthernet0/3.100   outside                    0
+ASA1(config-if)# sh run int g0/3.200
+!
+interface GigabitEthernet0/3.200
+ vlan 200
+ bridge-group 2
+ no nameif
+ no security-level
+ 
+ASA1(config-if)# int g0/3.200
+ASA1(config-subif)# nameif outside
+ERROR: Name "outside" has been assigned to interface GigabitEthernet0/3.100
