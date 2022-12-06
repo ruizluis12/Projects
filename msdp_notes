@@ -1,0 +1,36 @@
+Working NX-OS
+
+feature msdp
+ip pim rp-address 10.2.3.2 group-list 224.0.0.0/4
+ip pim ssm range 232.0.0.0/8
+!
+ip msdp peer 10.2.3.3 connect-source Ethernet1/3
+
+interface Ethernet1/5
+  no switchport
+  ip address 10.2.13.2/24
+  ip pim sparse-mode
+  no shutdown
+  
+  interface loopback0
+  ip address 2.2.2.2/32
+ 
+ -----------------
+  Working pair IOS
+  
+ip multicast-routing
+!
+interface Loopback0
+ ip address 3.3.3.3 255.255.255.255
+ ip pim sparse-mode
+ !
+interface GigabitEthernet0/1
+ ip address 10.2.3.3 255.255.255.0
+ ip pim sparse-mode
+ duplex auto
+ speed auto
+ media-type rj45
+ !
+ip pim rp-address 3.3.3.3
+ip msdp peer 10.2.3.2 connect-source GigabitEthernet0/1
+ip msdp cache-sa-state
