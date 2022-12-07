@@ -1,0 +1,88 @@
+With the setup on the configuration a client on the fabric can be a source and a host outside of the fabric can join the group
+
+
+PC4(config)#int g0/0
+PC4(config-if)#ip igmp jo
+PC4(config-if)#ip igmp join-group 224.3.3.3
+
+-----
+C2#ping 224.3.3.3 repeat 100
+
+Sending 100, 100-byte ICMP Echos to 224.3.3.3, timeout is 2 seconds:
+
+Reply to request 0 from 172.21.141.4, 78 ms
+Reply to request 1 from 172.21.141.4, 34 ms
+Reply to request 2 from 172.21.141.4, 24 ms
+Reply to request 3 from 172.21.141.4, 20 ms
+Reply to request 4 from 172.21.141.4, 25 ms
+Reply to request 5 from 172.21.141.4, 28 ms
+Reply to request 6 from 172.21.141.4, 22 ms
+Reply to request 7 from 172.21.141.4, 26 ms
+
+--
+
+On the Last hop router (close to the receiver)
+
+LF1# sh ip mroute vrf Tenent-1 
+IP Multicast Routing Table for VRF "Tenent-1"
+
+(*, 224.2.2.2/32), uptime: 04:26:38, igmp pim ip 
+  Incoming interface: Vlan999, RPF nbr: 192.168.0.19
+  Outgoing interface list: (count: 1)
+    Vlan140, uptime: 04:26:38, igmp
+
+
+(*, 224.3.3.3/32), uptime: 00:05:44, ip pim 
+  Incoming interface: Vlan999, RPF nbr: 192.168.0.19
+  Outgoing interface list: (count: 0)
+
+
+(10.5.100.100/32, 224.3.3.3/32), uptime: 00:05:31, ip mrib pim 
+  Incoming interface: Vlan999, RPF nbr: 192.168.0.19
+  Outgoing interface list: (count: 0)
+
+
+(*, 232.0.0.0/8), uptime: 05:52:48, pim ip 
+  Incoming interface: Null, RPF nbr: 0.0.0.0
+  Outgoing interface list: (count: 0)
+  
+  -- 
+  
+  On the first source router
+  
+R5#sh ip mroute
+IP Multicast Routing Table
+Flags: D - Dense, S - Sparse, B - Bidir Group, s - SSM Group, C - Connected,
+       L - Local, P - Pruned, R - RP-bit set, F - Register flag,
+       T - SPT-bit set, J - Join SPT, M - MSDP created entry, E - Extranet,
+       X - Proxy Join Timer Running, A - Candidate for MSDP Advertisement,
+       U - URD, I - Received Source Specific Host Report, 
+       Z - Multicast Tunnel, z - MDT-data group sender, 
+       Y - Joined MDT-data group, y - Sending to MDT-data group, 
+       G - Received BGP C-Mroute, g - Sent BGP C-Mroute, 
+       N - Received BGP Shared-Tree Prune, n - BGP C-Mroute suppressed, 
+       Q - Received BGP S-A Route, q - Sent BGP S-A Route, 
+       V - RD & Vector, v - Vector, p - PIM Joins on route, 
+       x - VxLAN group
+Outgoing interface flags: H - Hardware switched, A - Assert winner, p - PIM Join
+ Timers: Uptime/Expires
+ Interface state: Interface, Next-Hop or VCD, State/Mode
+
+(*, 224.3.3.3), 00:06:25/stopped, RP 3.3.3.3, flags: SPF
+  Incoming interface: GigabitEthernet0/0, RPF nbr 10.4.5.4
+  Outgoing interface list: Null
+
+(10.5.100.100, 224.3.3.3), 00:06:25/00:02:39, flags: PFT
+  Incoming interface: GigabitEthernet0/1, RPF nbr 0.0.0.0
+  Outgoing interface list: Null
+
+(*, 224.1.1.1), 1d21h/00:02:59, RP 3.3.3.3, flags: SJCL
+  Incoming interface: GigabitEthernet0/0, RPF nbr 10.4.5.4
+  Outgoing interface list:
+    Loopback0, Forward/Sparse, 04:53:03/00:02:34
+    GigabitEthernet0/1, Forward/Sparse, 1d03h/00:02:59
+
+(*, 224.0.1.40), 1d21h/00:02:35, RP 3.3.3.3, flags: SJCL
+  Incoming interface: GigabitEthernet0/0, RPF nbr 10.4.5.4
+  Outgoing interface list:
+    Loopback0, Forward/Sparse, 1d21h/00:02:35
