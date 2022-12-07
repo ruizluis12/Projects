@@ -1,0 +1,152 @@
+hostname Leaf2
+
+feature telnet
+feature nxapi
+feature bash-shell
+feature ngmvpn
+nv overlay evpn
+feature ospf
+feature bgp
+feature pim
+feature msdp
+feature interface-vlan
+feature vn-segment-vlan-based
+feature nv overlay
+
+fabric forwarding anycast-gateway-mac 0000.2222.3333
+ip pim rp-address 10.2.3.2 group-list 224.0.0.0/4
+ip pim rp-address 192.168.0.100 group-list 224.0.0.0/4
+ip pim ssm range 232.0.0.0/8
+ip igmp snooping vxlan
+vlan 1,140-141,999
+vlan 140
+  name test2
+  vn-segment 50140
+vlan 141
+  name test3
+  vn-segment 50141
+vlan 999
+  name test1
+  vn-segment 50999
+
+route-map CONNECTED permit 10
+vrf context Tenent-1
+  vni 50999
+  ip pim rp-address 10.2.3.2 group-list 224.0.0.0/4
+  ip pim ssm range 232.0.0.0/8
+  ip msdp peer 10.2.3.3 connect-source Ethernet1/3
+  rd auto
+  address-family ipv4 unicast
+    route-target both auto
+    route-target both auto mvpn
+    route-target both auto evpn
+vrf context management
+
+
+interface Vlan1
+
+interface Vlan140
+  no shutdown
+  vrf member Tenent-1
+  no ip redirects
+  ip address 172.21.140.1/24
+  ip pim sparse-mode
+  fabric forwarding mode anycast-gateway
+
+interface Vlan999
+  no shutdown
+  vrf member Tenent-1
+  ip forward
+  ip pim sparse-mode
+
+interface nve1
+  no shutdown
+  host-reachability protocol bgp
+  source-interface loopback1
+  member vni 50140
+    mcast-group 239.0.0.140
+  member vni 50141
+    mcast-group 239.0.0.141
+  member vni 50999 associate-vrf
+    mcast-group 239.0.0.99
+
+interface Ethernet1/1
+
+interface Ethernet1/2
+  description Connection to Spine1
+  no switchport
+  mtu 9216
+  ip address 10.0.0.26/30
+  ip ospf network point-to-point
+  ip router ospf 1 area 0.0.0.0
+  ip pim sparse-mode
+  no shutdown
+
+interface Ethernet1/3
+  no switchport
+  vrf member Tenent-1
+  ip address 10.2.3.2/24
+  ip pim sparse-mode
+  no shutdown
+
+interface Ethernet1/5
+  description Connection to PC3
+  switchport access vlan 140
+
+interface mgmt0
+  vrf member management
+
+interface loopback0
+  ip address 192.168.0.9/32
+  ip router ospf 1 area 0.0.0.0
+  ip pim sparse-mode
+
+interface loopback1
+  description VXLAN VTEP
+  ip address 192.168.0.19/32
+  ip router ospf 1 area 0.0.0.0
+  ip pim sparse-mode
+icam monitor scale
+
+line console
+line vty
+boot nxos bootflash:/nxos.9.3.6.bin sup-1
+router ospf 1
+  router-id 192.168.0.9
+router bgp 65000
+  router-id 192.168.0.9
+  address-family ipv4 unicast
+    redistribute direct route-map CONNECTED
+  address-family ipv4 mvpn
+  address-family l2vpn evpn
+    retain route-target all
+  template peer SPINE-PEER
+    remote-as 65000
+    update-source loopback0
+    address-family ipv4 unicast
+      send-community
+      send-community extended
+    address-family ipv4 mvpn
+      send-community
+      send-community extended
+    address-family l2vpn evpn
+      send-community
+      send-community extended
+  neighbor 192.168.0.6
+    inherit peer SPINE-PEER
+  vrf Tenent-1
+    address-family ipv4 unicast
+      network 10.2.3.0/24
+      network 172.21.140.0/24
+    neighbor 10.2.3.3
+      remote-as 100
+      address-family ipv4 unicast
+evpn
+  vni 50140 l2
+    rd auto
+    route-target import auto
+    route-target export auto
+  vni 50141 l2
+    rd auto
+    route-target import auto
+    route-target export auto
