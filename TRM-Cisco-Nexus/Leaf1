@@ -12,10 +12,14 @@ feature interface-vlan
 feature vn-segment-vlan-based
 feature nv overlay
 
+
 fabric forwarding anycast-gateway-mac 0000.2222.3333
+#Underlay Multicast configuration
 ip pim rp-address 192.168.0.100 group-list 224.0.0.0/4
 ip pim ssm range 232.0.0.0/8
+
 ip igmp snooping vxlan
+
 vlan 1,140-141,999
 vlan 140
   name test2
@@ -29,11 +33,13 @@ vlan 999
 
 vrf context Tenent-1
   vni 50999
+ #Overlay PIM configuration
   ip pim rp-address 10.2.3.2 group-list 224.0.0.0/4
   ip pim ssm range 232.0.0.0/8
   rd auto
   address-family ipv4 unicast
     route-target both auto
+    # enables the mvpc route targets
     route-target both auto mvpn
     route-target both auto evpn
 vrf context management
@@ -60,6 +66,7 @@ interface Vlan999
   no shutdown
   vrf member Tenent-1
   ip forward
+  #needs PIM
   ip pim sparse-mode
 
 interface nve1
@@ -71,6 +78,7 @@ interface nve1
   member vni 50141
     mcast-group 239.0.0.141
   member vni 50999 associate-vrf
+  #Needs a new multicast group to support overlay multicast @ layer3
     mcast-group 239.0.0.99
 
 interface Ethernet1/1
@@ -110,6 +118,7 @@ router ospf 1
 router bgp 65000
   router-id 192.168.0.8
   address-family ipv4 unicast
+  #MVPN addres family is needit
   address-family ipv4 mvpn
   address-family l2vpn evpn
     retain route-target all
@@ -119,6 +128,7 @@ router bgp 65000
     address-family ipv4 unicast
       send-community
       send-community extended
+      #Enables address family to Spine peering
     address-family ipv4 mvpn
       send-community
       send-community extended
