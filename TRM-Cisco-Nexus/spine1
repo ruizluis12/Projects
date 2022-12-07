@@ -1,0 +1,85 @@
+hostname spine1
+
+feature telnet
+feature nxapi
+feature bash-shell
+feature ngmvpn
+nv overlay evpn
+feature ospf
+feature bgp
+feature pim
+feature interface-vlan
+feature vn-segment-vlan-based
+feature nv overlay
+
+ip pim rp-address 192.168.0.100 group-list 224.0.0.0/4
+ip pim ssm range 232.0.0.0/8
+ip pim anycast-rp 192.168.0.100 192.168.0.6
+vlan 1
+
+vrf context management
+
+interface Vlan1
+
+interface Ethernet1/1
+  description Connection to leaf1
+  mtu 9216
+  ip address 10.0.0.21/30
+  ip ospf network point-to-point
+  ip router ospf 1 area 0.0.0.0
+  ip pim sparse-mode
+  no shutdown
+
+interface Ethernet1/2
+  description Connection to leaf2
+  mtu 9216
+  ip address 10.0.0.25/30
+  ip ospf network point-to-point
+  ip router ospf 1 area 0.0.0.0
+  ip pim sparse-mode
+  no shutdown
+
+interface mgmt0
+  vrf member management
+
+interface loopback0
+  ip address 192.168.0.6/32
+  ip router ospf 1 area 0.0.0.0
+  ip pim sparse-mode
+
+interface loopback1
+  ip address 192.168.0.100/32
+  ip router ospf 1 area 0.0.0.0
+  ip pim sparse-mode
+icam monitor scale
+
+line console
+line vty
+boot nxos bootflash:/nxos.9.3.6.bin sup-1
+router ospf 1
+  router-id 192.168.0.6
+router bgp 65000
+  router-id 192.168.0.6
+  address-family ipv4 unicast
+  address-family ipv4 mvpn
+  address-family l2vpn evpn
+    retain route-target all
+  template peer LEAF-PEER
+    remote-as 65000
+    update-source loopback0
+    address-family ipv4 unicast
+      send-community
+      send-community extended
+      route-reflector-client
+    address-family ipv4 mvpn
+      send-community
+      send-community extended
+      route-reflector-client
+    address-family l2vpn evpn
+      send-community
+      send-community extended
+      route-reflector-client
+  neighbor 192.168.0.8
+    inherit peer LEAF-PEER
+  neighbor 192.168.0.9
+    inherit peer LEAF-PEER
