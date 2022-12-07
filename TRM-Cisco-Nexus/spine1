@@ -61,6 +61,7 @@ router ospf 1
 router bgp 65000
   router-id 192.168.0.6
   address-family ipv4 unicast
+#Address family needs to be enabled
   address-family ipv4 mvpn
   address-family l2vpn evpn
     retain route-target all
@@ -71,6 +72,7 @@ router bgp 65000
       send-community
       send-community extended
       route-reflector-client
+ #Address family needs to be enabled
     address-family ipv4 mvpn
       send-community
       send-community extended
