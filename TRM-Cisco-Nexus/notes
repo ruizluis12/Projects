@@ -1,5 +1,7 @@
 With the setup on the configuration a client on the fabric can be a source and a host outside of the fabric can join the group
 
+On this seup I am using the P2P of the border leaf for the overlay RP.  This can be setup as a loopback instead of the physical interface.
+
 
 PC4(config)#int g0/0
 PC4(config-if)#ip igmp jo
