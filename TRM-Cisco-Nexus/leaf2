@@ -14,7 +14,6 @@ feature vn-segment-vlan-based
 feature nv overlay
 
 fabric forwarding anycast-gateway-mac 0000.2222.3333
-ip pim rp-address 10.2.3.2 group-list 224.0.0.0/4
 ip pim rp-address 192.168.0.100 group-list 224.0.0.0/4
 ip pim ssm range 232.0.0.0/8
 ip igmp snooping vxlan
