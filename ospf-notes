@@ -1,1 +1,3 @@
 https://www.cisco.com/c/en/us/support/docs/ip/open-shortest-path-first-ospf/116119-technote-ospf-mtu-00.html
+
+To check the database size, debug ip packet or take a packet capture and check the lenth of the packets.
