@@ -1,0 +1,196 @@
+hostname Leaf3
+vdc Leaf3 id 1
+  limit-resource vlan minimum 16 maximum 4094
+  limit-resource vrf minimum 2 maximum 4096
+  limit-resource port-channel minimum 0 maximum 511
+  limit-resource u4route-mem minimum 248 maximum 248
+  limit-resource u6route-mem minimum 96 maximum 96
+  limit-resource m4route-mem minimum 58 maximum 58
+  limit-resource m6route-mem minimum 8 maximum 8
+
+feature telnet
+feature nxapi
+feature bash-shell
+feature ngmvpn
+nv overlay evpn
+feature ospf
+feature bgp
+feature pim
+feature msdp
+feature interface-vlan
+feature vn-segment-vlan-based
+feature nv overlay
+
+no password strength-check
+username admin password 5 $5$NABCPN$Uw0HhBgv2Hxz8fZksZFFoWlyqmLx8W04.0GU1QWxjf/ 
+ role network-admin
+username cisco password 5 $5$APEMFI$UfLlUvE3tWLAIQyNHLn24746xBxGjwcwsvBmclLoFfC 
+ role network-admin
+username cisco passphrase  lifetime 99999 warntime 14 gracetime 3
+ip domain-lookup
+advertise evpn multicast
+snmp-server user admin network-admin auth md5 1768D8D11B3E76C3980A0916F6AA4F72D6
+6C priv 364FDCBB744224F3A62A0E17AFB2167BD812 localizedV2key
+snmp-server user cisco network-admin auth md5 481AD9A43A4C78B7F37C0048A2E63130CE
+4C priv 057EA5D7246C13A6FD321707AAEE1951F434 localizedV2key
+rmon event 1 log trap public description FATAL(1) owner PMON@FATAL
+rmon event 2 log trap public description CRITICAL(2) owner PMON@CRITICAL
+rmon event 3 log trap public description ERROR(3) owner PMON@ERROR
+rmon event 4 log trap public description WARNING(4) owner PMON@WARNING
+rmon event 5 log trap public description INFORMATION(5) owner PMON@INFO
+
+fabric forwarding anycast-gateway-mac 0000.2222.3333
+ip mroute 10.6.8.0/24 10.2.13.2 vrf Tenent-1
+ip pim evpn-border-leaf
+ip pim rp-address 192.168.0.100 group-list 224.0.0.0/4
+ip pim ssm range 232.0.0.0/8
+ip igmp snooping vxlan
+vlan 1,140-142,999
+vlan 140
+  name test2
+  vn-segment 50140
+vlan 141
+  name test3
+  vn-segment 50141
+vlan 142
+  name R2
+vlan 999
+  name test1
+  vn-segment 50999
+
+route-map CONNECTED permit 10
+vrf context Tenent-1
+  vni 50999
+  ip pim rp-address 209.165.200.1 group-list 224.0.0.0/4
+  ip pim ssm range 232.0.0.0/8
+  ip pim anycast-rp 209.165.200.1 209.165.200.12
+  ip pim anycast-rp 209.165.200.1 209.165.200.13
+  ip msdp peer 10.2.13.2 connect-source Ethernet1/1
+  rd auto
+  address-family ipv4 unicast
+    route-target both auto
+    route-target both auto mvpn
+    route-target both auto evpn
+vrf context management
+
+
+interface Vlan1
+
+interface Vlan140
+  no shutdown
+  vrf member Tenent-1
+  no ip redirects
+  ip address 172.21.140.1/24
+  ip pim sparse-mode
+  fabric forwarding mode anycast-gateway
+
+interface Vlan999
+  no shutdown
+  vrf member Tenent-1
+  ip forward
+  ip pim sparse-mode
+
+interface nve1
+  no shutdown
+  host-reachability protocol bgp
+  source-interface loopback1
+  member vni 50140
+    mcast-group 239.0.0.140
+  member vni 50141
+    mcast-group 239.0.0.141
+  member vni 50999 associate-vrf
+    mcast-group 239.0.0.99
+
+interface Ethernet1/1
+  no switchport
+  vrf member Tenent-1
+  no ip redirects
+  ip address 10.2.13.13/24
+  ip pim sparse-mode
+  no shutdown
+
+interface Ethernet1/2
+  description Connection to Spine1
+  no switchport
+  mtu 9216
+  ip address 10.0.0.30/30
+  ip ospf network point-to-point
+  ip router ospf 1 area 0.0.0.0
+  ip pim sparse-mode
+  no shutdown
+
+interface Ethernet1/5
+  description Connection to PC4
+  switchport access vlan 140
+
+interface loopback0
+  ip address 192.168.0.10/32
+  ip router ospf 1 area 0.0.0.0
+  ip pim sparse-mode
+
+interface loopback1
+  description VXLAN VTEP
+  ip address 192.168.0.20/32
+  ip router ospf 1 area 0.0.0.0
+  ip pim sparse-mode
+
+interface loopback11
+  vrf member Tenent-1
+  ip address 209.165.200.1/32
+  ip pim sparse-mode
+
+interface loopback12
+  vrf member Tenent-1
+  ip address 209.165.200.13/32
+  ip pim sparse-mode
+icam monitor scale
+
+line console
+line vty
+boot nxos bootflash:/nxos.9.3.8.bin sup-1
+router ospf 1
+  router-id 192.168.0.10
+router bgp 65000
+  router-id 192.168.0.10
+  address-family ipv4 unicast
+    redistribute direct route-map CONNECTED
+  address-family ipv4 mvpn
+  address-family l2vpn evpn
+    retain route-target all
+  template peer SPINE-PEER
+    remote-as 65000
+    update-source loopback0
+    address-family ipv4 unicast
+      send-community
+      send-community extended
+    address-family ipv4 mvpn
+      send-community
+      send-community extended
+    address-family l2vpn evpn
+      send-community
+      send-community extended
+  neighbor 192.168.0.6
+    inherit peer SPINE-PEER
+  vrf Tenent-1
+    address-family ipv4 multicast
+      network 10.2.13.0/24
+      redistribute direct route-map CONNECTED
+    address-family ipv4 unicast
+      network 10.2.13.0/24
+      network 209.165.200.13/32
+    neighbor 10.2.13.2
+      remote-as 100
+      address-family ipv4 multicast
+      address-family ipv4 unicast
+evpn
+  vni 50140 l2
+    rd auto
+    route-target import auto
+    route-target export auto
+  vni 50141 l2
+    rd auto
+    route-target import auto
+    route-target export auto
+
+logging monitor 7
+logging console 7
