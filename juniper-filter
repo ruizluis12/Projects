@@ -1,0 +1,8 @@
+set firewall filter TEST term 1 from destination-address 1.1.1.1/32
+set firewall filter TEST term 1 then log
+set firewall filter TEST term 1 then accept
+set firewall filter TEST term 2 then accept
+
+set interfaces gr-1/0/0 unit 52 family inet filter output TEST
+
+show firewall log detail
