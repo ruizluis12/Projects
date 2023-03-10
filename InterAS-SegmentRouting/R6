@@ -1,0 +1,123 @@
+version 15.9
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname R6
+!
+boot-start-marker
+boot-end-marker
+!
+!
+vrf definition VPN_ACME
+ rd 66001:6
+ !
+ address-family ipv4
+  route-target export 100:100
+  route-target import 100:100
+ exit-address-family
+!
+!
+no aaa new-model
+!
+!
+!
+mmi polling-interval 60
+no mmi auto-configure
+no mmi pvc
+mmi snmp-timeout 180
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+ip cef
+no ipv6 cef
+!
+multilink bundle-name authenticated
+!         
+!
+!
+!
+!
+redundancy
+!
+!
+! 
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+interface Loopback0
+ ip address 6.6.6.6 255.255.255.255
+!         
+interface Loopback100
+ vrf forwarding VPN_ACME
+ ip address 106.106.106.106 255.255.255.255
+!
+interface GigabitEthernet0/0
+ ip address 10.5.6.6 255.255.255.0
+ duplex auto
+ speed auto
+ media-type rj45
+!
+interface GigabitEthernet0/1
+ no ip address
+ shutdown
+ duplex auto
+ speed auto
+ media-type rj45
+!
+interface GigabitEthernet0/2
+ no ip address
+ shutdown
+ duplex auto
+ speed auto
+ media-type rj45
+!
+interface GigabitEthernet0/3
+ no ip address
+ shutdown
+ duplex auto
+ speed auto
+ media-type rj45
+!
+router ospf 1
+ mpls ldp autoconfig
+ network 0.0.0.0 255.255.255.255 area 0
+!
+router bgp 66001
+ bgp log-neighbor-changes
+ neighbor 5.5.5.5 remote-as 66001
+ neighbor 5.5.5.5 update-source Loopback0
+ !
+ address-family vpnv4
+  neighbor 5.5.5.5 activate
+  neighbor 5.5.5.5 send-community extended
+ exit-address-family
+ !
+ address-family ipv4 vrf VPN_ACME
+  redistribute connected
+ exit-address-family
+!
+ip forward-protocol nd
+!
+!
+no ip http server
+no ip http secure-server
+!
+ipv6 ioam timestamp
