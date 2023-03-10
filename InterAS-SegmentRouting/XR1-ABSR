@@ -1,0 +1,183 @@
+hostname XR1
+vrf VPN_ACME
+ address-family ipv4 unicast
+  import route-target
+   100:100
+  !
+  export route-target
+   100:100
+  !
+ !
+!
+interface Loopback0
+ ipv4 address 11.11.11.11 255.255.255.255
+!
+interface Loopback100
+ vrf VPN_ACME
+ ipv4 address 111.111.111.111 255.255.255.255
+!
+interface MgmtEth0/0/CPU0/0
+ shutdown
+!         
+interface GigabitEthernet0/0/0/0
+ ipv4 address 10.11.14.11 255.255.255.0
+!
+interface GigabitEthernet0/0/0/1
+ ipv4 address 10.11.12.11 255.255.255.0
+!
+interface GigabitEthernet0/0/0/2
+ ipv4 address 10.9.11.11 255.255.255.0
+!
+interface GigabitEthernet0/0/0/3
+ ipv4 address 10.11.15.11 255.255.255.0
+!
+interface GigabitEthernet0/0/0/4
+ shutdown
+!
+interface GigabitEthernet0/0/0/5
+ shutdown
+!
+interface GigabitEthernet0/0/0/6
+ shutdown
+!
+prefix-set AS65001
+  1.1.1.1/32,
+  14.14.14.14,
+  2.2.2.2/32,
+  3.3.3.3/32
+end-set
+!
+prefix-set AS65002
+  15.15.15.15/32,
+  16.16.16.16/32
+end-set
+!
+route-policy SID($SID)
+  set label-index $SID
+end-policy
+!
+route-policy PASS
+  pass
+end-policy
+!
+route-policy AS65001
+  if destination in AS65001 then
+    pass
+  endif
+end-policy
+!
+route-policy AS65002
+  if destination in AS65002 then
+    pass
+  endif
+end-policy
+!
+router static
+ address-family ipv4 unicast
+  10.11.14.14/32 GigabitEthernet0/0/0/0
+  10.11.15.15/32 GigabitEthernet0/0/0/3
+ !
+!
+router isis SR-AS-1
+ is-type level-2-only
+ net 49.0000.0000.0000.1111.00
+ address-family ipv4 unicast
+  metric-style wide
+  mpls traffic-eng level-2-only
+  mpls traffic-eng router-id Loopback0
+  segment-routing mpls sr-prefer
+  segment-routing prefix-sid-map advertise-local
+ !        
+ interface Loopback0
+  passive
+  circuit-type level-2-only
+  address-family ipv4 unicast
+   prefix-sid absolute 16001
+  !
+ !
+ interface GigabitEthernet0/0/0/0
+  passive
+  address-family ipv4 unicast
+  !
+ !
+ interface GigabitEthernet0/0/0/1
+  circuit-type level-2-only
+  point-to-point
+  address-family ipv4 unicast
+   fast-reroute per-prefix
+   fast-reroute per-prefix ti-lfa level 2
+   metric 10
+  !
+ !
+ interface GigabitEthernet0/0/0/2
+  circuit-type level-2-only
+  address-family ipv4 unicast
+  !
+ !
+ interface GigabitEthernet0/0/0/3
+  passive
+  address-family ipv4 unicast
+  !
+ !
+!
+router ospf SR-AS-1
+ address-family ipv4 unicast
+!
+router bgp 64001
+ bgp router-id 11.11.11.11
+ mpls activate
+  interface GigabitEthernet0/0/0/0
+  interface GigabitEthernet0/0/0/1
+  interface GigabitEthernet0/0/0/3
+ !
+ address-family ipv4 unicast
+  network 11.11.11.11/32 route-policy SID(1)
+  allocate-label all
+ !        
+ address-family vpnv4 unicast
+ !
+ neighbor 10.11.14.14
+  remote-as 65001
+  address-family ipv4 labeled-unicast
+   route-policy PASS in
+   route-policy PASS out
+   soft-reconfiguration inbound always
+  !
+ !
+ neighbor 12.12.12.12
+  remote-as 64001
+  update-source Loopback0
+  address-family ipv4 labeled-unicast
+   route-policy AS65001 out
+   next-hop-self
+  !
+  address-family vpnv4 unicast
+   next-hop-self
+  !
+ !
+ vrf VPN_ACME
+  rd auto 
+  address-family ipv4 unicast
+   redistribute connected
+  !
+ !
+!
+mpls oam
+!
+mpls ldp
+ interface GigabitEthernet0/0/0/2
+ !
+!
+segment-routing
+ global-block 16000 23999
+ mapping-server
+  prefix-sid-map
+   address-family ipv4
+    9.9.9.9/32 109
+    10.10.10.10/32 100
+   !
+  !
+ !
+!
+mpls label range table 0 94000 1000000
+end
