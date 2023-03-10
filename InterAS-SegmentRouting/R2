@@ -1,0 +1,147 @@
+version 15.9
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname R2
+!
+boot-start-marker
+boot-end-marker
+!
+!
+!
+no aaa new-model
+!
+!
+!
+mmi polling-interval 60
+no mmi auto-configure
+no mmi pvc
+mmi snmp-timeout 180
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+ip cef
+no ipv6 cef
+!
+multilink bundle-name authenticated
+!
+!
+!
+!
+!
+redundancy
+!         
+!
+! 
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+interface Loopback0
+ ip address 2.2.2.2 255.255.255.255
+!
+interface GigabitEthernet0/0
+ ip address 10.1.2.2 255.255.255.0
+ duplex auto
+ speed auto
+ media-type rj45
+!         
+interface GigabitEthernet0/1
+ ip address 10.2.3.2 255.255.255.0
+ duplex auto
+ speed auto
+ media-type rj45
+!
+interface GigabitEthernet0/2
+ no ip address
+ shutdown
+ duplex auto
+ speed auto
+ media-type rj45
+!
+interface GigabitEthernet0/3
+ no ip address
+ shutdown
+ duplex auto
+ speed auto
+ media-type rj45
+!
+router ospf 1
+ mpls ldp autoconfig
+ network 0.0.0.0 255.255.255.255 area 0
+!
+router bgp 65001
+ bgp log-neighbor-changes
+ network 2.2.2.2 mask 255.255.255.255
+ neighbor 1.1.1.1 remote-as 65001
+ neighbor 1.1.1.1 update-source Loopback0
+ neighbor 1.1.1.1 route-reflector-client
+ neighbor 1.1.1.1 send-label
+ neighbor 3.3.3.3 remote-as 65001
+ neighbor 3.3.3.3 update-source Loopback0
+ neighbor 3.3.3.3 route-reflector-client
+ neighbor 3.3.3.3 send-label
+ neighbor 10.10.10.10 remote-as 66001
+ neighbor 10.10.10.10 ebgp-multihop 255
+ neighbor 10.10.10.10 update-source Loopback0
+ neighbor 12.12.12.12 remote-as 64001
+ neighbor 12.12.12.12 ebgp-multihop 255
+ neighbor 12.12.12.12 update-source Loopback0
+ neighbor 14.14.14.14 remote-as 65001
+ neighbor 14.14.14.14 update-source Loopback0
+ neighbor 14.14.14.14 route-reflector-client
+ neighbor 14.14.14.14 send-label
+ neighbor 15.15.15.15 remote-as 65001
+ neighbor 15.15.15.15 update-source Loopback0
+ neighbor 15.15.15.15 route-reflector-client
+ !
+ address-family vpnv4
+  neighbor 1.1.1.1 activate
+  neighbor 1.1.1.1 send-community extended
+  neighbor 1.1.1.1 route-reflector-client
+  neighbor 3.3.3.3 activate
+  neighbor 3.3.3.3 send-community extended
+  neighbor 3.3.3.3 route-reflector-client
+  neighbor 10.10.10.10 activate
+  neighbor 10.10.10.10 send-community extended
+  neighbor 10.10.10.10 next-hop-unchanged
+  neighbor 12.12.12.12 activate
+  neighbor 12.12.12.12 send-community extended
+  neighbor 12.12.12.12 next-hop-unchanged
+  neighbor 14.14.14.14 activate
+  neighbor 14.14.14.14 send-community extended
+  neighbor 14.14.14.14 route-reflector-client
+  neighbor 15.15.15.15 activate
+  neighbor 15.15.15.15 send-community extended
+  neighbor 15.15.15.15 route-reflector-client
+ exit-address-family
+!
+ip forward-protocol nd
+!
+!
+no ip http server
+no ip http secure-server
+!
+ipv6 ioam timestamp
+!
+!
+!
+control-plane
+!
