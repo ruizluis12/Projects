@@ -1,0 +1,2 @@
+For inter as option c + bgp labels
+- Devices on the Segment routing domain will have 2 labels the SR label of the ASBR and the BGP label of the PE on the LDP domain
