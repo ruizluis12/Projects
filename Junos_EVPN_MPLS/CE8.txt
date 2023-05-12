@@ -1,0 +1,107 @@
+hostname CE8
+username root
+ group root-lr
+ group cisco-support
+ secret 10 $6$NpTrnxrxARD1n...$jQJbJUz.Gz4H5blD0zGXQ6hqo2qIyi8eHhB27Vm0C8GTpNFnaqUjXvLotBsaRTkdcDcF9rP.c7rXIre3BTjQ5/
+!
+username admin
+ group root-lr
+ group cisco-support
+ secret 10 $6$5Lo4x03hFjPo9x0.$HfWHdv6PcYDg5fhTOVHL6rDRdUVxh3Xm0DCQJ4RzLGiBPPmw/DTulkI37J0YCvypcDprn0Bn7hvEYfyEedy.k0
+!
+cdp
+line default
+ exec-timeout 0 0
+ transport input all
+ transport output all
+!
+call-home
+ service active
+ contact smart-licensing
+ profile CiscoTAC-1
+  active
+  destination transport-method http
+ !
+!
+interface Loopback0
+ ipv4 address 10.0.0.8 255.255.255.255
+!
+interface Loopback10
+ ipv4 address 10.8.0.8 255.255.255.0
+!
+interface Loopback11
+ ipv4 address 10.8.1.8 255.255.255.0
+!
+interface Loopback12
+ ipv4 address 10.8.2.8 255.255.255.0
+!
+interface MgmtEth0/RP0/CPU0/0
+ cdp
+ ipv4 address 192.168.2.208 255.255.255.0
+!
+interface GigabitEthernet0/0/0/0
+ shutdown
+!
+interface GigabitEthernet0/0/0/1
+ description Connect to PE1 G0/0/0/1
+ cdp
+!
+interface GigabitEthernet0/0/0/1.10
+ ipv4 address 10.0.18.8 255.255.255.0
+ encapsulation dot1q 10
+!
+interface GigabitEthernet0/0/0/1.200
+ ipv4 address 192.168.200.8 255.255.255.0
+ encapsulation dot1q 200
+!
+interface GigabitEthernet0/0/0/2
+ shutdown
+!
+interface GigabitEthernet0/0/0/3
+ shutdown
+!
+interface GigabitEthernet0/0/0/4
+ shutdown
+!
+interface GigabitEthernet0/0/0/5
+ shutdown
+!
+interface GigabitEthernet0/0/0/6
+ shutdown
+!
+route-policy PASS
+  pass
+end-policy
+!
+route-policy CONNECTED
+  if destination in (10.0.0.0/8 le 32) then
+    pass
+  else
+    drop
+  endif
+end-policy
+!
+router static
+ address-family ipv4 unicast
+  0.0.0.0/0 192.168.2.1
+ !
+!
+router bgp 800
+ bgp router-id 10.0.0.8
+ address-family ipv4 unicast
+  network 10.0.0.8/32
+ !
+ neighbor 10.0.18.1
+  remote-as 65000
+  address-family ipv4 unicast
+   route-policy PASS in
+   route-policy PASS out
+  !
+ !
+!
+lldp
+!
+telnet ipv4 client source-interface MgmtEth0/RP0/CPU0/0
+ssh server v2
+ssh server vrf default
+end
