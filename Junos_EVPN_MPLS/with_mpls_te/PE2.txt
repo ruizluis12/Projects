@@ -1,0 +1,92 @@
+hostname PE2
+username root
+ group root-lr
+ group cisco-support
+ secret 10 $6$NpTrnxrxARD1n...$jQJbJUz.Gz4H5blD0zGXQ6hqo2qIyi8eHhB27Vm0C8GTpNFnaqUjXvLotBsaRTkdcDcF9rP.c7rXIre3BTjQ5/
+!
+username admin
+ group root-lr
+ group cisco-support
+ secret 10 $6$Ji8kg/f0AP.n4g/.$sfXnj9pVievcMcetbZSDwsmdr3KIsXewr24Z1Omlc.J2J.016tLU0vysf.YYhz9kBNpdruHY5SMg.o3ZypGTR/
+!
+cdp
+line default
+ exec-timeout 0 0
+ transport input all
+ transport output all
+!
+call-home
+ service active
+ contact smart-licensing
+ profile CiscoTAC-1
+  active
+  destination transport-method http
+ !
+!
+interface Loopback0
+ ipv4 address 172.16.0.2 255.255.255.255
+!
+interface MgmtEth0/RP0/CPU0/0
+ cdp
+ ipv4 address 192.168.2.202 255.255.255.0
+!
+interface GigabitEthernet0/0/0/0
+ description Connect to P5 G0/0/0/0
+ cdp
+!
+interface GigabitEthernet0/0/0/0.10
+ ipv4 address 172.16.25.2 255.255.255.0
+ encapsulation dot1q 10
+!
+interface GigabitEthernet0/0/0/0.200
+ ipv4 address 192.168.200.2 255.255.255.0
+ encapsulation dot1q 200
+!
+interface GigabitEthernet0/0/0/1
+ description Connect to CE7 G0/0/0/1
+ cdp
+ vrf customer-1
+ ipv4 address 10.0.27.2 255.255.255.0
+!
+interface GigabitEthernet0/0/0/2
+ shutdown
+!
+interface GigabitEthernet0/0/0/3
+ shutdown
+!
+interface GigabitEthernet0/0/0/4
+ shutdown
+!
+interface GigabitEthernet0/0/0/5
+ shutdown
+!
+interface GigabitEthernet0/0/0/6
+ shutdown
+!
+route-policy PASS
+  pass
+end-policy
+!
+router static
+ address-family ipv4 unicast
+  0.0.0.0/0 192.168.2.1
+ !
+!
+router bgp 200
+ address-family ipv4 unicast
+  network 172.16.0.2/32
+ !
+ neighbor 172.16.25.5
+  remote-as 65000
+  address-family ipv4 unicast
+   route-policy PASS in
+   route-policy PASS out
+  !
+ !
+!
+lldp
+!
+telnet ipv4 client source-interface MgmtEth0/RP0/CPU0/0
+ssh server v2
+ssh server vrf default
+end
