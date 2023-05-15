@@ -1,0 +1,109 @@
+hostname P6
+username root
+ group root-lr
+ group cisco-support
+ secret 10 $6$NpTrnxrxARD1n...$jQJbJUz.Gz4H5blD0zGXQ6hqo2qIyi8eHhB27Vm0C8GTpNFnaqUjXvLotBsaRTkdcDcF9rP.c7rXIre3BTjQ5/
+!
+username admin
+ group root-lr
+ group cisco-support
+ secret 10 $6$dxgoI/D9BJGH3I/.$.TyE/L46Ig5l2PKHZp1SfesyxBH1Cwjla6ZLl7f4VlAMd5qYHWyFGiZmM447AWcIYNy9jqlv6CrEe8MzSrZsW1
+!
+cdp
+line default
+ exec-timeout 0 0
+ transport input all
+ transport output all
+!
+call-home
+ service active
+ contact smart-licensing
+ profile CiscoTAC-1
+  active
+  destination transport-method http
+ !
+!
+interface Loopback0
+ ipv4 address 172.16.0.6 255.255.255.255
+!
+interface MgmtEth0/RP0/CPU0/0
+ cdp
+ ipv4 address 192.168.2.206 255.255.255.0
+!
+interface GigabitEthernet0/0/0/0
+ description Connect to PE1 G0/0/0/0
+ cdp
+ ipv4 address 172.16.16.6 255.255.255.0
+!
+interface GigabitEthernet0/0/0/1
+ description Connect to P3 G0/0/0/1
+ cdp
+ ipv4 address 172.16.36.6 255.255.255.0
+!
+interface GigabitEthernet0/0/0/2
+ description Connect to P4 G0/0/0/0
+ cdp
+ ipv4 address 172.16.46.6 255.255.255.0
+!
+interface GigabitEthernet0/0/0/3
+ shutdown
+!
+interface GigabitEthernet0/0/0/4
+ shutdown
+!
+interface GigabitEthernet0/0/0/5
+ shutdown
+!
+interface GigabitEthernet0/0/0/6
+ shutdown
+!
+router static
+ address-family ipv4 unicast
+  0.0.0.0/0 192.168.2.105
+ !
+!
+router ospf 1
+ area 0
+  mpls traffic-eng
+  interface Loopback0
+  !
+  interface GigabitEthernet0/0/0/0
+  !
+  interface GigabitEthernet0/0/0/1
+  !
+  interface GigabitEthernet0/0/0/2
+  !
+  interface GigabitEthernet0/0/0/3
+  !
+ !
+!
+rsvp
+ interface GigabitEthernet0/0/0/0
+ !
+ interface GigabitEthernet0/0/0/1
+ !
+ interface GigabitEthernet0/0/0/2
+ !
+!
+mpls traffic-eng
+ interface GigabitEthernet0/0/0/0
+ !
+ interface GigabitEthernet0/0/0/1
+ !
+ interface GigabitEthernet0/0/0/2
+ !
+!
+mpls ldp
+ interface GigabitEthernet0/0/0/0
+ !
+ interface GigabitEthernet0/0/0/1
+ !
+ interface GigabitEthernet0/0/0/2
+ !
+!
+lldp
+!
+telnet ipv4 client source-interface MgmtEth0/RP0/CPU0/0
+ssh server v2
+ssh server vrf default
+end
