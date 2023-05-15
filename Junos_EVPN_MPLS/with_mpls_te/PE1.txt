@@ -1,0 +1,78 @@
+set version 20191112.100140_builder.r1067283
+set system host-name PE1
+set system root-authentication encrypted-password "$6$rj7euTEY$FOr87giWooL/TxscwOGeh6fH7nKYni/eurMi.pKQjU7VHqskpQd5T83kjUJQS7oIbqtWM7nu0uvwYdoS7dOLZ1"
+set system login user admin uid 2000
+set system login user admin class super-user
+set system login user admin authentication encrypted-password "$6$CZHdntk2$BC5obQjPkSulGQEsDLxVKbjF5xlqFPUBozXFpyRcnbFTWlNp2rpikDnaw7RX4wKqA7pbdKDV4gmFrG93JTNFS."
+set system services ssh
+set system syslog user * any emergency
+deactivate system syslog user *
+set system syslog file messages any notice
+set system syslog file messages authorization info
+set system syslog file interactive-commands interactive-commands any
+set system processes dhcp-service traceoptions file dhcp_logfile
+set system processes dhcp-service traceoptions file size 10m
+set system processes dhcp-service traceoptions level all
+set system processes dhcp-service traceoptions flag packet
+set chassis fpc 0 pic 0 interface-type ge
+set chassis fpc 0 pic 0 number-of-ports 10
+set chassis fpc 0 lite-mode
+set chassis network-services enhanced-ip
+set interfaces ge-0/0/0 unit 0 family inet address 172.16.16.1/24
+set interfaces ge-0/0/0 unit 0 family iso
+set interfaces ge-0/0/0 unit 0 family mpls maximum-labels 5
+set interfaces ge-0/0/1 flexible-vlan-tagging
+set interfaces ge-0/0/1 encapsulation flexible-ethernet-services
+set interfaces ge-0/0/1 unit 10 vlan-id 10
+set interfaces ge-0/0/1 unit 10 family inet address 10.0.18.1/24
+set interfaces ge-0/0/1 unit 200 family bridge interface-mode trunk
+set interfaces ge-0/0/1 unit 200 family bridge vlan-id-list 200
+set interfaces fxp0 unit 0 family inet address 192.168.2.201/24
+set interfaces lo0 unit 0 family inet address 172.16.0.1/32
+set interfaces lo0 unit 0 family iso address 49.0000.0000.0000.0001.00
+set interfaces lo0 unit 0 family mpls
+set policy-options policy-statement EVPN-COMM term 1 then community add TEST-COMM
+set policy-options policy-statement EVPN-COMM term 2 then community add EVPN-RT
+set policy-options policy-statement EVPN-COMM term 2 then accept
+set policy-options policy-statement EVPN-TO-LSP term P5 from community TEST-COMM
+set policy-options policy-statement EVPN-TO-LSP term P5 then install-nexthop lsp TO-P5
+set policy-options policy-statement EVPN-TO-LSP term def then accept
+set policy-options community EVPN-RT members target:1111:1112
+set policy-options community TEST-COMM members 100:100
+set routing-instances EVPN instance-type virtual-switch
+set routing-instances EVPN protocols evpn extended-vlan-list 200
+set routing-instances EVPN interface ge-0/0/1.200
+set routing-instances EVPN bridge-domains NETWORK200 domain-type bridge
+set routing-instances EVPN bridge-domains NETWORK200 vlan-id 200
+set routing-instances EVPN route-distinguisher 1111:1112
+set routing-instances EVPN vrf-export EVPN-COMM
+set routing-instances EVPN vrf-target target:1111:1112
+set routing-instances VRF-customer-1 instance-type vrf
+set routing-instances VRF-customer-1 protocols bgp group EBGP type external
+set routing-instances VRF-customer-1 protocols bgp group EBGP peer-as 800
+set routing-instances VRF-customer-1 protocols bgp group EBGP neighbor 10.0.18.8
+set routing-instances VRF-customer-1 interface ge-0/0/1.10
+set routing-instances VRF-customer-1 route-distinguisher 1111:1111
+set routing-instances VRF-customer-1 vrf-target target:1111:1111
+set routing-options forwarding-table export EVPN-TO-LSP
+set routing-options autonomous-system 65000
+set protocols ospf traffic-engineering
+set protocols ospf area 0.0.0.0 interface ge-0/0/0.0
+set protocols ospf area 0.0.0.0 interface lo0.0
+set protocols rsvp interface all
+set protocols bgp group RR type internal
+set protocols bgp group RR local-address 172.16.0.1
+set protocols bgp group RR family inet-vpn unicast
+set protocols bgp group RR family evpn signaling
+set protocols bgp group RR neighbor 172.16.0.4
+set protocols ldp interface all
+set protocols mpls icmp-tunneling
+set protocols mpls label-switched-path TO-P5 from 172.16.0.1
+set protocols mpls label-switched-path TO-P5 to 172.16.0.5
+set protocols mpls label-switched-path TO-P5 no-cspf
+set protocols mpls label-switched-path TO-P5 primary TO-P5
+set protocols mpls path TO-P5 172.16.0.6 strict
+set protocols mpls path TO-P5 172.16.0.4 strict
+set protocols mpls path TO-P5 172.16.0.5 strict
+set protocols mpls interface all
+set protocols lldp interface all
