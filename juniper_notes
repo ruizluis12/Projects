@@ -1,0 +1,4 @@
+Communities
+
+If applying vrf-export command - you will need to add the route target in policy since it will be overwritten
+If applying policy for communities to the neighbor group then vpn-apply-export needs to be configured on the BGP roup
