@@ -20,15 +20,24 @@ set chassis fpc 0 lite-mode
 set chassis network-services enhanced-ip
 set interfaces ge-0/0/0 unit 0 family inet address 172.16.16.1/24
 set interfaces ge-0/0/0 unit 0 family iso
-set interfaces ge-0/0/0 unit 0 family mpls
+set interfaces ge-0/0/0 unit 0 family mpls maximum-labels 5
 set interfaces ge-0/0/1 flexible-vlan-tagging
 set interfaces ge-0/0/1 encapsulation flexible-ethernet-services
 set interfaces ge-0/0/1 unit 10 vlan-id 10
 set interfaces ge-0/0/1 unit 10 family inet address 10.0.18.1/24
+set interfaces ge-0/0/1 unit 200 family bridge interface-mode trunk
+set interfaces ge-0/0/1 unit 200 family bridge vlan-id-list 200
 set interfaces fxp0 unit 0 family inet address 192.168.2.201/24
 set interfaces lo0 unit 0 family inet address 172.16.0.1/32
 set interfaces lo0 unit 0 family iso address 49.0000.0000.0000.0001.00
 set interfaces lo0 unit 0 family mpls
+set routing-instances EVPN instance-type virtual-switch
+set routing-instances EVPN protocols evpn extended-vlan-list 200
+set routing-instances EVPN interface ge-0/0/1.200
+set routing-instances EVPN bridge-domains NETWORK200 domain-type bridge
+set routing-instances EVPN bridge-domains NETWORK200 vlan-id 200
+set routing-instances EVPN route-distinguisher 1111:1112
+set routing-instances EVPN vrf-target target:1111:1112
 set routing-instances VRF-customer-1 instance-type vrf
 set routing-instances VRF-customer-1 protocols bgp group EBGP type external
 set routing-instances VRF-customer-1 protocols bgp group EBGP peer-as 800
