@@ -137,6 +137,9 @@ EVPN.evpn.0: 4 destinations, 4 routes (4 active, 0 holddown, 0 hidden)
                                         Nexthop: 172.16.16.6 via ge-0/0/0.0
                                         Session Id: 0
                                         
+             Links about the subnet
+             https://rickmur.com/evpn-configuration/
+             https://saidvandeklundert.net/2015-10-02-juniper-lsp-mapping/                           
                                       
       
 
