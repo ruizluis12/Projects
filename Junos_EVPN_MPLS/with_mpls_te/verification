@@ -1,0 +1,142 @@
+RP/0/RP0/CPU0:CE8#ping 192.168.200.2
+Mon May 15 17:33:46.066 UTC
+Type escape sequence to abort.
+Sending 5, 100-byte ICMP Echos to 192.168.200.2, timeout is 2 seconds:
+!!!!!
+Success rate is 100 percent (5/5), round-trip min/avg/max = 13/19/23 ms
+
+_____
+
+admin@PE1> show route community 100:100
+
+inet.0: 13 destinations, 13 routes (13 active, 0 holddown, 0 hidden)
+
+inet.3: 6 destinations, 7 routes (6 active, 0 holddown, 0 hidden)
+
+VRF-customer-1.inet.0: 5 destinations, 5 routes (5 active, 0 holddown, 0 hidden)
+
+iso.0: 1 destinations, 1 routes (1 active, 0 holddown, 0 hidden)
+
+mpls.0: 16 destinations, 16 routes (16 active, 0 holddown, 0 hidden)
++ = Active Route, - = Last Active, * = Both
+
+39                 *[EVPN/7] 00:42:06, remote-pe 172.16.0.5, routing-instance EVPN, route-type Egress-IM, vlan-id 200
+                    >  to 172.16.16.6 via ge-0/0/0.0, label-switched-path TO-P5
+
+bgp.l3vpn.0: 2 destinations, 2 routes (2 active, 0 holddown, 0 hidden)
+
+inet6.0: 1 destinations, 1 routes (1 active, 0 holddown, 0 hidden)
+
+VRF-customer-1.inet6.0: 1 destinations, 1 routes (1 active, 0 holddown, 0 hidden)
+
+bgp.evpn.0: 4 destinations, 4 routes (4 active, 0 holddown, 0 hidden)
++ = Active Route, - = Last Active, * = Both
+
+2:1111:1112::200::00:50:56:01:b9:ef/304 MAC/IP
+                   *[EVPN/170] 00:04:29
+                       Indirect
+2:5555:5556::200::00:50:56:01:b9:31/304 MAC/IP
+                   *[BGP/170] 00:04:29, localpref 100, from 172.16.0.4
+                      AS path: I, validation-state: unverified
+                    >  to 172.16.16.6 via ge-0/0/0.0, label-switched-path TO-P5
+3:1111:1112::200::172.16.0.1/248 IM
+                   *[EVPN/170] 02:15:14
+                       Indirect
+3:5555:5556::200::172.16.0.5/248 IM
+                   *[BGP/170] 00:51:40, localpref 100, from 172.16.0.4
+                      AS path: I, validation-state: unverified
+                    >  to 172.16.16.6 via ge-0/0/0.0, label-switched-path TO-P5
+
+EVPN.evpn.0: 4 destinations, 4 routes (4 active, 0 holddown, 0 hidden)
++ = Active Route, - = Last Active, * = Both
+
+2:5555:5556::200::00:50:56:01:b9:31/304 MAC/IP
+                   *[BGP/170] 00:04:29, localpref 100, from 172.16.0.4
+                      AS path: I, validation-state: unverified
+                    >  to 172.16.16.6 via ge-0/0/0.0, label-switched-path TO-P5
+3:5555:5556::200::172.16.0.5/248 IM
+                   *[BGP/170] 00:51:40, localpref 100, from 172.16.0.4
+                      AS path: I, validation-state: unverified
+                    >  to 172.16.16.6 via ge-0/0/0.0, label-switched-path TO-P5
+
+admin@PE1# run show route protocol bgp table EVPN.evpn.0 all extensive
+
+EVPN.evpn.0: 4 destinations, 4 routes (4 active, 0 holddown, 0 hidden)
+2:5555:5556::200::00:50:56:01:b9:31/304 MAC/IP (1 entry, 1 announced)
+        *BGP    Preference: 170/-101
+                Route Distinguisher: 5555:5556
+                Next hop type: Indirect, Next hop index: 0
+                Address: 0xc3884c8
+                Next-hop reference count: 4
+                Source: 172.16.0.4
+                Protocol next hop: 172.16.0.5
+                Indirect next hop: 0x2 no-forward INH Session ID: 0x0
+                State: <Secondary Active Int Ext>
+                Local AS: 65000 Peer AS: 65000
+                Age: 7  Metric2: 3
+                Validation State: unverified
+                Task: BGP_65000.172.16.0.4
+                Announcement bits (1): 0-EVPN-evpn
+                AS path: I  (Originator)
+                Cluster list:  172.16.0.4
+                Originator ID: 172.16.0.5
+                Communities: 100:100 target:1111:1112
+                Import Accepted
+                Route Label: 23
+                ESI: 00:00:00:00:00:00:00:00:00:00
+                Localpref: 100
+                Router ID: 172.16.0.4
+                Primary Routing Table bgp.evpn.0
+                Indirect next hops: 1
+                        Protocol next hop: 172.16.0.5 Metric: 3
+                        Indirect next hop: 0x2 no-forward INH Session ID: 0x0
+                        Indirect path forwarding next hops: 1
+                                Next hop type: Router
+                                Next hop: 172.16.16.6 via ge-0/0/0.0
+                                Session Id: 0x0
+                                172.16.0.5/32 Originating RIB: inet.3
+                                  Metric: 3     Node path count: 1
+                                  Forwarding nexthops: 1
+                                        Nexthop: 172.16.16.6 via ge-0/0/0.0
+                                        Session Id: 0
+
+3:5555:5556::200::172.16.0.5/248 IM (1 entry, 1 announced)
+        *BGP    Preference: 170/-101
+                Route Distinguisher: 5555:5556
+                PMSI: Flags 0x0: Label 27: Type INGRESS-REPLICATION 172.16.0.5
+                Next hop type: Indirect, Next hop index: 0
+                Address: 0xc3884c8
+                Next-hop reference count: 4
+                Source: 172.16.0.4
+                Protocol next hop: 172.16.0.5
+                Indirect next hop: 0x2 no-forward INH Session ID: 0x0
+                State: <Secondary Active Int Ext>
+                Local AS: 65000 Peer AS: 65000
+                Age: 47:18      Metric2: 3
+                Validation State: unverified
+                Task: BGP_65000.172.16.0.4
+                Announcement bits (1): 1-EVPN-evpn
+                AS path: I  (Originator)
+                Cluster list:  172.16.0.4
+                Originator ID: 172.16.0.5
+                Communities: 100:100 target:1111:1112
+                Import Accepted
+                Localpref: 100
+                Router ID: 172.16.0.4
+                Primary Routing Table bgp.evpn.0
+                Indirect next hops: 1
+                        Protocol next hop: 172.16.0.5 Metric: 3
+                        Indirect next hop: 0x2 no-forward INH Session ID: 0x0
+                        Indirect path forwarding next hops: 1
+                                Next hop type: Router
+                                Next hop: 172.16.16.6 via ge-0/0/0.0
+                                Session Id: 0x0
+                                172.16.0.5/32 Originating RIB: inet.3
+                                  Metric: 3     Node path count: 1
+                                  Forwarding nexthops: 1
+                                        Nexthop: 172.16.16.6 via ge-0/0/0.0
+                                        Session Id: 0
+                                        
+                                      
+      
+
