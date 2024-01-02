@@ -1,0 +1,30 @@
+options {
+  listen-on-v6 { any; };
+  forwarders { 10.30.30.30; };
+  dns64 2001:db8:cafe:2::/96 {
+    exclude { ::/0; };
+  };
+  allow-query { any; };
+  recursion yes;
+};
+
+sudo service bind9 restart
+sudo systemctl status bind9
+
+    clients: DNS64 clients (you could restrict it to certain IPv6 subnets based on your network address plan)
+
+    mapped: You can have ACLs to specify which IPv4 addresses are to be mapped (synthesised) into IPv6 addresses by DNS64. Ex: not synthesise A records if they are RFC1918 addresses
+
+    exclude: DNS64 would not synthesise AAAA records that it receives. exclude helps ignore such AAAA records and synthesise them instead using the DNS64 prefix.`
+
+Note that, if a DNS64 server is also authoritative for certain zones (like in our case), it will apply DNS64 to those zones too by default! Meaning, it will synthesise AAAA records from A records in the zones for which it is authoritative. 
+Also note that by default, DNS64 does not process secure queries/responses (DO = 1). We can override this with (break-dnssec yes;)
+
+
+The configuration is extremely simple. After installing BIND 9.8.1, it was enough for me:
+
+    Configure the server to listen in IPv6
+    Configure the IPv6 prefix associated with NAT64 (on which IPv4 addresses are automatically translated)
+    Configure a forwarder (10.30.30.30 in our case). In the most classic case, one can imagine that a company will not initially want to make changes to its DNS servers to deploy NAT64. It is very simple to configure the DNS64 server in proxy mode: it will simply relay the requests on the official DNS server and then translate the results.
+    Special case: in the lab that was used to do the tests there is no IPv6 internet access. It is therefore absolutely necessary to avoid that the DNS64 returns a global IPv6 address in case the searched host exists in the IPv6 internet! Everything must be natte64! This is done via the line "exclude {:: / 0; }; " below.
+
