@@ -1,0 +1,20 @@
+;
+; BIND data file for local loopback interface
+;
+$TTL    604800
+@       IN      SOA     dns64-test.casa.local. admin.dns64-test.casa.local. (
+                              3         ; Serial
+                         604800         ; Refresh
+                          86400         ; Retry
+                        2419200         ; Expire
+                         604800 )       ; Negative Cache TTL
+;
+; name servers - NS records
+       IN       NS      dns64-test.casa.local.
+
+; name servers - A records
+dns64-test.casa.local.  IN      A       192.168.1.202
+
+; 192.168.1.0/24 - A records
+dns64-test.casa.local.  IN      A       192.168.1.202
+testpc.casa.local.      IN      A       192.168.1.1
