@@ -1,0 +1,19 @@
+event manager applet IP-CHANGE
+ event none sync no default 60 maxrun 60
+ action 100 syslog priority alerts msg "IP change 30 second countdown initiated"
+ action 110 wait 30
+ action 120 syslog priority alerts msg "Proceeding with IP address change"
+ action 130 cli command "enable"
+ action 140 cli command "config t"
+ action 150 cli command "interface fast0/0"
+ action 160 cli command "ip addr 12.12.12.1 255.255.255.0"
+ action 170 cli command "no ip route 0.0.0.0 0.0.0.0 192.0.2.2"
+ action 180 cli command "ip route 0.0.0.0 0.0.0.0 12.12.12.2"
+ action 200 syslog priority notifications msg "IP change complete."
+
+
+Log it to box and run the script
+
+R#event man run IP-CHANGE
+
+Wait 30 seconds and log in to new address
