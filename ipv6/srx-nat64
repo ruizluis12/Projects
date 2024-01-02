@@ -1,0 +1,41 @@
+
+set security forwarding-options family inet6 mode flow-based
+set security forwarding-options family iso mode packet-based
+set security nat source pool V4-POOL address 172.16.5.5/24 to 172.16.5.10/24
+set security nat source rule-set NAT64 from zone OUTSIDE
+set security nat source rule-set NAT64 to zone INSIDE
+set security nat source rule-set NAT64 rule NAT64 match source-address 4001::/96
+set security nat source rule-set NAT64 rule NAT64 match destination-address 0.0.0.0/0                                                                                                                               0.0/0
+set security nat source rule-set NAT64 rule NAT64 then source-nat pool V4-POOL
+set security nat static rule-set NAT64 from zone OUTSIDE
+set security nat static rule-set NAT64 rule STATEFUL-NAT64 match destination-add                                                                                                                               ress 2001:67c:27e4:64::/96
+set security nat static rule-set NAT64 rule STATEFUL-NAT64 then static-nat inet routing-instance default
+set security nat natv6v4 no-v6-frag-header
+set security policies from-zone OUTSIDE to-zone INSIDE policy PERMIT match source-address any
+set security policies from-zone OUTSIDE to-zone INSIDE policy PERMIT match destination-address any
+set security policies from-zone OUTSIDE to-zone INSIDE policy PERMIT match application any
+set security policies from-zone OUTSIDE to-zone INSIDE policy PERMIT then permit
+set security policies from-zone INSIDE to-zone OUTSIDE policy PERMIT match source-address any
+set security policies from-zone INSIDE to-zone OUTSIDE policy PERMIT match destination-address any
+set security policies from-zone INSIDE to-zone OUTSIDE policy PERMIT match application any
+set security policies from-zone INSIDE to-zone OUTSIDE policy PERMIT then permit
+set security zones security-zone INSIDE host-inbound-traffic system-services all
+set security zones security-zone INSIDE interfaces ge-0/0/1.0
+set security zones security-zone OUTSIDE host-inbound-traffic system-services all
+set security zones security-zone OUTSIDE interfaces ge-0/0/0.0
+set interfaces ge-0/0/0 unit 0 family inet6 address 2001:3:200::200/64
+set interfaces ge-0/0/1 unit 0 family inet address 172.16.2.63/24
+set interfaces ge-0/0/1 unit 0 family inet6 address 2001:5:100::102/64
+set interfaces lo0 unit 0 family inet6 address 6001::102/128
+set routing-options rib inet6.0 static route ::/0 next-hop 2001:5:100::100
+set routing-options static route 0.0.0.0/0 next-hop 172.16.2.1
+set routing-options router-id 102.102.102.102
+set routing-options autonomous-system 200
+set protocols bgp group EBGP type external
+set protocols bgp group EBGP family inet6 unicast
+set protocols bgp group EBGP export TO-BGP
+set protocols bgp group EBGP peer-as 65000
+set protocols bgp group EBGP neighbor 2001:3:200::3
+set policy-options policy-statement TO-BGP term Direct from protocol direct
+set policy-options policy-statement TO-BGP term Direct from protocol static
+set policy-options policy-statement TO-BGP term Direct then accept
