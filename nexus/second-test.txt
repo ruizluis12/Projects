@@ -1,0 +1,7 @@
+from cli import *
+
+cli('configure terminal ; interface mgmt0; no shut')
+
+def Config():
+    cli
+
