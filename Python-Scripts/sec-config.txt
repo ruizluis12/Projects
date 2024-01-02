@@ -1,0 +1,62 @@
+import paramiko
+import sys
+import time
+import getpass
+
+
+ip_list = [ip1, ip2, ip3, ip4]
+enable = "enable"
+conf = "configure terminal"
+termlengh = "terminal lenght 0"
+username = "cisco"
+password = getpass.getpass()
+end = "end"
+exit = "exit"
+
+def Session1(ipaddr):
+    remote_conn_pre = paramiko.SSHClient()
+    remote_conn_pre.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+    remote_conn_pre.connect(ipaddr, username=username, password=password, look_for_keys= False, allow_agent= False)
+    remote_conn = remote_conn_pre.invoke_shell()
+    print "Interactive SSH session established"
+    remote_conn.send("terminal length 0\n")
+    remote_conn.send("enable\r")
+    remote_conn.send("cisco\r")
+    remote_conn.send("conf t\r")
+    time.sleep(1)
+    remote_conn.send("flow record RECORD-1\r")
+    time.sleep(1)
+    remote_conn.send("match ipv4 protocol\r")
+    time.sleep(1)
+    remote_conn.send("match ipv4 source address\r")
+    time.sleep(1)
+    remote_conn.send("match ipv4 destination address\r")
+    time.sleep(1)
+    remote_conn.send("match transport source-port\r")
+    time.sleep(1)
+    remote_conn.send("match transport destination-port\r")
+    time.sleep(1)
+    remote_conn.send("match interface input\r")
+    time.sleep(1)
+    remote_conn.send("collect routing source as\r")
+    time.sleep(1)
+    remote_conn.send("collect routing destination as\r")
+    time.sleep(1)
+    remote_conn.send("collect routing next-hop address ipv4\r")
+    time.sleep(1)
+    remote_conn.send("collect ipv4 ttl maximum\r")
+    time.sleep(1)
+    remote_conn.send("collect ipv4 source mask\r")
+    remote_conn.send("exit\r")
+    time.sleep(1)
+    remote_conn.send("end\r")
+    time.sleep(1)
+    remote_conn.send("wr\r")
+    time.sleep(5)
+    remote_conn.send("disable\r")
+    time.sleep(1)
+    remote_conn.close()
+
+Session1(192.168.1.201)
+print "Configuring R1"
+sys.exit("operation completed")
