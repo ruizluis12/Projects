@@ -1,0 +1,98 @@
+version 15.2
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+service compress-config
+!
+hostname SW1
+!
+boot-start-marker
+boot-end-marker
+!
+!
+!
+no aaa new-model
+!
+!
+!
+!
+!         
+!
+!
+!
+ip cef
+no ipv6 cef
+!
+!
+!
+spanning-tree mode pvst
+spanning-tree extend system-id
+!
+!
+! 
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!         
+!
+!
+interface Port-channel10
+ switchport access vlan 200
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+!
+interface GigabitEthernet0/0
+ switchport access vlan 200
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ negotiation auto
+ channel-group 10 mode active
+!
+interface GigabitEthernet0/1
+ switchport access vlan 200
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ negotiation auto
+ channel-group 10 mode active
+!
+interface GigabitEthernet0/2
+ negotiation auto
+!
+interface GigabitEthernet0/3
+ negotiation auto
+!
+interface Vlan50
+ ip address dhcp
+!
+interface Vlan100
+ ip address 172.21.0.1 255.255.255.0
+!
+interface Vlan200
+ ip address 172.21.200.1 255.255.255.0
+!
+interface Group-Async0
+ physical-layer async
+ no ip address
+ encapsulation slip
+!
+ip forward-protocol nd
+!
+ip http server
+ip http secure-server
+!         
+ip ssh server algorithm encryption aes128-ctr aes192-ctr aes256-ctr
+ip ssh client algorithm encryption aes128-ctr aes192-ctr aes256-ctr
+!
+!
+!
+!
+!
+!
+control-plane
+!
