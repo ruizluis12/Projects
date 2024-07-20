@@ -1,0 +1,12 @@
+For templates qemu
+
+/opt/unetlab/html/templates
+
+modification to avoid getting stucked on vjunosrouters
+
+type: qemu
+description: Juniper vRouter
+name: vRouter
+config_script: config_junosvex.py
+prep: prep_junosvex.sh
+cstart: -drive if=none,id=stick,format=raw,file=virtiob.qcow2,cache=none -device nec-usb-xhci,id=xhci  -device usb-storage,bus=xhci.0,drive=stick
