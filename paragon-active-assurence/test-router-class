@@ -1,0 +1,318 @@
+lab@VR# show | display set 
+set version 23.2R1.13
+set groups cos-int interfaces <ge-*> unit 0 family inet filter input CoS-Multifield-Classifier
+set groups cos-int interfaces <ge-*> unit 0 family inet filter output CoS-Multifield-Classifier
+set groups cos-int interfaces <lt-*> unit <*> family inet filter input CoS-Multifield-Classifier
+set groups cos-int interfaces <lt-*> unit <*> family inet filter output CoS-Multifield-Classifier
+set groups cos-int-1 class-of-service interfaces <ge-*> unit 0 classifiers dscp PAAW-class
+set groups cos-int-1 class-of-service interfaces <ge-*> unit 0 rewrite-rules dscp PAAW-rewrite
+set groups cos-int-1 class-of-service interfaces <lt-*> unit <*> classifiers dscp PAAW-class
+set groups cos-int-1 class-of-service interfaces <lt-*> unit <*> rewrite-rules dscp PAAW-rewrite
+set apply-groups cos-int
+set apply-groups cos-int-1
+set system host-name VR
+set system root-authentication encrypted-password "$6$Gm0cDKiX$88VC.4RbN28UgTgoWTxYptkIPTwcYv8qEBkkUxjV9JynycLzmqAgy.jTPWss3C7uyFobOwED/YqOXni1A34qA1"
+set system login user lab uid 2000
+set system login user lab class super-user
+set system login user lab authentication encrypted-password "$6$8D1MCiQq$.t7aeG3iNCovmJGRmrQMClWIcTRgCyvFFxw6RO2E935YFlbK.GpURmUQK/YQP8N8liMFiEZ2sDRvbZncbESJ71"
+set system services ssh
+set system services netconf ssh
+set system name-server 8.8.8.8
+set system name-server 1.1.1.1
+set system syslog user * any emergency
+set system syslog file interactive-commands interactive-commands any
+set system syslog file messages any notice
+set system syslog file messages authorization info
+set system license autoupdate url https://ae1.juniper.net/junos/key_retrieval
+set system ntp server 172.25.11.254
+set chassis fpc 0 pic 0 tunnel-services bandwidth 1g
+set services rpm twamp server routing-instance-list R1 port 861
+set services rpm twamp server routing-instance-list R2 port 862
+set services rpm twamp server routing-instance-list R3 port 863
+set services rpm twamp server routing-instance-list R4 port 864
+set services rpm twamp server routing-instance-list R5 port 865
+set services rpm twamp server routing-instance-list R6 port 866
+set services rpm twamp server routing-instance-list R7 port 867
+set services rpm twamp server authentication-mode none
+set services rpm twamp server port 800
+set services rpm twamp server client-list PAAW address 172.29.0.0/16
+set interfaces ge-0/0/0 unit 0 family inet address 172.25.11.10/24
+set interfaces ge-0/0/1 mtu 9192
+set interfaces ge-0/0/1 unit 0 family inet address 172.29.1.254/24
+set interfaces ge-0/0/2 unit 0 family inet address 172.29.2.254/24
+set interfaces ge-0/0/3 unit 0 family inet address 172.29.3.254/24
+set interfaces ge-0/0/4 unit 0 family inet address 172.29.4.254/24
+set interfaces ge-0/0/5 unit 0 family inet address 172.29.5.254/24
+set interfaces ge-0/0/6 unit 0 family inet address 172.29.6.254/24
+set interfaces ge-0/0/8 unit 0 family inet address 172.25.11.19/24
+deactivate interfaces ge-0/0/8
+set interfaces lt-0/0/10 unit 0 encapsulation ethernet
+set interfaces lt-0/0/10 unit 0 peer-unit 1
+set interfaces lt-0/0/10 unit 0 family inet address 10.1.1.0/31
+set interfaces lt-0/0/10 unit 1 encapsulation ethernet
+set interfaces lt-0/0/10 unit 1 peer-unit 0
+set interfaces lt-0/0/10 unit 1 family inet address 10.1.1.1/31
+set interfaces lt-0/0/10 unit 2 encapsulation ethernet
+set interfaces lt-0/0/10 unit 2 peer-unit 3
+set interfaces lt-0/0/10 unit 2 family inet address 10.1.1.2/31
+set interfaces lt-0/0/10 unit 3 encapsulation ethernet
+set interfaces lt-0/0/10 unit 3 peer-unit 2
+set interfaces lt-0/0/10 unit 3 family inet address 10.1.1.3/31
+set interfaces lt-0/0/10 unit 4 encapsulation ethernet
+set interfaces lt-0/0/10 unit 4 peer-unit 5
+set interfaces lt-0/0/10 unit 4 family inet address 10.1.1.4/31
+set interfaces lt-0/0/10 unit 5 encapsulation ethernet
+set interfaces lt-0/0/10 unit 5 peer-unit 4
+set interfaces lt-0/0/10 unit 5 family inet address 10.1.1.5/31
+set interfaces lt-0/0/10 unit 6 encapsulation ethernet
+set interfaces lt-0/0/10 unit 6 peer-unit 7
+set interfaces lt-0/0/10 unit 6 family inet address 10.1.1.6/31
+set interfaces lt-0/0/10 unit 7 encapsulation ethernet
+set interfaces lt-0/0/10 unit 7 peer-unit 6
+set interfaces lt-0/0/10 unit 7 family inet address 10.1.1.7/31
+set interfaces lt-0/0/10 unit 8 encapsulation ethernet
+set interfaces lt-0/0/10 unit 8 peer-unit 9
+set interfaces lt-0/0/10 unit 8 family inet address 10.1.1.8/31
+set interfaces lt-0/0/10 unit 9 encapsulation ethernet
+set interfaces lt-0/0/10 unit 9 peer-unit 8
+set interfaces lt-0/0/10 unit 9 family inet address 10.1.1.9/31
+set interfaces lt-0/0/10 unit 10 encapsulation ethernet
+set interfaces lt-0/0/10 unit 10 peer-unit 11
+set interfaces lt-0/0/10 unit 10 family inet address 10.1.1.10/31
+set interfaces lt-0/0/10 unit 11 encapsulation ethernet
+set interfaces lt-0/0/10 unit 11 peer-unit 10
+set interfaces lt-0/0/10 unit 11 family inet address 10.1.1.11/31
+set interfaces lt-0/0/10 unit 12 encapsulation ethernet
+set interfaces lt-0/0/10 unit 12 peer-unit 13
+set interfaces lt-0/0/10 unit 12 family inet address 10.1.1.12/31
+set interfaces lt-0/0/10 unit 13 encapsulation ethernet
+set interfaces lt-0/0/10 unit 13 peer-unit 12
+set interfaces lt-0/0/10 unit 13 family inet address 10.1.1.13/31
+set interfaces lt-0/0/10 unit 14 encapsulation ethernet
+set interfaces lt-0/0/10 unit 14 peer-unit 15
+set interfaces lt-0/0/10 unit 14 family inet address 10.1.1.14/31
+set interfaces lt-0/0/10 unit 15 encapsulation ethernet
+set interfaces lt-0/0/10 unit 15 mtu 1000
+deactivate interfaces lt-0/0/10 unit 15 mtu
+set interfaces lt-0/0/10 unit 15 peer-unit 14
+set interfaces lt-0/0/10 unit 15 family inet address 10.1.1.15/31
+set interfaces lt-0/0/10 unit 16 encapsulation ethernet
+set interfaces lt-0/0/10 unit 16 peer-unit 17
+set interfaces lt-0/0/10 unit 16 family inet address 10.1.1.16/31
+set interfaces lt-0/0/10 unit 17 encapsulation ethernet
+set interfaces lt-0/0/10 unit 17 peer-unit 16
+set interfaces lt-0/0/10 unit 17 family inet address 10.1.1.17/31
+set interfaces lt-0/0/10 unit 18 encapsulation ethernet
+set interfaces lt-0/0/10 unit 18 peer-unit 19
+set interfaces lt-0/0/10 unit 18 family inet address 10.1.1.18/31
+set interfaces lt-0/0/10 unit 19 encapsulation ethernet
+set interfaces lt-0/0/10 unit 19 peer-unit 18
+set interfaces lt-0/0/10 unit 19 family inet address 10.1.1.19/31
+set interfaces lt-0/0/10 unit 20 encapsulation ethernet
+set interfaces lt-0/0/10 unit 20 peer-unit 21
+set interfaces lt-0/0/10 unit 20 family inet address 10.1.1.20/31
+set interfaces lt-0/0/10 unit 21 encapsulation ethernet
+set interfaces lt-0/0/10 unit 21 peer-unit 20
+set interfaces lt-0/0/10 unit 21 family inet address 10.1.1.21/31
+set interfaces lo0 unit 0 family inet address 192.168.1.100/32
+set interfaces lo0 unit 1 family inet address 192.168.1.1/32
+set interfaces lo0 unit 2 family inet address 192.168.1.2/32
+set interfaces lo0 unit 3 family inet address 192.168.1.3/32
+set interfaces lo0 unit 4 family inet address 192.168.1.4/32
+set interfaces lo0 unit 5 family inet address 192.168.1.5/32
+set interfaces lo0 unit 6 family inet address 192.168.1.6/32
+set interfaces lo0 unit 7 family inet address 192.168.1.7/32
+set policy-options policy-statement TA-4-docker term 1 from protocol static
+set policy-options policy-statement TA-4-docker term 1 then accept
+set policy-options policy-statement default-route term 1 from protocol static
+set policy-options policy-statement default-route term 1 from route-filter 0.0.0.0/0 exact
+set policy-options policy-statement default-route term 1 then accept
+set class-of-service classifiers dscp PAAW-class forwarding-class assured-forwarding loss-priority high code-points 001010
+set class-of-service classifiers dscp PAAW-class forwarding-class best-effort loss-priority high code-points 000000
+set class-of-service classifiers dscp PAAW-class forwarding-class expedited-forwarding loss-priority high code-points 101110
+set class-of-service classifiers dscp PAAW-class forwarding-class network-control loss-priority high code-points 001000
+set class-of-service interfaces ge-* scheduler-map PAAW
+set class-of-service interfaces ge-* unit 0 classifiers dscp PAAW-class
+set class-of-service interfaces ge-* unit 0 rewrite-rules dscp PAAW-rewrite
+set class-of-service interfaces lt-* unit * classifiers dscp PAAW-class
+set class-of-service interfaces lt-* unit * rewrite-rules dscp PAAW-rewrite
+set class-of-service rewrite-rules dscp PAAW-rewrite forwarding-class assured-forwarding loss-priority high code-point 001010
+set class-of-service rewrite-rules dscp PAAW-rewrite forwarding-class best-effort loss-priority high code-point 000000
+set class-of-service rewrite-rules dscp PAAW-rewrite forwarding-class expedited-forwarding loss-priority high code-point 101110
+set class-of-service rewrite-rules dscp PAAW-rewrite forwarding-class network-control loss-priority high code-point 001000
+set class-of-service scheduler-maps PAAW forwarding-class assured-forwarding scheduler af
+set class-of-service scheduler-maps PAAW forwarding-class best-effort scheduler be
+set class-of-service scheduler-maps PAAW forwarding-class expedited-forwarding scheduler ef
+set class-of-service scheduler-maps PAAW forwarding-class network-control scheduler nc
+set class-of-service schedulers af transmit-rate remainder
+set class-of-service schedulers be priority high
+set class-of-service schedulers ef priority high
+set class-of-service schedulers nc priority high
+set firewall family inet filter CoS-Multifield-Classifier term 1 from source-address 172.29.0.0/16
+set firewall family inet filter CoS-Multifield-Classifier term 1 then loss-priority high
+set firewall family inet filter CoS-Multifield-Classifier term 1 then forwarding-class assured-forwarding
+set firewall family inet filter CoS-Multifield-Classifier term 1 then accept
+set firewall family inet filter CoS-Multifield-Classifier term 2 then accept
+set routing-instances R1 instance-type virtual-router
+set routing-instances R1 routing-options router-id 192.168.1.1
+set routing-instances R1 routing-options autonomous-system 65514
+set routing-instances R1 protocols bgp group Int type internal
+set routing-instances R1 protocols bgp group Int local-address 192.168.1.1
+set routing-instances R1 protocols bgp group Int neighbor 192.168.1.2
+set routing-instances R1 protocols bgp group Int neighbor 192.168.1.3
+set routing-instances R1 protocols bgp group Int neighbor 192.168.1.4
+set routing-instances R1 protocols bgp group Int neighbor 192.168.1.5
+set routing-instances R1 protocols bgp group Int neighbor 192.168.1.6
+set routing-instances R1 protocols bgp group Int neighbor 192.168.1.7
+deactivate routing-instances R1 protocols bgp
+set routing-instances R1 protocols ospf area 0.0.0.0 interface all
+set routing-instances R1 protocols ospf area 0.0.0.0 interface lo0.1 passive
+set routing-instances R1 protocols ospf area 0.0.0.0 interface ge-0/0/1.0 passive
+set routing-instances R1 interface ge-0/0/1.0
+set routing-instances R1 interface lt-0/0/10.0
+set routing-instances R1 interface lt-0/0/10.2
+set routing-instances R1 interface lt-0/0/10.10
+set routing-instances R1 interface lo0.1
+set routing-instances R2 instance-type virtual-router
+set routing-instances R2 routing-options router-id 192.168.1.2
+set routing-instances R2 routing-options autonomous-system 65514
+set routing-instances R2 protocols bgp group Int type internal
+set routing-instances R2 protocols bgp group Int local-address 192.168.1.2
+set routing-instances R2 protocols bgp group Int neighbor 192.168.1.1
+set routing-instances R2 protocols bgp group Int neighbor 192.168.1.3
+set routing-instances R2 protocols bgp group Int neighbor 192.168.1.4
+set routing-instances R2 protocols bgp group Int neighbor 192.168.1.5
+set routing-instances R2 protocols bgp group Int neighbor 192.168.1.6
+set routing-instances R2 protocols bgp group Int neighbor 192.168.1.7
+deactivate routing-instances R2 protocols bgp
+set routing-instances R2 protocols ospf area 0.0.0.0 interface all
+set routing-instances R2 protocols ospf area 0.0.0.0 interface lo0.2 passive
+set routing-instances R2 protocols ospf area 0.0.0.0 interface ge-0/0/2.0 passive
+set routing-instances R2 interface ge-0/0/2.0
+set routing-instances R2 interface lt-0/0/10.3
+set routing-instances R2 interface lt-0/0/10.4
+set routing-instances R2 interface lt-0/0/10.6
+set routing-instances R2 interface lo0.2
+set routing-instances R3 instance-type virtual-router
+set routing-instances R3 routing-options router-id 192.168.1.3
+set routing-instances R3 routing-options autonomous-system 65514
+set routing-instances R3 routing-options static route 0.0.0.0/0 next-hop 10.1.1.20
+deactivate routing-instances R3 routing-options static route 0.0.0.0/0
+set routing-instances R3 protocols bgp group Int type internal
+set routing-instances R3 protocols bgp group Int local-address 192.168.1.3
+set routing-instances R3 protocols bgp group Int neighbor 192.168.1.1
+set routing-instances R3 protocols bgp group Int neighbor 192.168.1.2
+set routing-instances R3 protocols bgp group Int neighbor 192.168.1.4
+set routing-instances R3 protocols bgp group Int neighbor 192.168.1.5
+set routing-instances R3 protocols bgp group Int neighbor 192.168.1.6
+set routing-instances R3 protocols bgp group Int neighbor 192.168.1.7
+deactivate routing-instances R3 protocols bgp
+set routing-instances R3 protocols ospf area 0.0.0.0 interface all
+set routing-instances R3 protocols ospf area 0.0.0.0 interface lo0.3 passive
+set routing-instances R3 protocols ospf export default-route
+deactivate routing-instances R3 protocols ospf export
+set routing-instances R3 interface ge-0/0/8.0
+deactivate routing-instances R3 interface ge-0/0/8.0
+set routing-instances R3 interface lt-0/0/10.7
+set routing-instances R3 interface lt-0/0/10.8
+set routing-instances R3 interface lt-0/0/10.11
+set routing-instances R3 interface lt-0/0/10.12
+set routing-instances R3 interface lt-0/0/10.21
+set routing-instances R3 interface lo0.3
+set routing-instances R4 instance-type virtual-router
+set routing-instances R4 routing-options router-id 192.168.1.4
+set routing-instances R4 routing-options autonomous-system 65514
+set routing-instances R4 protocols bgp group Int type internal
+set routing-instances R4 protocols bgp group Int local-address 192.168.1.4
+set routing-instances R4 protocols bgp group Int neighbor 192.168.1.1
+set routing-instances R4 protocols bgp group Int neighbor 192.168.1.2
+set routing-instances R4 protocols bgp group Int neighbor 192.168.1.3
+set routing-instances R4 protocols bgp group Int neighbor 192.168.1.5
+set routing-instances R4 protocols bgp group Int neighbor 192.168.1.6
+set routing-instances R4 protocols bgp group Int neighbor 192.168.1.7
+deactivate routing-instances R4 protocols bgp
+set routing-instances R4 protocols ospf area 0.0.0.0 interface all
+set routing-instances R4 protocols ospf area 0.0.0.0 interface lo0.4 passive
+set routing-instances R4 protocols ospf area 0.0.0.0 interface ge-0/0/3.0 passive
+set routing-instances R4 interface ge-0/0/3.0
+set routing-instances R4 interface lt-0/0/10.9
+set routing-instances R4 interface lt-0/0/10.14
+set routing-instances R4 interface lt-0/0/10.17
+set routing-instances R4 interface lo0.4
+set routing-instances R5 instance-type virtual-router
+set routing-instances R5 routing-options router-id 192.168.1.5
+set routing-instances R5 routing-options autonomous-system 65514
+set routing-instances R5 routing-options static route 172.29.1.100/32 next-hop 10.1.1.14
+deactivate routing-instances R5 routing-options static
+set routing-instances R5 protocols bgp group Int type internal
+set routing-instances R5 protocols bgp group Int local-address 192.168.1.5
+set routing-instances R5 protocols bgp group Int neighbor 192.168.1.1
+set routing-instances R5 protocols bgp group Int neighbor 192.168.1.2
+set routing-instances R5 protocols bgp group Int neighbor 192.168.1.3
+set routing-instances R5 protocols bgp group Int neighbor 192.168.1.4
+set routing-instances R5 protocols bgp group Int neighbor 192.168.1.6
+set routing-instances R5 protocols bgp group Int neighbor 192.168.1.7
+deactivate routing-instances R5 protocols bgp
+set routing-instances R5 protocols ospf area 0.0.0.0 interface all
+set routing-instances R5 protocols ospf area 0.0.0.0 interface lo0.5 passive
+set routing-instances R5 protocols ospf area 0.0.0.0 interface ge-0/0/4.0 passive
+set routing-instances R5 interface ge-0/0/4.0
+set routing-instances R5 interface lt-0/0/10.13
+set routing-instances R5 interface lt-0/0/10.15
+set routing-instances R5 interface lt-0/0/10.19
+set routing-instances R5 interface lo0.5
+set routing-instances R6 instance-type virtual-router
+set routing-instances R6 routing-options router-id 192.168.1.6
+set routing-instances R6 routing-options autonomous-system 65514
+set routing-instances R6 protocols bgp group Int type internal
+set routing-instances R6 protocols bgp group Int local-address 192.168.1.6
+set routing-instances R6 protocols bgp group Int neighbor 192.168.1.1
+set routing-instances R6 protocols bgp group Int neighbor 192.168.1.2
+set routing-instances R6 protocols bgp group Int neighbor 192.168.1.3
+set routing-instances R6 protocols bgp group Int neighbor 192.168.1.4
+set routing-instances R6 protocols bgp group Int neighbor 192.168.1.5
+set routing-instances R6 protocols bgp group Int neighbor 192.168.1.7
+deactivate routing-instances R6 protocols bgp
+set routing-instances R6 protocols ospf area 0.0.0.0 interface all
+set routing-instances R6 protocols ospf area 0.0.0.0 interface lo0.6 passive
+set routing-instances R6 protocols ospf area 0.0.0.0 interface ge-0/0/5.0 passive
+set routing-instances R6 interface ge-0/0/5.0
+set routing-instances R6 interface lt-0/0/10.1
+set routing-instances R6 interface lt-0/0/10.16
+set routing-instances R6 interface lo0.6
+set routing-instances R7 instance-type virtual-router
+set routing-instances R7 routing-options router-id 192.168.1.7
+set routing-instances R7 routing-options autonomous-system 65514
+set routing-instances R7 routing-options static route 172.17.0.0/16 next-hop 172.29.6.100
+set routing-instances R7 protocols bgp group Int type internal
+set routing-instances R7 protocols bgp group Int local-address 192.168.1.7
+set routing-instances R7 protocols bgp group Int neighbor 192.168.1.1
+set routing-instances R7 protocols bgp group Int neighbor 192.168.1.2
+set routing-instances R7 protocols bgp group Int neighbor 192.168.1.3
+set routing-instances R7 protocols bgp group Int neighbor 192.168.1.4
+set routing-instances R7 protocols bgp group Int neighbor 192.168.1.5
+set routing-instances R7 protocols bgp group Int neighbor 192.168.1.6
+deactivate routing-instances R7 protocols bgp
+set routing-instances R7 protocols ospf area 0.0.0.0 interface all
+set routing-instances R7 protocols ospf area 0.0.0.0 interface lo0.7 passive
+set routing-instances R7 protocols ospf area 0.0.0.0 interface ge-0/0/6.0 passive
+set routing-instances R7 protocols ospf export TA-4-docker
+set routing-instances R7 interface ge-0/0/6.0
+set routing-instances R7 interface lt-0/0/10.5
+set routing-instances R7 interface lt-0/0/10.18
+set routing-instances R7 interface lo0.7
+set routing-instances TWAMP-2 instance-type virtual-router
+set routing-instances TWAMP-2 routing-options static route 0.0.0.0/0 next-hop 172.29.2.254
+set routing-instances TWAMP-2 interface ge-0/0/5.0
+deactivate routing-instances TWAMP-2
+set routing-options static route 0.0.0.0/0 next-hop 172.25.11.254
+set routing-options static route 10.1.1.0/24 next-hop 10.1.1.21
+deactivate routing-options static route 10.1.1.0/24
+set routing-options static route 172.29.0.0/16 next-hop 10.1.1.21
+deactivate routing-options static route 172.29.0.0/16
+set routing-options static route 192.168.1.0/24 next-hop 10.1.1.21
+deactivate routing-options static route 192.168.1.0/24
+set protocols ospf area 0.0.0.0 interface lt-0/0/10.20
+set protocols ospf area 0.0.0.0 interface lo0.0 passive
+set protocols ospf export default-route
+
